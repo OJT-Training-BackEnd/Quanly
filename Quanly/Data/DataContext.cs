@@ -15,7 +15,7 @@ namespace Quanly.Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
                 .HasData(
@@ -44,7 +44,7 @@ namespace Quanly.Data
                         Importer = "Ad",
                     }
                 );
-        }
+        }*/
 
         public DbSet<User> User { get; set; }
         public DbSet<Customer> Customers { get; set; }

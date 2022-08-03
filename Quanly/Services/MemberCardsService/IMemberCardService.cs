@@ -5,6 +5,6 @@ namespace Quanly.Services.MemberCardsService
     public interface IMemberCardService
     {
         Task<ServiceResponse<MemberCard>> AddNewMemberCard(MemberCard memberCard);
-        Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard memberCard);
+        Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard newMemberCard);
     }
 }

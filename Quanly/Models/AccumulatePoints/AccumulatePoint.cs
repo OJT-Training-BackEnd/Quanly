@@ -12,8 +12,8 @@ namespace Quanly.Models.AccumulatePoints
         public string? Reason { get; set; } = string.Empty;
         public MemberCard? MemberCards { get; set; }
         public string? Type { get; set; } = string.Empty;
-        public int? Money { get; set; }
-        public int? Points { get; set; }
+        public string? Money { get; set; }
+        public string? Points { get; set; }
         public string? Shop { get; set; } = string.Empty;
         public AccumulatePointsRule AccumulatePointsRules { get; set; }
     }
