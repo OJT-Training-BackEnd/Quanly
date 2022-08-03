@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanly.Data;
 
@@ -11,9 +12,10 @@ using Quanly.Data;
 namespace Quanly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220803062400_FixNullablepart3")]
+    partial class FixNullablepart3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,11 +151,11 @@ namespace Quanly.Migrations
 
             modelBuilder.Entity("Quanly.Models.Customers.Customer", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -250,13 +252,13 @@ namespace Quanly.Migrations
                             Id = 1,
                             Address = "District 9, Ho Chi Minh City",
                             Age = 20,
-                            BirthDate = new DateTime(2022, 8, 3, 13, 41, 58, 847, DateTimeKind.Local).AddTicks(7854),
+                            BirthDate = new DateTime(2022, 8, 3, 13, 24, 0, 556, DateTimeKind.Local).AddTicks(6958),
                             Code = "KH123456789",
                             CompanyName = "KNS",
                             CompanyPhone = 1234567891,
                             Contact = "An Ngo",
                             CustomerName = "Cong Chinh",
-                            DateOfRecord = new DateTime(2022, 8, 3, 13, 41, 58, 847, DateTimeKind.Local).AddTicks(7871),
+                            DateOfRecord = new DateTime(2022, 8, 3, 13, 24, 0, 556, DateTimeKind.Local).AddTicks(6973),
                             District = "District 9",
                             Email = "Chinhpro@gmail.com",
                             Fax = "+84 (8) 3823 3318",
@@ -265,7 +267,7 @@ namespace Quanly.Migrations
                             Importer = "Ad",
                             IsActive = true,
                             IsMarried = false,
-                            IssueDate = new DateTime(2022, 8, 3, 13, 41, 58, 847, DateTimeKind.Local).AddTicks(7866),
+                            IssueDate = new DateTime(2022, 8, 3, 13, 24, 0, 556, DateTimeKind.Local).AddTicks(6970),
                             Language = "Vietnamese",
                             Note = "",
                             Phone = 1234567891,
@@ -278,15 +280,15 @@ namespace Quanly.Migrations
 
             modelBuilder.Entity("Quanly.Models.MemberCards.MemberCard", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CardNumber")
+                    b.Property<int?>("CardNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("int");
 
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");

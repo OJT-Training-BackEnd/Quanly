@@ -42,7 +42,6 @@ namespace Quanly.Data
                         Age = 20,
                         DateOfRecord = DateTime.Now,
                         Importer = "Ad",
-                        Updater = "Ad",
                     }
                 );
         }
