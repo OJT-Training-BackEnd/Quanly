@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanly.Data;
 
@@ -11,9 +12,10 @@ using Quanly.Data;
 namespace Quanly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220803020556_CustomerSeedingAddMore")]
+    partial class CustomerSeedingAddMore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,24 +299,24 @@ namespace Quanly.Migrations
                             Id = 1,
                             Address = "District 9, Ho Chi Minh City",
                             Age = 20,
-                            BirthDate = new DateTime(2022, 8, 3, 9, 9, 55, 79, DateTimeKind.Local).AddTicks(9687),
+                            BirthDate = new DateTime(2022, 8, 3, 9, 5, 56, 306, DateTimeKind.Local).AddTicks(2348),
                             Code = "KH123456789",
                             CompanyName = "KNS",
                             CompanyPhone = 1234567891,
                             Contact = "An Ngo",
                             CustomerName = "Cong Chinh",
-                            DateAdded = new DateTime(2022, 8, 3, 9, 9, 55, 79, DateTimeKind.Local).AddTicks(9682),
-                            DateOfRecord = new DateTime(2022, 8, 3, 9, 9, 55, 79, DateTimeKind.Local).AddTicks(9691),
-                            DateUpdated = new DateTime(2022, 8, 3, 9, 9, 55, 79, DateTimeKind.Local).AddTicks(9683),
+                            DateAdded = new DateTime(2022, 8, 3, 9, 5, 56, 306, DateTimeKind.Local).AddTicks(2345),
+                            DateOfRecord = new DateTime(2022, 8, 3, 9, 5, 56, 306, DateTimeKind.Local).AddTicks(2354),
+                            DateUpdated = new DateTime(2022, 8, 3, 9, 5, 56, 306, DateTimeKind.Local).AddTicks(2345),
                             District = "District 9",
                             Email = "Chinhpro@gmail.com",
                             Fax = "+84 (8) 3823 3318",
                             Gender = "Male",
                             IdentityCard = "343456771234",
-                            Importer = "Ad",
+                            Importer = "",
                             IsActive = true,
                             IsMarried = false,
-                            IssueDate = new DateTime(2022, 8, 3, 9, 9, 55, 79, DateTimeKind.Local).AddTicks(9687),
+                            IssueDate = new DateTime(2022, 8, 3, 9, 5, 56, 306, DateTimeKind.Local).AddTicks(2349),
                             Language = "Vietnamese",
                             Note = "",
                             Phone = 1234567891,
@@ -323,7 +325,7 @@ namespace Quanly.Migrations
                             Province = "",
                             TelePhone = 1234567891,
                             Type = "Silver",
-                            Updater = "Ad"
+                            Updater = ""
                         });
                 });
 
