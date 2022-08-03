@@ -9,7 +9,7 @@ namespace Quanly.Models.ContactPersons
         public string? Position { get; set; } = string.Empty;
         public string? Department { get; set; } = string.Empty;
         [StringLength(11, MinimumLength = 10)]
-        public int? Phone { get; set; }
+        public string? Phone { get; set; }
         public string? Email { get; set; } = string.Empty;
         public int? CustomerId { get; set; }
     }

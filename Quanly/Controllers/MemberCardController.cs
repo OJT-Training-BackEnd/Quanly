@@ -20,5 +20,10 @@ namespace Quanly.Controllers
         {
             return Ok(await _memberCardService.AddNewMemberCard(memberCard));
         }
+        [HttpPut("UpdateMemberCard")]
+        public async Task<ActionResult<ServiceResponse<MemberCard>>> UpdateMemberCard(MemberCard newMemberCard)
+        { 
+            return Ok(await _memberCardService.UpdateMemberCard(newMemberCard));
+        }
     }
 }

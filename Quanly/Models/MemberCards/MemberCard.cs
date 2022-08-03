@@ -16,6 +16,7 @@ namespace Quanly.Models.MemberCards
         public DateTime? EffectDate { get; set; }
         public DateTime? ValidDate { get; set; }
         public Customer? Customer { get; set; }
+        public bool IsActive { get; set; } = true;
         public string? RegisterAt { get; set; } = string.Empty;
         public List<AccumulatePoint>? AccumulatePoints { get; set; }
     }

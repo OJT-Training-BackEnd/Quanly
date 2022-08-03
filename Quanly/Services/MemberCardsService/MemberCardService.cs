@@ -1,4 +1,5 @@
-﻿using Quanly.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quanly.Data;
 using Quanly.Models.MemberCards;
 using Quanly.ValidationHandling.MemberCardValidation;
 using System.Security.Claims;
@@ -39,9 +40,33 @@ namespace Quanly.Services.MemberCardsService
             };
         }
 
-        public Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard memberCard)
+        public async Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard newMemberCard)
         {
-            
+            var cardValidate = _memberCardValidation.ValidateMemberCardWhenUpdate(newMemberCard);
+            if (cardValidate != "ok")
+            {
+                return new ServiceResponse<MemberCard>
+                {
+                    Success = false,
+                    Message = cardValidate
+                };
+            }
+            var cardExits = await _context.MemberCards.FirstOrDefaultAsync(x => x.Id == newMemberCard.Id);
+            cardExits.CardNumber = newMemberCard.CardNumber;
+            cardExits.Reason = newMemberCard.Reason;
+            cardExits.IssueDate = newMemberCard.IssueDate;
+            cardExits.EffectDate = newMemberCard.EffectDate;
+            cardExits.ValidDate = newMemberCard.ValidDate;
+            cardExits.IsActive = newMemberCard.IsActive;
+            /*var importer = await _context.User.FindAsync(GetUserId());
+            cardExits.Importer = importer.Username;*/
+
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<MemberCard>
+            {
+                Success = true,
+                Message = "Updated Successfully"
+            };
         }
 
         // Get authenticated USER

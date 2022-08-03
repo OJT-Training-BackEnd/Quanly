@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanly.Data;
 
@@ -11,9 +12,10 @@ using Quanly.Data;
 namespace Quanly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220803090455_fixPropertiespart3")]
+    partial class fixPropertiespart3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,8 +160,8 @@ namespace Quanly.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Age")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
@@ -170,14 +172,15 @@ namespace Quanly.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyPhone")
+                    b.Property<int?>("CompanyPhone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateAdded")
@@ -219,12 +222,12 @@ namespace Quanly.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<int?>("Phone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
-                    b.Property<string>("Points")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -232,9 +235,9 @@ namespace Quanly.Migrations
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TelePhone")
+                    b.Property<int?>("TelePhone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
@@ -242,6 +245,37 @@ namespace Quanly.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "District 9, Ho Chi Minh City",
+                            Age = 20,
+                            BirthDate = new DateTime(2022, 8, 3, 16, 4, 55, 236, DateTimeKind.Local).AddTicks(4085),
+                            Code = "KH123456789",
+                            CompanyName = "KNS",
+                            CompanyPhone = 1234567891,
+                            Contact = "An Ngo",
+                            CustomerName = "Cong Chinh",
+                            DateOfRecord = new DateTime(2022, 8, 3, 16, 4, 55, 236, DateTimeKind.Local).AddTicks(4098),
+                            District = "District 9",
+                            Email = "Chinhpro@gmail.com",
+                            Fax = "+84 (8) 3823 3318",
+                            Gender = "Male",
+                            IdentityCard = "343456771234",
+                            Importer = "Ad",
+                            IsActive = true,
+                            IsMarried = false,
+                            IssueDate = new DateTime(2022, 8, 3, 16, 4, 55, 236, DateTimeKind.Local).AddTicks(4096),
+                            Language = "Vietnamese",
+                            Note = "",
+                            Phone = 1234567891,
+                            Position = "Head of KNS",
+                            Province = "",
+                            TelePhone = 1234567891,
+                            Type = "Silver"
+                        });
                 });
 
             modelBuilder.Entity("Quanly.Models.MemberCards.MemberCard", b =>
@@ -268,7 +302,7 @@ namespace Quanly.Migrations
                     b.Property<string>("Importer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("IssueDate")
