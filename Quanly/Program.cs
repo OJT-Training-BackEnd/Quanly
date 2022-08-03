@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Quanly.Data;
+using Quanly.Services.MemberCardsService;
+using Quanly.Services.UserService;
+using Quanly.ValidationHandling.MemberCardValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IMemberCardService, MemberCardService>();
+builder.Services.AddScoped<MemberCardValidation>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
