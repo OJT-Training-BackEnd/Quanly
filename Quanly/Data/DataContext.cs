@@ -41,9 +41,8 @@ namespace Quanly.Data
                         Language = "Vietnamese",
                         Age = 20,
                         DateOfRecord = DateTime.Now,
-
-
-
+                        Importer = "Ad",
+                        Updater = "Ad",
                     }
                 );
         }
