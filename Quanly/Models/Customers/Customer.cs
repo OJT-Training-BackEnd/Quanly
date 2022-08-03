@@ -16,6 +16,7 @@ namespace Quanly.Models.Customers
         public int Phone { get; set; }
         [StringLength(11, MinimumLength = 10)]
         public int TelePhone { get; set; }
+        [EmailAddress]
         public string Email { get; set; } = string.Empty;
         public string Fax { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
@@ -31,7 +32,7 @@ namespace Quanly.Models.Customers
         public string Province { get; set; } = string.Empty;
         public string District { get; set; } = string.Empty;
         public string Language { get; set; } = string.Empty;
-        public string Age { get; set; } = string.Empty;
+        public int Age { get; set; }
         public DateTime DateOfRecord { get; set; } = DateTime.Now;
         public int Points { get; set; }
         public bool IsActive { get; set; } = true;
