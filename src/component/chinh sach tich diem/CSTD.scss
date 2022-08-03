@@ -1,0 +1,146 @@
+$default: #fff;
+$lightest-blue: #bbd3f2;
+$blur-blue: #3e588c;
+$light-blue: #77a1d9;
+$pri-blue: #0D378C;
+
+#Container {
+  display: inline-flex;
+  .ant-input-group > .ant-input:first-child {
+    width: 383px;
+    background-color: $lightest-blue;
+    color: $default;
+    border-radius: 12px 0 0 12px;
+    text-indent: 12px;
+    margin-left: 349px;
+    font-size: 16px;
+    margin-top: 65px;
+    height: 56px;
+    &::placeholder {
+      color: $light-blue
+    }
+  }
+
+  .ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button {
+    margin-top: 65px;
+    width: 56px;
+    background-color: $lightest-blue;
+    height: 56px;
+    border-radius: 0 12px 12px 0;
+    .anticon svg {
+      color: $pri-blue;
+      font-size: 20px;
+    }
+  }
+
+  .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+    background-color: $default;
+    color: $lightest-blue;
+    margin-top: 65px;
+  }
+
+  .ant-btn-primary {
+    background-color: $lightest-blue;
+    margin-top: 65px;
+    height: 56px;
+    font-size: 20px;
+    left: 642px;
+    margin-right: 40px;
+    width: 220px;
+    border-radius: 20px;
+    color: $pri-blue;
+    font-weight: 500;
+    border: none;
+    &:hover {
+        background-color: $pri-blue;
+        color: $lightest-blue;
+    }
+  }
+  .anticon-user {
+    position: absolute;
+    margin-top: 72px;
+    width: 48px;
+    height: 48px;
+    right: 56px;
+    background-color: $pri-blue;
+    font-size: 28px;
+    padding-top: 12px;
+    color: $default;
+    border-radius: 50%;
+  }
+}
+h2 {
+    border-bottom: 1px solid $pri-blue;
+    color: $pri-blue;
+    margin-left: 349px;
+    margin-top: 40px;
+    text-indent: 8px;
+    font-weight: 600;
+    font-size: 24px;
+    width: 1521px;
+}
+
+.ant-table table {
+    width: 1521px;
+    margin-left: 349px;
+    .ant-table-thead th {
+        height: 50px;
+        background-color: $pri-blue;
+        color: $lightest-blue;
+        font-size: 16px;
+        font-weight: 600;
+        &:hover {
+            background-color: $light-blue;
+            color: $pri-blue;
+        }
+    }
+    .ant-table-column-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 20px;
+        white-space: nowrap;
+    }
+}
+
+.ant-table-container table > thead > tr:first-child th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.ant-table-container table > thead > tr:first-child th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.ant-pagination {
+    margin-left: 1050px;
+}
+.ant-pagination-prev .ant-pagination-item-link {
+    color: $pri-blue;
+    border: none;
+}
+
+.ant-pagination-next .ant-pagination-item-link {
+    color: $pri-blue;
+    border: none;
+}
+
+.ant-pagination-item {
+    border: none;
+    a {
+        color: $pri-blue;
+        font-weight: 300;
+    }
+}
+
+.ant-pagination-item-active {
+    background-color: $pri-blue;
+    border-radius: 8px;
+    a {
+        color: $default;
+    }
+}
+
+
+

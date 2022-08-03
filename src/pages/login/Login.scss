@@ -147,6 +147,7 @@ $blur-blue: #3e588c;
   .ant-checkbox + span {
     color: #ffffff;
     margin: 20px 0;
+    font-size: 16px;
   }
   button {
     background: rgba(119, 161, 217, 0.5);
@@ -157,5 +158,8 @@ $blur-blue: #3e588c;
     margin-top: 24px;
     margin-left: 24px;
     border: none;
+    &:hover {
+      background-color: #0D378C;
+    }
   }
 }
