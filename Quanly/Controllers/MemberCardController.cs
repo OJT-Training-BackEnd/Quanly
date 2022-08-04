@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quanly.Models.MemberCards;
 using Quanly.Services.MemberCardsService;
@@ -25,6 +25,18 @@ namespace Quanly.Controllers
         { 
             return Ok(await _memberCardService.UpdateMemberCard(newMemberCard));
         }
+
+        [HttpGet("SearchMemberCard/{keyword}")]
+        public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> SearchMemberCard(string keyword)
+        {
+            return Ok(await _memberCardService.SearchMemberCard(keyword));
+        }
+        [HttpPut("ChangedStatusCard/{id}")]
+        public async Task<ActionResult<ServiceResponse<string>>> ChangedStatusCard(int id)
+        {
+            return Ok(await _memberCardService.ChangeStatusCard(id));
+        }
+
         [HttpGet("GetAllMembers")]
         public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> GetAllMembers()
         {
@@ -35,5 +47,6 @@ namespace Quanly.Controllers
         {
             return Ok(await _memberCardService.DeleteMemberCard(id));
         } 
+
     }
 }

@@ -75,6 +75,22 @@ namespace Quanly.ValidationHandling.MemberCardValidation
 
             return "ok";
         }
+
+        public string ValidateSearchMemberCard(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+                return "Please enter the keyword to search";
+            if (keyword.Count() > 50)
+                return "The keyword is out of range";
+            return "ok";
+        }
+        public string ValidateChangeStatusCard(int id)
+        {
+            var membercard = _context.MemberCards.FirstOrDefault(x => x.Id == id);
+            if (membercard == null)
+                return $"Can not see the member card of this id : {id}";
+            return "ok";
+
         public string ValidGetMemberList(List<MemberCard> memberCard)
         {
             if(memberCard == null)
@@ -96,6 +112,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 return "The MemberCard has a point, Cant Delete";
             }
            return "ok";
+
         }
     }
 }
