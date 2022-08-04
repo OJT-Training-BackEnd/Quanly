@@ -80,7 +80,7 @@ namespace Quanly.Services.MemberCardsService
                     Message = cardValidate
                 };
             }
-            var memberCards =  _context.MemberCards.Where(x => x.CardNumber.Contains(keyword)
+            var memberCards = _context.MemberCards.Where(x => x.CardNumber.Contains(keyword)
                                                                 || x.IssueDate.ToString().Contains(keyword)
                                                                 || x.Reason.ToLower().Contains(keyword.ToLower())
                                                                 || x.EffectDate.ToString().Contains(keyword)
@@ -96,7 +96,7 @@ namespace Quanly.Services.MemberCardsService
                     Message = $"Can not find any result {keyword}"
                 };
             }
-            
+
 
             return new ServiceResponse<List<MemberCard>>
             {
@@ -104,7 +104,7 @@ namespace Quanly.Services.MemberCardsService
                 Success = true,
                 Message = "Search successfully"
             };
-
+        }
         public async Task<ServiceResponse<List<MemberCard>>> DeleteMemberCard(int id)
         {
             var cardValidate = _memberCardValidation.ValidDeleteMember(id);

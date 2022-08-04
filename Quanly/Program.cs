@@ -5,7 +5,6 @@ using Quanly.Data;
 using Quanly.Services.CustomerService;
 using Quanly.Services.MemberCardsService;
 using Quanly.ValidationHandling.CustomerValidation;
-using Quanly.Services.Customers;
 using Quanly.Services.UserService;
 using Quanly.Services.MemberCardsService;
 using Quanly.ValidationHandling.MemberCardValidation;

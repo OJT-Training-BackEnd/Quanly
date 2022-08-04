@@ -94,7 +94,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             if (membercard == null)
                 return $"Can not see the member card of this id : {id}";
             return "ok";
-
+        }
         public string ValidGetMemberList(List<MemberCard> memberCard)
         {
             if(memberCard == null)
