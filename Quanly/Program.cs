@@ -5,6 +5,9 @@ using Quanly.Data;
 using Quanly.Services.Customers;
 using Quanly.Services.UserService;
 using Quanly.ValidationHandling.CustomerValidation;
+using Quanly.Services.MemberCardsService;
+using Quanly.ValidationHandling.MemberCardValidation;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +32,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
 //Configure the Services
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<CustomerValidation>();
+
+builder.Services.AddScoped<IMemberCardService, MemberCardService>();
+builder.Services.AddScoped<MemberCardValidation>();
 
 var app = builder.Build();
 

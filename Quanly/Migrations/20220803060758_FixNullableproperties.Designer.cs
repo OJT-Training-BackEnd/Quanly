@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanly.Data;
 
@@ -11,9 +12,10 @@ using Quanly.Data;
 namespace Quanly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220803060758_FixNullableproperties")]
+    partial class FixNullableproperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,14 +47,14 @@ namespace Quanly.Migrations
                     b.Property<int?>("MemberCardsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Money")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Money")
+                        .HasColumnType("int");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Points")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("Reason")
                         .IsRequired()
@@ -91,8 +93,8 @@ namespace Quanly.Migrations
                     b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Formula")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Formula")
+                        .HasColumnType("int");
 
                     b.Property<string>("Guide")
                         .HasColumnType("nvarchar(max)");
@@ -131,9 +133,9 @@ namespace Quanly.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<int?>("Phone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -149,19 +151,19 @@ namespace Quanly.Migrations
 
             modelBuilder.Entity("Quanly.Models.Customers.Customer", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Age")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("BirthDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Code")
@@ -170,20 +172,21 @@ namespace Quanly.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyPhone")
+                    b.Property<int?>("CompanyPhone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateOfRecord")
+                    b.Property<DateTime>("DateOfRecord")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
@@ -210,7 +213,7 @@ namespace Quanly.Migrations
                     b.Property<bool?>("IsMarried")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("IssueDate")
+                    b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Language")
@@ -219,12 +222,12 @@ namespace Quanly.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<int?>("Phone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
-                    b.Property<string>("Points")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -232,9 +235,9 @@ namespace Quanly.Migrations
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TelePhone")
+                    b.Property<int?>("TelePhone")
                         .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
@@ -248,14 +251,14 @@ namespace Quanly.Migrations
                         {
                             Id = 1,
                             Address = "District 9, Ho Chi Minh City",
-                            Age = "20",
-                            BirthDate = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4098),
+                            Age = 20,
+                            BirthDate = new DateTime(2022, 8, 3, 13, 7, 58, 254, DateTimeKind.Local).AddTicks(2879),
                             Code = "KH123456789",
                             CompanyName = "KNS",
-                            CompanyPhone = "01234567891",
+                            CompanyPhone = 1234567891,
                             Contact = "An Ngo",
                             CustomerName = "Cong Chinh",
-                            DateOfRecord = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4112),
+                            DateOfRecord = new DateTime(2022, 8, 3, 13, 7, 58, 254, DateTimeKind.Local).AddTicks(2892),
                             District = "District 9",
                             Email = "Chinhpro@gmail.com",
                             Fax = "+84 (8) 3823 3318",
@@ -264,28 +267,29 @@ namespace Quanly.Migrations
                             Importer = "Ad",
                             IsActive = true,
                             IsMarried = false,
-                            IssueDate = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4109),
+                            IssueDate = new DateTime(2022, 8, 3, 13, 7, 58, 254, DateTimeKind.Local).AddTicks(2890),
                             Language = "Vietnamese",
                             Note = "",
-                            Phone = "0123456789",
+                            Phone = 1234567891,
                             Position = "Head of KNS",
                             Province = "",
-                            TelePhone = "01234567891",
+                            TelePhone = 1234567891,
                             Type = "Silver"
                         });
                 });
 
             modelBuilder.Entity("Quanly.Models.MemberCards.MemberCard", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CardNumber")
+                    b.Property<int?>("CardNumber")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("int");
 
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
@@ -293,16 +297,13 @@ namespace Quanly.Migrations
                     b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("EffectDate")
+                    b.Property<DateTime>("EffectDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Importer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("IssueDate")
+                    b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
@@ -318,7 +319,7 @@ namespace Quanly.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ValidDate")
+                    b.Property<DateTime>("ValidDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

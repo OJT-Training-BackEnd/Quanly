@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanly.Data;
 
@@ -11,9 +12,10 @@ using Quanly.Data;
 namespace Quanly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220803115920_FixIntToString")]
+    partial class FixIntToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,37 +244,6 @@ namespace Quanly.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "District 9, Ho Chi Minh City",
-                            Age = "20",
-                            BirthDate = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4098),
-                            Code = "KH123456789",
-                            CompanyName = "KNS",
-                            CompanyPhone = "01234567891",
-                            Contact = "An Ngo",
-                            CustomerName = "Cong Chinh",
-                            DateOfRecord = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4112),
-                            District = "District 9",
-                            Email = "Chinhpro@gmail.com",
-                            Fax = "+84 (8) 3823 3318",
-                            Gender = "Male",
-                            IdentityCard = "343456771234",
-                            Importer = "Ad",
-                            IsActive = true,
-                            IsMarried = false,
-                            IssueDate = new DateTime(2022, 8, 3, 21, 6, 28, 996, DateTimeKind.Local).AddTicks(4109),
-                            Language = "Vietnamese",
-                            Note = "",
-                            Phone = "0123456789",
-                            Position = "Head of KNS",
-                            Province = "",
-                            TelePhone = "01234567891",
-                            Type = "Silver"
-                        });
                 });
 
             modelBuilder.Entity("Quanly.Models.MemberCards.MemberCard", b =>
