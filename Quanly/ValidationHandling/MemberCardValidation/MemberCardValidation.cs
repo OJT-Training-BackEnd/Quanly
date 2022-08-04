@@ -21,6 +21,12 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             if (memberCardExist != null)
                 return "The CardNumber has existed! Please enter a new card number";
 
+            if (string.IsNullOrEmpty(memberCard.CardNumber))
+                return "Please enter CardNumber";
+
+            if (string.IsNullOrEmpty(memberCard.Reason))
+                return "Please enter Reason";
+
             Regex regex = new Regex(@"^\d{1,10}$");
             if (!regex.IsMatch(memberCard.CardNumber))
                 return "Card Numbers must be numbers";
@@ -49,6 +55,12 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             var cardExist = _context.MemberCards.FirstOrDefault(x => x.Id == memberCard.Id);
             if (cardExist == null)
                 return "Customer does not exist";
+
+            if (string.IsNullOrEmpty(memberCard.CardNumber))
+                return "Please enter CardNumber";
+
+            if (string.IsNullOrEmpty(memberCard.Reason))
+                return "Please enter Reason";
 
             Regex regex = new Regex(@"^\d{1,10}$");
             if (!regex.IsMatch(memberCard.CardNumber))
