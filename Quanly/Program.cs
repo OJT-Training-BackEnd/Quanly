@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Quanly.Data;
+using Quanly.Services.CustomerService;
 using Quanly.Services.MemberCardsService;
 using Quanly.Services.UserService;
+using Quanly.ValidationHandling.CustomerValidation;
 using Quanly.ValidationHandling.MemberCardValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMemberCardService, MemberCardService>();
 builder.Services.AddScoped<MemberCardValidation>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ValidGetAllCus>();
+builder.Services.AddScoped<ValidDeleteCus>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
