@@ -6,8 +6,11 @@ using Quanly.Services.CustomerService;
 using Quanly.Services.MemberCardsService;
 using Quanly.ValidationHandling.CustomerValidation;
 using Quanly.Services.UserService;
-using Quanly.Services.MemberCardsService;
 using Quanly.ValidationHandling.MemberCardValidation;
+using Quanly.Services.ContactPersonService;
+using Quanly.ValidationHandling.ContactPersonValidation;
+using Quanly.Services.AccumulateRuleService;
+using Quanly.ValidationHandling.AccumulateRuleValidation;
 using Quanly.ValidationHandling.AccumulatePointsValidation;
 using Quanly.Services.ValidPointsService;
 using Quanly.Services.AccumulatePointsService;
@@ -48,10 +51,15 @@ builder.Services.AddScoped<MemberCardValidation>();
 builder.Services.AddScoped<ValidGetAllCus>();
 builder.Services.AddScoped<ValidDeleteCus>();
 
+builder.Services.AddScoped<IContactPersonService, ContactPersonService>();
+builder.Services.AddScoped<ContactPersonValidation>();
+
 builder.Services.AddScoped<IAccumulatePointsService, AccumulatePointsService>();
 builder.Services.AddScoped<ValidGetAllAccumulatePoints>();
 builder.Services.AddScoped<DeleteAccumulatePoints>();
 
+builder.Services.AddScoped<IAccumulateRuleService, AccumulateRuleService>();
+builder.Services.AddScoped<AccumulateRuleValidation>();
 
 var app = builder.Build();
 
