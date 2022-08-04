@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quanly.Models.Customers;
+using Quanly.Services.CustomerService;
 using Quanly.Services.Customers;
 
 namespace Quanly.Controllers
@@ -14,6 +15,19 @@ namespace Quanly.Controllers
         public CustomerController(ICustomerService customerService)
         {
             _customerService = customerService;
+        }
+        
+        [HttpGet]
+            
+        public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomer() 
+        {
+            return Ok(await _customerService.GetAllCustomers());        
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<List<Customer>>>> DeleteCustomer(int cusId)
+        {
+            return Ok(await _customerService.DeleteCustomers(cusId));
         }
 
         [HttpPost("Add-User")]
