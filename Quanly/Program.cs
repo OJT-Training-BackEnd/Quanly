@@ -8,7 +8,9 @@ using Quanly.ValidationHandling.CustomerValidation;
 using Quanly.Services.UserService;
 using Quanly.Services.MemberCardsService;
 using Quanly.ValidationHandling.MemberCardValidation;
-
+using Quanly.ValidationHandling.AccumulatePointsValidation;
+using Quanly.Services.ValidPointsService;
+using Quanly.Services.AccumulatePointsService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +48,9 @@ builder.Services.AddScoped<MemberCardValidation>();
 builder.Services.AddScoped<ValidGetAllCus>();
 builder.Services.AddScoped<ValidDeleteCus>();
 
+builder.Services.AddScoped<IAccumulatePointsService, AccumulatePointsService>();
+builder.Services.AddScoped<ValidGetAllAccumulatePoints>();
+builder.Services.AddScoped<DeleteAccumulatePoints>();
 
 
 var app = builder.Build();
