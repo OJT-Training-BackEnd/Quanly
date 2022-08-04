@@ -6,5 +6,7 @@ namespace Quanly.Services.MemberCardsService
     {
         Task<ServiceResponse<MemberCard>> AddNewMemberCard(MemberCard memberCard);
         Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard newMemberCard);
+        Task<ServiceResponse<List<MemberCard>>> SearchMemberCard(string keyword);
+        Task<ServiceResponse<string>> ChangeStatusCard(int id);
     }
 }
