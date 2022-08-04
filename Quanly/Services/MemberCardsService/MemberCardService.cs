@@ -107,7 +107,7 @@ namespace Quanly.Services.MemberCardsService
         }
         public async Task<ServiceResponse<List<MemberCard>>> DeleteMemberCard(int id)
         {
-            var cardValidate = _memberCardValidation.ValidDeleteMember(id);
+            var cardValidate = _memberCardValidation.ValidateDeleteMember(id);
             if(cardValidate != "ok")
             {
                 return new ServiceResponse<List<MemberCard>>
@@ -128,7 +128,7 @@ namespace Quanly.Services.MemberCardsService
         public async Task<ServiceResponse<List<MemberCard>>> GetAllMemberCards()
         {
             var membercard = await _context.MemberCards.OrderByDescending(x => x.Id).ToListAsync();
-            var validateResult = _memberCardValidation.ValidGetMemberList(membercard);
+            var validateResult = _memberCardValidation.ValidateGetMemberList(membercard);
             if (validateResult != "ok")
             {
                 return new ServiceResponse<List<MemberCard>>

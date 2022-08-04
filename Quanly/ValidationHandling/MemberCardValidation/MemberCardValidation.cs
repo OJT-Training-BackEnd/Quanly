@@ -95,7 +95,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 return $"Can not see the member card of this id : {id}";
             return "ok";
         }
-        public string ValidGetMemberList(List<MemberCard> memberCard)
+        public string ValidateGetMemberList(List<MemberCard> memberCard)
         {
             if(memberCard == null)
             {
@@ -103,7 +103,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             }
             return "ok";
         }
-        public string ValidDeleteMember(int id)
+        public string ValidateDeleteMember(int id)
         {
             var memberCardExist = _context.MemberCards.FirstOrDefault(x => x.Id == id);
             if (memberCardExist == null)
