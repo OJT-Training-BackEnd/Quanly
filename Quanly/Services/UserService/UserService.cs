@@ -1,4 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
+using Quanly.Data;
 using Quanly.Models.User;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Quanly.Services.UserService
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+        
         }
 
         public Task<ServiceResponse<string>> Login(string username, string password)
@@ -59,5 +61,10 @@ namespace Quanly.Services.UserService
         // Get authenticated USER
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User
         .FindFirstValue(ClaimTypes.NameIdentifier));
+
+
+       
+
+        
     }
 }
