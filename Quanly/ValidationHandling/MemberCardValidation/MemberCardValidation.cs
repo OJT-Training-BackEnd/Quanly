@@ -21,6 +21,10 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             if (memberCardExist != null)
                 return "The CardNumber has existed! Please enter a new card number";
 
+            Regex regex = new Regex(@"^\d{1,10}$");
+            if (!regex.IsMatch(memberCard.CardNumber))
+                return "Card Numbers must be numbers";
+
             if (memberCard.CardNumber.Contains("!") || memberCard.CardNumber.Contains("@")
                 || memberCard.CardNumber.Contains("#") || memberCard.CardNumber.Contains("$")
                 || memberCard.CardNumber.Contains("%") || memberCard.CardNumber.Contains("^")
