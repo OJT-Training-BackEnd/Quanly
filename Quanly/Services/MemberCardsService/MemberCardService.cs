@@ -40,6 +40,7 @@ namespace Quanly.Services.MemberCardsService
             };
         }
 
+
         public async Task<ServiceResponse<string>> ChangeStatusCard(int id)
         {
             var idValidate = _memberCardValidation.ValidateChangeStatusCard(id);
@@ -103,6 +104,42 @@ namespace Quanly.Services.MemberCardsService
                 Success = true,
                 Message = "Search successfully"
             };
+
+        public async Task<ServiceResponse<List<MemberCard>>> DeleteMemberCard(int id)
+        {
+            var cardValidate = _memberCardValidation.ValidDeleteMember(id);
+            if(cardValidate != "ok")
+            {
+                return new ServiceResponse<List<MemberCard>>
+                {
+                    Success = false,
+                    Message = cardValidate
+                };
+            }
+            var member = await _context.MemberCards.FirstOrDefaultAsync(x => x.Id == id);
+            _context.MemberCards.Remove(member);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<List<MemberCard>>
+            {
+                Message = "Delete Successfully",
+                Success = true
+            };
+        }
+        public async Task<ServiceResponse<List<MemberCard>>> GetAllMemberCards()
+        {
+            var membercard = await _context.MemberCards.OrderByDescending(x => x.Id).ToListAsync();
+            var validateResult = _memberCardValidation.ValidGetMemberList(membercard);
+            if (validateResult != "ok")
+            {
+                return new ServiceResponse<List<MemberCard>>
+                {
+                    Message = validateResult,
+                    Success = false,
+
+                };
+            }
+            return new ServiceResponse<List<MemberCard>> { Data=membercard, Message="Successfully", Success = true };
+
         }
 
         public async Task<ServiceResponse<MemberCard>> UpdateMemberCard(MemberCard newMemberCard)
