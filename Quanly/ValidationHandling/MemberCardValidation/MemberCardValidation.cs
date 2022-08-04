@@ -70,5 +70,27 @@ namespace Quanly.ValidationHandling.MemberCardValidation
 
             return "ok";
         }
+        public string ValidGetMemberList(List<MemberCard> memberCard)
+        {
+            if(memberCard == null)
+            {
+                return "The customer list is empty";
+            }
+            return "ok";
+        }
+        public string ValidDeleteMember(int id)
+        {
+            var memberCardExist = _context.MemberCards.FirstOrDefault(x => x.Id == id);
+            if (memberCardExist == null)
+            {
+                return "The MemberCard is empty";
+            }
+             var point= _context.AccumulatePoints.FirstOrDefault(x => x.MemberCards == memberCardExist);
+            if (point != null)
+            {
+                return "The MemberCard has a point, Cant Delete";
+            }
+           return "ok";
+        }
     }
 }
