@@ -25,5 +25,15 @@ namespace Quanly.Controllers
         { 
             return Ok(await _memberCardService.UpdateMemberCard(newMemberCard));
         }
+        [HttpGet("GetAllMembers")]
+        public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> GetAllMembers()
+        {
+            return Ok(await _memberCardService.GetAllMemberCards());
+        } 
+        [HttpDelete("DeleteMembersCard")]
+        public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> DeleteMembersCard(int id)
+        {
+            return Ok(await _memberCardService.DeleteMemberCard(id));
+        } 
     }
 }
