@@ -1,3 +1,4 @@
+using Quanly.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace Quanly.Services.UserService
     {
         Task<ServiceResponse<string>> Login(string username, string password);
         Task<bool> UserExists(string username);
+     
+
     }
 }

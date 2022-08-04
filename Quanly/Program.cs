@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Quanly.Data;
+using Quanly.Services.Customers;
+using Quanly.Services.UserService;
+using Quanly.ValidationHandling.CustomerValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+//Configure the Services
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<CustomerValidation>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
