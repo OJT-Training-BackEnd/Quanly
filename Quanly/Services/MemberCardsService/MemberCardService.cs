@@ -94,6 +94,7 @@ namespace Quanly.Services.MemberCardsService
             cardExits.EffectDate = newMemberCard.EffectDate;
             cardExits.ValidDate = newMemberCard.ValidDate;
             cardExits.IsActive = newMemberCard.IsActive;
+            cardExits.Note = newMemberCard.Note;
             /*var importer = await _context.User.FindAsync(GetUserId());
             cardExits.Importer = importer.Username;*/
 
