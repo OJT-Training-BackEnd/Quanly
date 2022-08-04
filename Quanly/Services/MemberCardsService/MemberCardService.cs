@@ -29,8 +29,8 @@ namespace Quanly.Services.MemberCardsService
                     Message = cardValidate
                 };
             }
-            /*var importer = await _context.User.FindAsync(GetUserId());
-            memberCard.Importer = importer.Username;*/
+                /*var importer = await _context.User.FindAsync(GetUserId());
+                memberCard.Importer = importer.Username;*/
             await _context.MemberCards.AddAsync(memberCard);
             await _context.SaveChangesAsync();
             return new ServiceResponse<MemberCard>

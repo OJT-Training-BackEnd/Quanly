@@ -13,8 +13,8 @@ namespace Quanly.Models.MemberCards
         [StringLength(20, ErrorMessage = "Do not enter more than 20 characters")]
         public string? Reason { get; set; } = string.Empty;
         public DateTime? IssueDate { get; set; }
-        public DateTime? EffectDate { get; set; }
-        public DateTime? ValidDate { get; set; }
+        public DateTime? EffectDate { get; set; } = DateTime.Now;
+        public DateTime? ValidDate { get; set; } = DateTime.Now.AddYears(1);
         public Customer? Customer { get; set; }
         public bool IsActive { get; set; } = true;
         public string? RegisterAt { get; set; } = string.Empty;

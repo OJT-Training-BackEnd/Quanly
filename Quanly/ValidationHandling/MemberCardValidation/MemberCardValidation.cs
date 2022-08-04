@@ -21,9 +21,22 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             if (memberCardExist != null)
                 return "The CardNumber has existed! Please enter a new card number";
 
+            if (string.IsNullOrEmpty(memberCard.CardNumber))
+                return "Please enter CardNumber";
+
+            if (string.IsNullOrEmpty(memberCard.Reason))
+                return "Please enter Reason";
+
+            if (memberCard.CardNumber.Count() > 10)
+                return "The CardNumber must have less than 10 characters";
+
+            if (memberCard.Reason.Count() > 20)
+                return "The reason must have less than 20 charaters";
+
             Regex regex = new Regex(@"^\d{1,10}$");
             if (!regex.IsMatch(memberCard.CardNumber))
-                return "Card Numbers must be numbers";
+                return "CardNumber must be a number and not more than 10 characters";
+
 
             if (memberCard.CardNumber.Contains("!") || memberCard.CardNumber.Contains("@")
                 || memberCard.CardNumber.Contains("#") || memberCard.CardNumber.Contains("$")
@@ -31,15 +44,11 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 || memberCard.CardNumber.Contains("Select * "))
                 return "Please do not enter special character or sql query";
 
-            if (memberCard.IssueDate > memberCard.EffectDate)
+            if (memberCard.IssueDate >= memberCard.EffectDate)
                 return "The issue date needs to be less than the effective date";
 
-            if (memberCard.ValidDate < memberCard.EffectDate)
+            if (memberCard.ValidDate <= memberCard.EffectDate)
                 return "The effect date needs to be greater than the valid date";
-
-            var cardExpiration = 1;
-            if ((memberCard.ValidDate?.Year - memberCard.EffectDate?.Year) < cardExpiration)
-                return "The validity period of the card must be greater than or equal to 1";
 
             return "ok";
         }
@@ -50,9 +59,21 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             if (cardExist == null)
                 return "Customer does not exist";
 
+            if (string.IsNullOrEmpty(memberCard.CardNumber))
+                return "Please enter CardNumber";
+
+            if (string.IsNullOrEmpty(memberCard.Reason))
+                return "Please enter Reason";
+
+            if (memberCard.CardNumber.Count() > 10)
+                return "The card number must have less than 10 characters";
+
+            if (memberCard.Reason.Count() > 20)
+                return "The reason must have less than 20 charaters";
+
             Regex regex = new Regex(@"^\d{1,10}$");
             if (!regex.IsMatch(memberCard.CardNumber))
-                return "Card Numbers must be numbers";
+                return "CardNumber must be a number and not more than 10 characters";
 
             if (memberCard == null)
                 return "The MemberCard is Empty";
@@ -67,15 +88,11 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 || memberCard.CardNumber.Contains("Select * "))
                 return "Please do not enter special character or sql query";
 
-            if (memberCard.IssueDate > memberCard.EffectDate)
+            if (memberCard.IssueDate >= memberCard.EffectDate)
                 return "The issue date needs to be less than the effective date";
 
-            if (memberCard.ValidDate < memberCard.EffectDate)
+            if (memberCard.ValidDate <= memberCard.EffectDate)
                 return "The effect date needs to be greater than the valid date";
-
-            var cardExpiration = 1;
-            if ((memberCard.ValidDate?.Year - memberCard.EffectDate?.Year) < cardExpiration)
-                return "The validity period of the card must be greater than or equal to 1";
 
             return "ok";
         }
