@@ -10,5 +10,7 @@ namespace Quanly.Services.CustomerService
         Task<ServiceResponse<Customer>> EditCustomer(Customer customer);
         Task<ServiceResponse<List<Customer>>> searchCustomer(string name);
         Task<ServiceResponse<List<Customer>>> sortFieldCustomer(string sortBy);
+
+        Task<ServiceResponse<string>> changeStatusCustomer(int id);
     }
 }
