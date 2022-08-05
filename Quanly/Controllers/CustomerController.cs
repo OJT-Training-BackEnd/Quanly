@@ -42,7 +42,7 @@ namespace Quanly.Controllers
             return Ok(await _customerService.EditCustomer(customer));
         }
 
-        [HttpGet("SearchName/{name}")]
+        [HttpGet("SearchName")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> SearchCustomerName(string name)
         {
             return Ok(await _customerService.searchCustomer(name));
@@ -54,5 +54,10 @@ namespace Quanly.Controllers
             return Ok(await _customerService.sortFieldCustomer(sortBy));
         }
 
+        [HttpPut("Card-Issue")]
+        public async Task<ActionResult<ServiceResponse<Customer>>> CardIssue(string cardNumber, int id)
+        {
+            return Ok(await _customerService.CardIssue(cardNumber, id));
+        }
     }
 }

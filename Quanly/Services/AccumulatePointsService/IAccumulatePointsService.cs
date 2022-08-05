@@ -1,4 +1,5 @@
 ﻿using Quanly.Models.AccumulatePoints;
+using Quanly.Models.MemberCards;
 
 namespace Quanly.Services.ValidPointsService
 {
@@ -8,6 +9,11 @@ namespace Quanly.Services.ValidPointsService
 
         Task<ServiceResponse<List<AccumulatePoint>>> DeleteAccumulatePoints(int id);
 
-        
+        Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, string cardNumber);
+
+        Task<ServiceResponse<AccumulatePoint>> search(string cardNumber);
+
+
+
     }
 }
