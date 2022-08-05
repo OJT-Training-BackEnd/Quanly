@@ -135,5 +135,22 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             }
             return "ok";
         }
+
+        public string ValidateGetAllAccumulatePointRule(List<AccumulatePointsRule> apr)
+        {
+            if(apr == null)
+            {
+                return "The Accumulate Point Rule is empty";
+            }
+            return "ok";
+        }
+        public string ValidateSearchAccumulatePointRule (string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+                return "Please enter the keyword to search";
+            if (keyword.Count() > 50)
+                return "The keyword is out of range";
+            return "ok";
+        }
     }
 }

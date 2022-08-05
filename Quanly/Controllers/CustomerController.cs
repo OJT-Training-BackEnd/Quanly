@@ -53,6 +53,10 @@ namespace Quanly.Controllers
         {
             return Ok(await _customerService.sortFieldCustomer(sortBy));
         }
-
+        [HttpPut("Active/Inactive Customer")]
+        public async Task<ActionResult<ServiceResponse<string>>> ChangeStatusCustomer(int id)
+        {
+            return Ok(await _customerService.changeStatusCustomer(id));
+        }
     }
 }
