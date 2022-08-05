@@ -12,8 +12,5 @@ namespace Quanly.Services.ValidPointsService
         Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, string cardNumber);
 
         Task<ServiceResponse<AccumulatePoint>> search(string cardNumber);
-
-
-
     }
 }

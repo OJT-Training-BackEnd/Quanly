@@ -75,7 +75,8 @@ namespace Quanly.Services.CustomerService
 
         public async Task<ServiceResponse<Customer>> AddCustomer(Customer customer)
         {
-            var customerValidate = _customerValidation.ValidateAddCustomer(customer);
+
+            var customerValidate = _customerValidation.ValidateNewCustomer(customer);
             if (customerValidate != "ok")
             {
                 return new ServiceResponse<Customer>
@@ -246,6 +247,47 @@ namespace Quanly.Services.CustomerService
             };
         }
 
+
+        public async Task<ServiceResponse<string>> changeStatusCustomer(int id)
+        {
+            try
+            {
+                var validate = _customerValidation.ValidateCustomer(id);
+                if (validate != "ok")
+                {
+                    return new ServiceResponse<string>
+                    {
+                        Message = validate,
+                        Success = false
+                    };
+                }
+                var customerExist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
+                if (customerExist.IsActive == true)
+                {
+                    customerExist.IsActive = false;
+                }
+                else
+                {
+                    customerExist.IsActive = true;
+                }
+                await _dataContext.SaveChangesAsync();
+                return new ServiceResponse<string>
+                {
+                    Success = true,
+                    Message = "Changed Successfully"
+                };
+            }
+            catch(Exception ex)
+            {
+                return new ServiceResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+            
+        }
+        
         public async Task<ServiceResponse<Customer>> CardIssue(string cardNumber, int id)
         {
             var cardIssueCValidate = _customerValidation.cardIssueValidate(cardNumber, id);

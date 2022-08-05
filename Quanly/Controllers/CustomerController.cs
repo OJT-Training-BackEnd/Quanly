@@ -54,10 +54,18 @@ namespace Quanly.Controllers
             return Ok(await _customerService.sortFieldCustomer(sortBy));
         }
 
+
         [HttpPut("Card-Issue")]
         public async Task<ActionResult<ServiceResponse<Customer>>> CardIssue(string cardNumber, int id)
         {
             return Ok(await _customerService.CardIssue(cardNumber, id));
+        }
+        
+        [HttpPut("Active/Inactive Customer")]
+        public async Task<ActionResult<ServiceResponse<string>>> ChangeStatusCustomer(int id)
+        {
+            return Ok(await _customerService.changeStatusCustomer(id));
+
         }
     }
 }

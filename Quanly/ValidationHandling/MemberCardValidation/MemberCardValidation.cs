@@ -1,4 +1,5 @@
-﻿using Quanly.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quanly.Data;
 using Quanly.Models.MemberCards;
 using System.Text.RegularExpressions;
 
@@ -134,6 +135,35 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             }
            return "ok";
 
+        }
+        public string ValidateSearchCardToAddPoint(string cardNumber)
+        {
+            if (cardNumber.Count() > 10)
+                return "The card number must have less than 10 characters";
+
+            Regex regex = new Regex(@"^\d{1,10}$");
+            if (!regex.IsMatch(cardNumber))
+                return "CardNumber must be a number and not more than 10 characters";
+
+            var res2 = _context.MemberCards
+                        .Include(x => x.Customer)
+                        .FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
+            if (res2.Result == null)
+                return "The CardNumber does not exist";
+
+            if (res2.Result.IsActive == false)
+                return "The CardNumber has been inactive";
+
+            if (DateTime.Now > res2.Result.ValidDate)
+                return "The card has expired";
+        
+            if (res2.Result.Customer == null)
+                return "Empty card!!! No customers yet";
+            
+            if (res2.Result.Customer.IsActive == false)
+                return "The Owner of the card has been inactive";
+
+            return "ok";
         }
     }
 }

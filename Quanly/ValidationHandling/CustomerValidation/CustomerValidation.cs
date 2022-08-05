@@ -14,7 +14,8 @@ namespace Quanly.ValidationHandling.CustomerValidation
             _dataContext = dataContext;
         }
 
-        public string ValidateAddCustomer(Customer customer)
+
+        public string ValidateNewCustomer(Customer customer)
         {
             var customerExist = _dataContext.Customers.FirstOrDefault(x => x.Id == customer.Id);
             if (customerExist != null)
@@ -162,6 +163,18 @@ namespace Quanly.ValidationHandling.CustomerValidation
             return "ok";
         }
 
+
+       
+       public string ValidateCustomer( int id )
+        {
+            var cusexist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
+            if(cusexist == null)
+            {
+                return "Customer is not exist";
+            }
+            return "ok";
+        }
+ 
 
     }
 }

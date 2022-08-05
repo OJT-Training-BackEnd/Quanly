@@ -17,7 +17,7 @@ namespace Quanly.Models.MemberCards
         public DateTime? ValidDate { get; set; } = DateTime.Now.AddYears(1);
         public Customer? Customer { get; set; }
         public bool IsActive { get; set; } = true;
-        public string? RegisterAt { get; set; } = string.Empty;
+        public string? RegisterAt { get; set; } = "KNS";
         public List<AccumulatePoint>? AccumulatePoints { get; set; }
     }
 }
