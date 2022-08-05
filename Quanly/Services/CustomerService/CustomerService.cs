@@ -75,6 +75,7 @@ namespace Quanly.Services.CustomerService
 
         public async Task<ServiceResponse<Customer>> AddCustomer(Customer customer)
         {
+
             var customerValidate = _customerValidation.ValidateNewCustomer(customer);
             if (customerValidate != "ok")
             {
@@ -84,8 +85,29 @@ namespace Quanly.Services.CustomerService
                     Message = customerValidate
                 };
             }
-
-            await _dataContext.Customers.AddAsync(customer);
+            var _customer = new Customer
+            {
+                Code = customer.Code.Trim(),
+                CustomerName = customer.CustomerName,
+                District = customer.District,
+                Type = customer.Type,
+                Phone = customer.Phone.Trim(),
+                TelePhone = customer.TelePhone.Trim(),
+                Email = customer.Email.Trim(),
+                Fax = customer.Fax.Trim(),
+                Gender = customer.Gender,
+                IsMarried = customer.IsMarried,
+                BirthDate = customer.BirthDate,
+                IdentityCard = customer.IdentityCard.Trim(),
+                DateOfRecord = customer.DateOfRecord,
+                CompanyName = customer.CompanyName,
+                CompanyPhone = customer.CompanyPhone.Trim(),
+                Contact = customer.Contact,
+                Position = customer.Position,
+                MemberCards = null,
+                ContactPersons = null
+            };
+            await _dataContext.Customers.AddAsync(_customer);
             await _dataContext.SaveChangesAsync();
             return new ServiceResponse<Customer>
             {
@@ -148,25 +170,41 @@ namespace Quanly.Services.CustomerService
 
         }
 
-        public async Task<ServiceResponse<List<Customer>>> searchCustomer(string name)
+        public async Task<ServiceResponse<List<Customer>>> searchCustomer(string searchString)
         {
-            IQueryable<Customer> query = _dataContext.Customers;
-
-            if (!String.IsNullOrWhiteSpace(name))
+            var searchValidation = _customerValidation.searchCustomerValidate(searchString);
+            if (searchValidation != "ok")
             {
-                query = query.Where(e => e.CustomerName.Contains(name));
                 return new ServiceResponse<List<Customer>>
                 {
-                    Data = await query.ToListAsync(),
-                    Success = true,
-                    Message = "Success Search"
+                    Success = false,
+                    Message = searchValidation
                 };
+            }
+
+            var allCustomer = _dataContext.Customers.OrderBy(c => c.CustomerName).ToList();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allCustomer = allCustomer.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                            n.Phone.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                            n.Importer.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.District.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                            n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+
+                if (allCustomer.Count == 0)
+                {
+                    return new ServiceResponse<List<Customer>>
+                    {
+                        Success = false,
+                        Message = "Khong co"
+                    };
+                }
             }
             return new ServiceResponse<List<Customer>>
             {
-
-                Success = false,
-                Message = "Failed Search"
+                Data = allCustomer,
+                Success = true,
+                Message = " Search"
             };
         }
 
@@ -176,7 +214,7 @@ namespace Quanly.Services.CustomerService
 
             if (!String.IsNullOrEmpty(sortBy))
             {
-                switch (sortBy)
+                switch (sortBy.Trim())
                 {
                     case "name_desc":
                         sortCustomer = sortCustomer.OrderByDescending(n => n.CompanyName).ToList();
@@ -208,6 +246,7 @@ namespace Quanly.Services.CustomerService
                 Message = "Failed"
             };
         }
+
 
         public async Task<ServiceResponse<string>> changeStatusCustomer(int id)
         {
@@ -248,12 +287,39 @@ namespace Quanly.Services.CustomerService
             }
             
         }
-
-        /*public async Task<ServiceResponse<Customer>> CapThe()
+        
+        public async Task<ServiceResponse<Customer>> CardIssue(string cardNumber, int id)
         {
-            var customer = _dataContext.Customers.FirstOrDefault();
+            var cardIssueCValidate = _customerValidation.cardIssueValidate(cardNumber, id);
+            if (cardIssueCValidate != "ok")
+            {
+                return new ServiceResponse<Customer>
+                {
+                    Success = false,
+                    Message = cardIssueCValidate
+                };
+            }
+            var customer = await _dataContext.Customers.FirstOrDefaultAsync(p => p.Id == id);
+            var _memberCard = await _dataContext.MemberCards.FirstOrDefaultAsync(p => p.CardNumber == cardNumber && p.Customer == null);
+            if (_memberCard != null)
+            {
+                _memberCard.Customer = customer;
+                await _dataContext.SaveChangesAsync();
+                return new ServiceResponse<Customer>
+                {
+                    Data = customer,
+                    Success = true,
+                    Message = "Success card issue"
+                };
+            }
+            return new ServiceResponse<Customer>
+            {
+                Success = false,
+                Message = "Failed card issue"
+            };
         }
-         */
+
+        
 
     }
 }

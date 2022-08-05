@@ -40,12 +40,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
-
-//Configure the Services
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//Configure the Services
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<CustomerValidation>();
