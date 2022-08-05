@@ -7,7 +7,5 @@ namespace Quanly.Services.ValidPointsService
         Task<ServiceResponse<List<AccumulatePoint>>> GetAllAccumulatePoints();
 
         Task<ServiceResponse<List<AccumulatePoint>>> DeleteAccumulatePoints(int id);
-
-        
     }
 }

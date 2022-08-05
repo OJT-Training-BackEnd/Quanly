@@ -46,7 +46,11 @@ namespace Quanly.Controllers
         public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> DeleteMembersCard(int id)
         {
             return Ok(await _memberCardService.DeleteMemberCard(id));
-        } 
-
+        }
+        [HttpGet("SearchMemberCardToAddPoint/{cardNumber}")]
+        public async Task<ActionResult<ServiceResponse<MemberCard>>> SearchMemberCardToAddPoint(string cardNumber)
+        {
+            return Ok(await _memberCardService.SearchMemberCardToAddPoint(cardNumber));
+        }
     }
 }

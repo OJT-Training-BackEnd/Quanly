@@ -10,6 +10,6 @@ namespace Quanly.Services.MemberCardsService
         Task<ServiceResponse<string>> ChangeStatusCard(int id);
         Task<ServiceResponse<List<MemberCard>>> GetAllMemberCards();
         Task<ServiceResponse<List<MemberCard>>> DeleteMemberCard(int Cardnumber);
-
+        Task<ServiceResponse<MemberCard>> SearchMemberCardToAddPoint(string cardNumber);
     }
 }
