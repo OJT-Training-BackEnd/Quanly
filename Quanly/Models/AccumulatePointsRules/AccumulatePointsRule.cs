@@ -1,4 +1,4 @@
-﻿using Quanly.Models.AccumulatePoints;
+using Quanly.Models.AccumulatePoints;
 
 namespace Quanly.Models.AccumulatePointsRules
 {
