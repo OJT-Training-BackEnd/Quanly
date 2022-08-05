@@ -32,7 +32,7 @@ namespace Quanly.Models.Customers
         public string? Language { get; set; } = string.Empty;
         public string? Age { get; set; }
         public DateTime? DateOfRecord { get; set; }
-        public string? Points { get; set; }
+        public string? Points { get; set; } = "0";
         public bool? IsActive { get; set; } = true;
         public List<MemberCard>? MemberCards { get; set; }
         public ContactPerson? ContactPersons { get; set; }

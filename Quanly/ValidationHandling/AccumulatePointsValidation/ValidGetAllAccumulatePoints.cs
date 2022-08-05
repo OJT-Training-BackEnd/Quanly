@@ -12,5 +12,17 @@ namespace Quanly.ValidationHandling.AccumulatePointsValidation
             return "ok";
             
         }
+        public string ValidateCreateAccumulatePoint(AccumulatePoint accumulatePoint)
+        {
+            if (accumulatePoint == null)
+                return "The AccumulatePoint is empty";
+            if (accumulatePoint.MemberCards.ValidDate < DateTime.Now)
+                return "The date is not suitable";
+            if (string.IsNullOrEmpty(accumulatePoint.Reason))
+                return "Please enter the rease";
+            if (accumulatePoint.Reason.Count() > 100)
+                return "Please enter reason less than 100";
+            return "Ok";
+        }
     }
 }
