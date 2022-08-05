@@ -18,5 +18,10 @@ namespace Quanly.Controllers
         {
             return Ok(await _accumulateRuleService.UpdateAccumulatePointsRule(apr));
         }
+        [HttpPost("AddNewAcumulateRule")]
+        public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> AddNewAccmulatePointRule(AccumulatePointsRule acc)
+        {
+            return Ok(await _accumulateRuleService.AddNewAccumulatePointsRule(acc));
+        }
     }
 }
