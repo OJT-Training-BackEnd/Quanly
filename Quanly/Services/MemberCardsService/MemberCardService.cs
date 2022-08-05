@@ -163,7 +163,6 @@ namespace Quanly.Services.MemberCardsService
             cardExits.Note = newMemberCard.Note;
             /*var importer = await _context.User.FindAsync(GetUserId());
             cardExits.Importer = importer.Username;*/
-
             await _context.SaveChangesAsync();
             return new ServiceResponse<MemberCard>
             {
@@ -175,5 +174,27 @@ namespace Quanly.Services.MemberCardsService
         // Get authenticated USER
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User
         .FindFirstValue(ClaimTypes.NameIdentifier));
+
+        public async Task<ServiceResponse<MemberCard>> SearchMemberCardToAddPoint(string cardNumber)
+        {
+            var validate = _memberCardValidation.ValidateSearchCardToAddPoint(cardNumber);
+            if (validate != "ok")
+            {
+                return new ServiceResponse<MemberCard>
+                {
+                    Success = false,
+                    Message = validate
+                };
+            }
+            var res = await _context.MemberCards
+                            .Include(x => x.Customer)
+                            .FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
+            return new ServiceResponse<MemberCard> {
+                Data = res,
+                Success = true,
+                Message = "Find Successfully"
+            };
+            
+        }
     }
 }

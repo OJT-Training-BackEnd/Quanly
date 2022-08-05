@@ -15,6 +15,7 @@ using Quanly.ValidationHandling.AccumulatePointsValidation;
 using Quanly.Services.ValidPointsService;
 using Quanly.Services.AccumulatePointsService;
 using Quanly.Models.AccumulatePoints;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 //Configure the Services
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<CustomerValidation>();
