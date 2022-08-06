@@ -1,4 +1,5 @@
-﻿using Quanly.Models.Customers;
+﻿using Quanly.Models.AccumulatePoints;
+using Quanly.Models.Customers;
 
 namespace Quanly.Services.CustomerService
 {
@@ -12,5 +13,6 @@ namespace Quanly.Services.CustomerService
         Task<ServiceResponse<List<Customer>>> sortFieldCustomer(string sortBy);
         Task<ServiceResponse<Customer>> CardIssue(string cardNumber, int id);
         Task<ServiceResponse<string>> changeStatusCustomer(int id);
+        Task<ServiceResponse<List<AccumulatePoint>>> ViewCustomerTransactionHistory(int customerId);
     }
 }
