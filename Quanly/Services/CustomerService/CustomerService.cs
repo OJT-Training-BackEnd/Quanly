@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Quanly.Data;
+using Quanly.Models.AccumulatePoints;
 using Quanly.Models.Customers;
 using Quanly.ValidationHandling.CustomerValidation;
 using System.Security.Claims;
@@ -319,7 +320,32 @@ namespace Quanly.Services.CustomerService
             };
         }
 
-        
-
+        public async Task<ServiceResponse<List<AccumulatePoint>>> ViewCustomerTransactionHistory(int customerId)
+        {
+            var validate = _customerValidation.ValidateViewCustomerTransactionHistory(customerId);
+            if (validate != "ok")
+            {
+                return new ServiceResponse<List<AccumulatePoint>>
+                {
+                    Success = false,
+                    Message = validate
+                };
+            }
+            var cardList = await _dataContext.MemberCards.Include(x => x.Customer)
+                .Where(x => x.Customer.Id == customerId).ToListAsync();
+            var transaction = new List<AccumulatePoint>();
+            foreach (var card in cardList)
+            {
+                transaction = await _dataContext.AccumulatePoints
+                    .Where(x => x.MemberCards.Id == card.Id).OrderByDescending(x => x.Id).ToListAsync();
+            }
+            
+            return new ServiceResponse<List<AccumulatePoint>>
+            {
+                Data = transaction,
+                Success = true,
+                Message = "View Customer Transaction History Successfully"
+            };
+        }
     }
 }

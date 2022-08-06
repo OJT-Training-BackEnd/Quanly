@@ -152,20 +152,11 @@ namespace Quanly.Services.AccumulatePointsService
                     Message = validate
                 };
             }
-            var memberCard = await _dataContext.MemberCards.Include(x => x.Customer).FirstOrDefaultAsync(x => x.CardNumber == accumulatePoint.MemberCards.CardNumber);
+            var memberCard = await _dataContext.MemberCards
+                .Include(x => x.Customer)
+                .FirstOrDefaultAsync(x => x.CardNumber == accumulatePoint.MemberCards.CardNumber);
 
-            /*var memberCard = await _dataContext
-                .Include(x => x.MemberCards)
-                .FirstOrDefaultAsync(x => x.Id == accumulatePoint.MemberCards.Id);
-            
-            var oldPoint = Convert.ToDouble(memberCard.Customer.Points);
 
-            if (accumulatePoint.Type.ToLower().Equals("CONG".ToLower()))
-                oldPoint += Convert.ToDouble(accumulatePoint.Points);
-            else if (accumulatePoint.Type.ToLower().Equals("TRU".ToLower()))
-                oldPoint -= Convert.ToDouble(accumulatePoint.Points);*/
-            /*_dataContext.AccumulatePoints.Add(accumulatePoint);
-            await _dataContext.SaveChangesAsync();*/
             var customer = await _dataContext.Customers.FirstOrDefaultAsync(x => x.Id == memberCard.Customer.Id);
             var oldPoint = Convert.ToDouble(customer.Points);
             if (customer.Points == null)
@@ -192,16 +183,9 @@ namespace Quanly.Services.AccumulatePointsService
             var customer2 = await _dataContext.Customers.FirstOrDefaultAsync(x => x.Id == memberCard.Customer.Id);
             customer2.Points = oldPoint.ToString();
             await _dataContext.SaveChangesAsync();
+            accumulatePoint.MemberCards = memberCard;
             _dataContext.AccumulatePoints.Add(accumulatePoint);
             await _dataContext.SaveChangesAsync();
-            /*if (customer != null)
-            {
-                return new ServiceResponse<AccumulatePoint>
-                {
-                    Success = true,
-                    Message = "Added Successfully"
-                };
-            }*/
             return new ServiceResponse<AccumulatePoint>
             {
                 Success = true,
@@ -209,27 +193,5 @@ namespace Quanly.Services.AccumulatePointsService
             };
         }
 
-        /*public async Task<ServiceResponse<double>> CalculatePoint(string type, string cardNumber, double money, double newPoint)
-        {
-            var card = await _dataContext.MemberCards
-                .Include(x => x.Customer)
-                .FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
-            var oldPoint = Convert.ToDouble(card.Customer.Points);
-            if (oldPoint == 0) 
-            {
-                oldPoint = newPoint;
-            }
-
-
-            if (type.ToLower().Equals("CONG".ToLower()))
-                return new ServiceResponse<double>
-                {
-                    Data = ,
-                    Success = false,
-                    Message = "Calculate Successfully"
-                };
-            else
-                return new ServiceResponse<double>
-        }*/
     }
 }

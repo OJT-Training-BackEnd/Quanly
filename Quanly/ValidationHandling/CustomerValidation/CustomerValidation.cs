@@ -1,4 +1,5 @@
-﻿using Quanly.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quanly.Data;
 using Quanly.Models.Customers;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -166,15 +167,26 @@ namespace Quanly.ValidationHandling.CustomerValidation
 
        
        public string ValidateCustomer( int id )
-        {
+       {
             var cusexist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
             if(cusexist == null)
             {
                 return "Customer is not exist";
             }
             return "ok";
+       }
+        public string ValidateViewCustomerTransactionHistory(int customerId)
+        {
+            if (customerId == null)
+                return "Please enter customerId";
+            /*var transactionOfCus = _dataContext.MemberCards
+                .Include(x => x.Customer).Include(x => x.AccumulatePoints)
+                .FirstOrDefault(x => x.Id == customerId);
+            if (transactionOfCus.AccumulatePoints == null)
+                return "Does not has any transaction";*/
+
+            return "ok";
         }
- 
 
     }
 }

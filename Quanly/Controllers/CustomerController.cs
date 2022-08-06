@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Quanly.Models.AccumulatePoints;
 using Quanly.Models.Customers;
 using Quanly.Services.CustomerService;
 
@@ -66,6 +67,11 @@ namespace Quanly.Controllers
         {
             return Ok(await _customerService.changeStatusCustomer(id));
 
+        }
+        [HttpGet("ViewCustomerTransactionHistory")]
+        public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> ViewCustomerTransactionHistory(int cusId)
+        { 
+            return Ok(await _customerService.ViewCustomerTransactionHistory(cusId));
         }
     }
 }
