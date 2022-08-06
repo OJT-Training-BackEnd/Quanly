@@ -152,5 +152,21 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
                 return "The keyword is out of range";
             return "ok";
         }
+        public string ValidDeleteAccumulateRule(int accumulatePointId)
+        {
+            var accuPoint = _dataContext.AccumulatePointsRules.FirstOrDefault(x => x.Id == accumulatePointId);
+
+            if (accuPoint == null)
+            {
+                return "This customer's accumulate rule does not existed";
+            }
+
+            var accumulatePoint = _dataContext.AccumulatePoints.FirstOrDefault(x => x.AccumulatePointsRules.Id == accuPoint.Id);
+            if (accumulatePoint != null)
+            {
+                return "This accumulate rule has been used so you cant delete";
+            }
+            return "ok";
+        }
     }
 }

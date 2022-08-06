@@ -12,14 +12,16 @@ namespace Quanly.Services.AccumulatePointsService
         private readonly ValidGetAllAccumulatePoints _validGetAllAccumulatePoints;
         private readonly DataContext _dataContext;
         private readonly DeleteAccumulatePoints _deleteAccumulatePoint;
-
+        private readonly SearchAccumulatePoints _searchAccumulatePoints;
         public AccumulatePointsService(ValidGetAllAccumulatePoints validGetAllAccumulatePoints,
             DataContext dataContext,
-            DeleteAccumulatePoints deleteAccumulatePoint)
+            DeleteAccumulatePoints deleteAccumulatePoint,
+            SearchAccumulatePoints searchAccumulatePoints)
         {
             _validGetAllAccumulatePoints = validGetAllAccumulatePoints;
             _dataContext = dataContext;
             _deleteAccumulatePoint = deleteAccumulatePoint;
+            _searchAccumulatePoints = searchAccumulatePoints;
         }
 
         public async Task<ServiceResponse<List<AccumulatePoint>>> GetAllAccumulatePoints()
@@ -138,6 +140,38 @@ namespace Quanly.Services.AccumulatePointsService
 
             };
 
+        }
+        public async Task<ServiceResponse<List<AccumulatePoint>>> searchAccumulatePoints(string key)
+        {
+            var validPoint = _searchAccumulatePoints.ValidateSearchAccumulatePoint(key);
+            if (validPoint != "ok")
+            {
+                return new ServiceResponse<List<AccumulatePoint>>
+                {
+                    Message = validPoint,
+                    Success = false
+                };
+            }
+            var aPoint = _dataContext.AccumulatePoints.Where(x => x.Reason.ToLower().Contains(key.ToLower())
+                                                                   || x.Type.ToLower().Contains(key.ToLower())
+                                                                   || x.Money.ToLower().Contains(key.ToLower())
+                                                                   || x.Points.ToLower().Contains(key.ToLower())
+                                                                   ||x.Shop.ToLower().Contains(key.ToLower())
+                                                                   ||x.Date.ToString().Contains(key));
+            if(aPoint.Count()==0)
+            {
+                return new ServiceResponse<List<AccumulatePoint>>
+                {
+                    Message = "Cant not find any result",
+                    Success = false
+                };
+            }
+
+            return new ServiceResponse<List<AccumulatePoint>>
+            {
+                Data = await aPoint.OrderByDescending(x => x.Id).ToListAsync(),
+                Message = "Searching successfully"
+            };
         }
 
     }

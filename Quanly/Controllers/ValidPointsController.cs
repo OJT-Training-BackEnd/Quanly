@@ -42,5 +42,11 @@ namespace Quanly.Controllers
         {
             return Ok(await _validpointsService.search(cardnumber));
         }
+
+        [HttpGet("SearchAccumulatePoint")]
+        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> searchAccumulatePoints(string keyword)
+        {
+            return Ok(await _validpointsService.searchAccumulatePoints(keyword));
+        }
     }
 }

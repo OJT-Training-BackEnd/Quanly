@@ -16,6 +16,7 @@ using Quanly.Services.ValidPointsService;
 using Quanly.Services.AccumulatePointsService;
 using Quanly.Models.AccumulatePoints;
 using System.Text.Json.Serialization;
+using Quanly.Models.AccumulatePointsRules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,11 +61,12 @@ builder.Services.AddScoped<ContactPersonValidation>();
 builder.Services.AddScoped<IAccumulatePointsService, AccumulatePointsService>();
 builder.Services.AddScoped<ValidGetAllAccumulatePoints>();
 builder.Services.AddScoped<DeleteAccumulatePoints>();
+builder.Services.AddScoped<SearchAccumulatePoints>();
 
 builder.Services.AddScoped<IAccumulateRuleService, AccumulateRuleService>();
 builder.Services.AddScoped<AccumulateRuleValidation>();
 builder.Services.AddScoped<AccumulatePoint>();
-
+builder.Services.AddScoped<AccumulatePointsRule>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
