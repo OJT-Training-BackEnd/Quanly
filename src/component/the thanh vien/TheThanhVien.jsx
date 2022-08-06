@@ -1,18 +1,44 @@
 import React, { useRef, useState } from "react";
-import { Input, Button, Space, Table, Pagination } from "antd";
+import {
+  Input,
+  Button,
+  Space,
+  Table,
+  Pagination,
+  DatePicker,
+  Modal,
+  Row,
+  Col,
+} from "antd";
 import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "./TheThanhVien.scss";
+import MenuProjectManage from "../menu/Menu";
 import Highlighter from "react-highlight-words";
-
-const { Search } = Input;
-const onSearch = (value) => console.log(value);
-
-const data = [];
 
 function TheThanhVien() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
+  const data = [];
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -195,18 +221,93 @@ function TheThanhVien() {
 
   return (
     <>
-      <div id="Container">
-        <Search
-          placeholder="input search text"
-          onSearch={onSearch}
-          style={{ width: 200 }}
-        />
-        <Button type="primary">Thêm mới</Button>
-        <UserOutlined />
-      </div>
-      <h2>THẺ THÀNH VIÊN</h2>
-      <Table columns={columns} dataSource={data} />;
-      <Pagination defaultCurrent={1} total={10} />;
+      <Row id="CSTDRowContainer">
+        <Col span={21} id="TTVColContainer">
+          <div id="Container">
+            <Search
+              placeholder="input search text"
+              onSearch={onSearch}
+              style={{ width: 200 }}
+            />
+            <Button type="primary" onClick={showModal}>
+              Thêm mới
+            </Button>
+            <Modal
+              className="modalTheThanhVien"
+              width={"1200px"}
+              title="ĐIỀU CHỈNH ĐIỂM"
+              centered
+              visible={visible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              footer={[
+                <Button key="back" onClick={handleCancel}>
+                  Hủy
+                </Button>,
+                <Button key="submit" type="primary" onClick={handleOk}>
+                  Thêm
+                </Button>,
+              ]}
+            >
+              <div class="inputFormThemTTV">
+                <span class="inputText">Số thẻ</span>
+                <Input />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Loại thẻ</span>
+                <Input value={"Thẻ thành viên"} disabled />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Lý do phát hành thẻ</span>
+                <Input />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Ngày ban hành</span>
+                <DatePicker
+                  style={{ marginLeft: "160px", backgroundColor: "#0D378C" }}
+                  onChange={onChange}
+                />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Hiệu lực từ</span>
+                <DatePicker
+                  style={{ marginLeft: "201px", backgroundColor: "#0D378C" }}
+                  onChange={onChange}
+                />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Hiệu lực đến</span>
+                <DatePicker
+                  style={{ marginLeft: "185px", backgroundColor: "#0D378C" }}
+                  onChange={onChange}
+                />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">khách hàng</span>
+                <Input disabled />
+              </div>
+              <div class="inputFormThemTTV">
+                <span class="inputText">Đăng ký tại</span>
+                <Input disabled />
+              </div>
+              <div id="audit">
+                <div class="inputFormThemTTV">
+                  <span class="inputText">Ngày nhập/sửa</span>
+                  <Input disabled />
+                </div>
+                <div class="inputFormThemTTV">
+                  <span class="inputText">Người nhập/sửa</span>
+                  <Input disabled />
+                </div>
+              </div>
+            </Modal>
+            <UserOutlined />
+          </div>
+          <h2 id="titleTheThanhVien">THẺ THÀNH VIÊN</h2>
+          <Table columns={columns} dataSource={data} />;
+          <Pagination defaultCurrent={1} total={10} />;
+        </Col>
+      </Row>
     </>
   );
 }

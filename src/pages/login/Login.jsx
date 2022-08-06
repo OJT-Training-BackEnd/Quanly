@@ -62,7 +62,7 @@ function Login() {
                   },
                 ]}
               >
-                <Input.Password placeholder="input password" />
+                <Input.Password id="inputPassword" placeholder="input password" />
               </Form.Item>
 
               <Form.Item

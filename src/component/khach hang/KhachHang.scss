@@ -4,6 +4,10 @@ $blur-blue: #3e588c;
 $light-blue: #77a1d9;
 $pri-blue: #0D378C;
 
+
+#KHColContainer {
+    margin-left: 160px;
+}
 #Container {
   display: inline-flex;
   .ant-input-group > .ant-input:first-child {
@@ -12,7 +16,6 @@ $pri-blue: #0D378C;
     color: $default;
     border-radius: 12px 0 0 12px;
     text-indent: 12px;
-    margin-left: 349px;
     font-size: 16px;
     margin-top: 65px;
     height: 56px;
@@ -72,10 +75,9 @@ $pri-blue: #0D378C;
     border-radius: 50%;
   }
 }
-h2 {
+#titleKhachHang {
     border-bottom: 1px solid $pri-blue;
     color: $pri-blue;
-    margin-left: 349px;
     margin-top: 40px;
     text-indent: 8px;
     font-weight: 600;
@@ -85,7 +87,6 @@ h2 {
 
 .ant-table table {
     width: 1521px;
-    margin-left: 349px;
     .ant-table-thead th {
         height: 50px;
         background-color: $pri-blue;
@@ -140,6 +141,64 @@ h2 {
     a {
         color: $default;
     }
+}
+
+.modalExcel1 {
+  .ant-modal-body {
+    background-color: $default;
+    padding: 0;
+    .ant-upload.ant-upload-drag .ant-upload-drag-container {
+      .anticon svg {
+        font-size: 56px;
+        margin-bottom: 24px;
+        color: $pri-blue;
+      }
+      button {
+        margin-top: 8px;
+        width: 200px;
+        border-radius: 8px;
+        color: $default;
+        background-color: $blur-blue;
+        font-weight: 400;
+        border: none;
+        &:hover {
+          background-color: $pri-blue;
+        }
+      }
+    }
+    
+    p {
+      font-size: 16px;
+      font-weight: 600;
+      color: $pri-blue;
+      line-height: 36px;
+    }
+    
+  }
+  #dragExcel1 {
+    height: 306px;
+  }
+  .ant-modal-content .ant-modal-footer {
+    text-align: right;
+    margin-top: 70px;
+  }
+  .ant-btn {
+    width: 260px;
+  }
+  .ant-upload-list {
+    height: 70px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      display: none; 
+    }
+  }
+  .ant-upload-list-item-error .ant-upload-list-item-card-actions-btn {
+    width: 25px;
+  }
+  .ant-upload-list-item-card-actions-btn.ant-btn-sm {
+    width: 25px !important;
+  }
 }
 
 

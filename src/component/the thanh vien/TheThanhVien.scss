@@ -4,6 +4,10 @@ $blur-blue: #3e588c;
 $light-blue: #77a1d9;
 $pri-blue: #0D378C;
 
+#TTVColContainer {
+    margin-left: 160px;
+}
+
 #Container {
   display: inline-flex;
   .ant-input-group > .ant-input:first-child {
@@ -12,7 +16,6 @@ $pri-blue: #0D378C;
     color: $default;
     border-radius: 12px 0 0 12px;
     text-indent: 12px;
-    margin-left: 349px;
     font-size: 16px;
     margin-top: 65px;
     height: 56px;
@@ -72,10 +75,9 @@ $pri-blue: #0D378C;
     border-radius: 50%;
   }
 }
-h2 {
+#titleTheThanhVien {
     border-bottom: 1px solid $pri-blue;
     color: $pri-blue;
-    margin-left: 349px;
     margin-top: 40px;
     text-indent: 8px;
     font-weight: 600;
@@ -85,7 +87,6 @@ h2 {
 
 .ant-table table {
     width: 1521px;
-    margin-left: 349px;
     .ant-table-thead th {
         height: 50px;
         background-color: $pri-blue;
@@ -141,6 +142,48 @@ h2 {
         color: $default;
     }
 }
+
+.inputFormThemTTV {
+  margin-top: 24px;
+  .ant-modal-body {
+    position: relative;
+    clear: both;
+  }
+  div {
+    clear: both;
+  }
+  .ant-input {
+    float: right;
+    width: 800px;
+    margin: 0;
+    border-radius: 4px;
+    background-color: $pri-blue;
+    color: $default;
+    &:disabled {
+      background-color: $blur-blue;
+    }
+  }
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: $pri-blue;
+  color: $default;
+}
+
+.ant-select-arrow {
+  color: $default;
+}
+
+.ant-picker-suffix {
+  color: $default;
+}
+
+#audit {
+  border-top: 1px solid $lightest-blue;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
 
 
 

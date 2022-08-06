@@ -1,0 +1,75 @@
+$default: #fff;
+$lightest-blue: #bbd3f2;
+$blur-blue: #3e588c;
+$light-blue: #77a1d9;
+$pri-blue: #0D378C;
+
+.site-page-header {
+    margin: 36px 64px;
+    .ant-page-header-heading-title {
+        color: $pri-blue;
+    }
+    svg {
+        font-size: 16px;
+        color: $pri-blue;
+        margin-right: 16px;
+    }
+    .ant-page-header-heading-sub-title {
+        color: $blur-blue;
+    }
+}
+
+
+
+#formThemMoiCSTD {
+    clear: both;
+    padding: 24px;
+    width: 90%;
+    margin: auto;
+    border: 1px solid $pri-blue;
+    #titleNewCSTD {
+        background-color: $default;
+        padding: 12px;
+        position: absolute;
+        top: 114px;
+        color: $pri-blue;
+    }
+    .newCSTD {
+        margin-top: 8px;
+        margin-bottom: 24px;
+        clear: both;
+        span {
+            color: $pri-blue;
+            font-size: 16px;
+        }
+    }
+    .dateApdung {
+        color: $pri-blue;
+        font-size: 16px;
+    }
+    .ant-input {
+        width: 600px;
+        margin-right: 100px;
+        float: right;
+        border-radius: 4px;
+        border: 1px solid $pri-blue;
+        color: $pri-blue;
+    }
+    .ant-btn {
+        clear: both;
+        background-color: $lightest-blue;
+        color: $pri-blue;
+        font-weight: 600;
+        width: 100px;
+        height: 50px;
+        border-radius: 20px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        margin-left: 630px;
+        font-size: 20px;
+        &:hover {
+            background-color: $pri-blue;
+            color: $default;
+        }
+    }
+}
