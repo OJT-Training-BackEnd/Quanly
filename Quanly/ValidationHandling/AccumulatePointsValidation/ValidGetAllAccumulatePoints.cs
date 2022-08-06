@@ -8,7 +8,6 @@ namespace Quanly.ValidationHandling.AccumulatePointsValidation
         {
             if(points.Count == 0)
                 return "This customer have no point left";
-            
             return "ok";
             
         }

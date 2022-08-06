@@ -115,7 +115,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
         }
         public string ValidateGetMemberList(List<MemberCard> memberCard)
         {
-            if(memberCard == null)
+            if(memberCard.Count == 0)
             {
                 return "The customer list is empty";
             }

@@ -138,7 +138,7 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
 
         public string ValidateGetAllAccumulatePointRule(List<AccumulatePointsRule> apr)
         {
-            if(apr == null)
+            if(apr.Count == 0)
             {
                 return "The Accumulate Point Rule is empty";
             }
