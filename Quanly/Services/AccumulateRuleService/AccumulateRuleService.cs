@@ -82,13 +82,8 @@ namespace Quanly.Services.AccumulateRuleService
                 }
                 var apr = _context.AccumulatePointsRules.Where(x => x.Name.Contains(keyword)
                                                                     || x.ApplyFrom.ToString().Contains(keyword)
-                                                                    || x.Note.ToLower().Contains(keyword.ToLower())
                                                                     || x.ApplyTo.ToString().Contains(keyword)
-                                                                    || x.Guide.ToLower().Contains(keyword)
-                                                                    || x.DateAdded.ToString().Contains(keyword)
-                                                                    || x.Formula.ToLower().Contains(keyword.ToLower())
-                                                                    || x.Code.ToLower().Contains(keyword.ToLower())
-                                                                    || x.Importer.ToLower().Contains(keyword.ToLower()));
+                                                                    || x.DateAdded.ToString().Contains(keyword));
                 if (apr.Count() == 0)
                 {
                     return new ServiceResponse<List<AccumulatePointsRule>>
