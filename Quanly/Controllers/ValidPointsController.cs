@@ -46,9 +46,10 @@ namespace Quanly.Controllers
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> searchAccumulatePoints(string keyword)
         {
             return Ok(await _validpointsService.searchAccumulatePoints(keyword));
+        }
         [HttpPost("CreateAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> CreateAccumulatePoint(AccumulatePoint accumulatePoint)
-        { 
+        {
             return Ok(await _validpointsService.CreateAccumulatePoint(accumulatePoint));
         }
     }
