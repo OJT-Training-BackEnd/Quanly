@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quanly.Models.AccumulatePoints;
 using Quanly.Services.ValidPointsService;
-//
 namespace Quanly.Controllers
 {
     [Route("api/[controller]")]
@@ -42,6 +41,11 @@ namespace Quanly.Controllers
         {
             return Ok(await _validpointsService.search(cardnumber));
         }
+
+        [HttpGet("SearchAccumulatePoint")]
+        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> searchAccumulatePoints(string keyword)
+        {
+            return Ok(await _validpointsService.searchAccumulatePoints(keyword));
         [HttpPost("CreateAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> CreateAccumulatePoint(AccumulatePoint accumulatePoint)
         { 

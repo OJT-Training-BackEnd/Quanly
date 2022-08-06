@@ -8,5 +8,6 @@ namespace Quanly.Services.AccumulateRuleService
         Task<ServiceResponse<List<AccumulatePointsRule>>> GetAllAccumulatePointRule();
         Task<ServiceResponse<List<AccumulatePointsRule>>> SearchAccumulatePointRule(string keyword);
         Task<ServiceResponse<AccumulatePointsRule>> AddNewAccumulatePointsRule(AccumulatePointsRule acc);
+        Task<ServiceResponse<AccumulatePointsRule>> DeleteAccumulatePointsRule(int id);
     }
 }

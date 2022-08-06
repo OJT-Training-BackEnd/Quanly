@@ -12,7 +12,7 @@ namespace Quanly.Services.AccumulateRuleService
         private readonly AccumulateRuleValidation _accumulateRuleValidation;
         private readonly AccumulatePoint _accumulatePoint;
 
-        public AccumulateRuleService (DataContext context, AccumulateRuleValidation AccumulateRuleValidation, AccumulatePoint accumulatePoint)
+        public AccumulateRuleService(DataContext context, AccumulateRuleValidation AccumulateRuleValidation, AccumulatePoint accumulatePoint)
         {
             _context = context;
             _accumulateRuleValidation = AccumulateRuleValidation;
@@ -42,7 +42,7 @@ namespace Quanly.Services.AccumulateRuleService
 
         public async Task<ServiceResponse<List<AccumulatePointsRule>>> GetAllAccumulatePointRule()
         {
-            
+
             try
             {
                 var list = await _context.AccumulatePointsRules.OrderByDescending(x => x.Id).ToListAsync();
@@ -57,13 +57,13 @@ namespace Quanly.Services.AccumulateRuleService
                 }
                 return new ServiceResponse<List<AccumulatePointsRule>> { Message = "Successfully", Success = true, Data = list };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new ServiceResponse<List<AccumulatePointsRule>>
-                    {
-                        Message = e.Message,
-                        Success = false
-                    };
+                {
+                    Message = e.Message,
+                    Success = false
+                };
             }
         }
 
@@ -100,7 +100,8 @@ namespace Quanly.Services.AccumulateRuleService
                     Success = true,
                     Message = "Search successfully"
                 };
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new ServiceResponse<List<AccumulatePointsRule>>
                 {
@@ -108,7 +109,7 @@ namespace Quanly.Services.AccumulateRuleService
                     Success = false
                 };
             }
-            
+
         }
 
         public async Task<ServiceResponse<AccumulatePointsRule>> UpdateAccumulatePointsRule(AccumulatePointsRule apr)
@@ -136,6 +137,27 @@ namespace Quanly.Services.AccumulateRuleService
                 Message = "Updated Successfully"
             };
         }
+        public async Task<ServiceResponse<AccumulatePointsRule>> DeleteAccumulatePointsRule(int accumulatePointsRule)
+        {
+            var message = _accumulateRuleValidation.ValidDeleteAccumulateRule(accumulatePointsRule);
+            if (message != "ok")
+            {
+                return new ServiceResponse<AccumulatePointsRule>
+                {
+                    Message = message,
+                    Success = false
+                };
+            }
 
+            var apr = await _context.AccumulatePointsRules.FirstOrDefaultAsync(x => x.Id == accumulatePointsRule);
+            _context.AccumulatePointsRules.Remove(apr);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<AccumulatePointsRule>
+            {
+
+                Message = "Delete succecfully from system",
+                Success = true
+            };
+        }
     }
-    }
+}
