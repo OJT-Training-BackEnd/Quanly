@@ -28,12 +28,10 @@ namespace Quanly.ValidationHandling.CustomerValidation
                 return "Customer name can not be null or empty";
             }
 
-            if (IsValidEmail(customer.Email) == false)
+            if (!string.IsNullOrWhiteSpace(customer.Email) && IsValidEmail(customer.Email) == false)
             {
                 return "Customer Email khong dung format";
             }
-
-
 
             return "ok";
         }
@@ -46,7 +44,7 @@ namespace Quanly.ValidationHandling.CustomerValidation
                 return "Customer name can not be null or empty";
             }
 
-            if (IsValidEmail(customer.Email) == false)
+            if (!string.IsNullOrWhiteSpace(customer.Email) && IsValidEmail(customer.Email) == false)
             {
                 return "Customer Email khong dung format";
             }
