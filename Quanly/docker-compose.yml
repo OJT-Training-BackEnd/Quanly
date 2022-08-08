@@ -1,10 +1,10 @@
 version: '3'
 services:
   ms-sql-server:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: restored-db
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Chinhpro123a"
+      SA_PASSWORD: "Supercoolpassword123!"
       MSSQL_PID: Express
     ports:
       - "11433:1433"
