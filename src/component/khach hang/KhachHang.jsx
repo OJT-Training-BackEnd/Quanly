@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Input,
   Button,
@@ -9,20 +9,63 @@ import {
   Row,
   Modal,
   message,
-  Upload
+  Upload,
+  Checkbox,
+  Spin
 } from "antd";
 import {
   UserOutlined,
   SearchOutlined,
   UploadOutlined,
+  EditFilled,
+  DeleteFilled,
 } from "@ant-design/icons";
 import "./KhachHang.scss";
 import Highlighter from "react-highlight-words";
 import MenuProjectManage from "../menu/Menu";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
 const { Search } = Input;
-const onSearch = (value) => console.log(value);
+
+
+function KhachHang() {
+  const [visible4, setVisible4] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+  const [datas, setDatas] = useState([]);
+  const [loading, setloading] = useState(true);
+  const onSearch = (value) => console.log(value);
+
+useEffect(() => {
+  getData();
+}, []);
+
+const getData = async () => {
+  await Axios.get("https://localhost:7145/api/Customer").then(
+    res => {
+      setloading(false);
+      setDatas(
+        res.data.data.map(row => ({
+          ma: row.code,
+          ten: row.customerName,
+          dt: row.phone,
+          tinh: row.province === null ? "-" : row.province,
+          lkh: row.type,
+          the: row.memberCards === null ? "-" : row.memberCards,
+          nguoinhap: row.importer,
+          nhanvien: row.contactPersons === null ? "-" : row.contactPersons,
+          ngayt: row.dateOfRecord,
+          active: row.isActive === true ? <Checkbox style={{marginLeft: '18px'}} defaultChecked disabled /> : <Checkbox style={{marginLeft: '18px'}} defaultChecked={false} disabled />,
+          sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
+          xoa: <DeleteFilled style={{color: '#0D378C', fontSize: '20px'}}/>
+        }))
+      );
+      console.log(res.data);
+    }
+  );
+};
 const props = {
   name: 'file',
   multiple: true,
@@ -47,13 +90,6 @@ const props = {
   },
 };
 
-const data = [];
-
-function KhachHang() {
-  const [visible4, setVisible4] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -174,63 +210,63 @@ function KhachHang() {
       dataIndex: "ma",
       key: "ma",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.ma.localeCompare(b.ma),
     },
     {
       title: "Tên",
       dataIndex: "ten",
       key: "ten",
       width: "10%",
-      ...getColumnSearchProps("Tên"),
+      sorter: (a, b) => a.ten.localeCompare(b.ten),
     },
     {
       title: "Điện thoại",
       dataIndex: "dt",
       key: "dt",
       width: "10%",
-      ...getColumnSearchProps("Điện thoại"),
+      sorter: (a, b) => a.dt - b.dt,
     },
     {
       title: "Tỉnh",
       dataIndex: "tinh",
       key: "tinh",
       width: "5%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.tinh.localeCompare(b.tinh),
     },
     {
       title: "Loại khách hàng",
       dataIndex: "lkh",
       key: "lkh",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.lkh.localeCompare(b.lkh),
     },
     {
       title: "Thẻ",
       dataIndex: "the",
       key: "the",
       width: "10%",
-      ...getColumnSearchProps("Thẻ"),
+      sorter: (a, b) => a.the - b.the,
     },
     {
       title: "Người nhập",
       dataIndex: "nguoinhap",
       key: "nguoinhap",
       width: "10%",
-      ...getColumnSearchProps("người nhập"),
+      sorter: (a, b) => a.nguoinhap.localeCompare(b.nguoinhap),
     },
     {
       title: "Nhân viên",
       dataIndex: "nhanvien",
       key: "nhanvien",
       width: "10%",
-      ...getColumnSearchProps("Nhân viên"),
+      sorter: (a, b) => a.nhanvien.localeCompare(b.nhanvien),
     },
     {
       title: "Ngày t/...",
       dataIndex: "ngayt",
       key: "ngayt",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.ngayt - b.ngayt,
     },
     {
       title: "Active",
@@ -239,10 +275,16 @@ function KhachHang() {
       width: "5%",
     },
     {
-      title: "Action",
-      dataIndex: "suaxoa",
-      key: "suaxoa",
-      width: "20%",
+      title: "Sửa",
+      dataIndex: "sua",
+      key: "sua",
+      width: "5%",
+    },
+    {
+      title: "Xóa",
+      dataIndex: "xoa",
+      key: "xoa",
+      width: "5%",
     },
   ];
 
@@ -289,8 +331,10 @@ function KhachHang() {
             <UserOutlined />
           </div>
           <h2 id="titleKhachHang">KHÁCH HÀNG</h2>
-          <Table columns={columns} dataSource={data} />;
-          <Pagination defaultCurrent={1} total={10} />;
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+          <Table columns={columns} pagination={{position: ["bottomLeft"]}} dataSource={datas} />)}
         </Col>
       </Row>
     </>

@@ -20,9 +20,10 @@ $pri-blue: #0D378C;
     margin-top: 65px;
     height: 56px;
     &::placeholder {
-      color: $light-blue
+      color: $light-blue;
     }
   }
+
 
   .ant-input-search
     > .ant-input-group
@@ -182,6 +183,19 @@ $pri-blue: #0D378C;
   border-top: 1px solid $lightest-blue;
   margin-top: 24px;
   margin-bottom: 24px;
+}
+
+
+.ant-table-tbody > tr:nth-child(odd) {
+  background-color: $lightest-blue;
+  font-weight: 500;
+  color: $pri-blue;
+}
+.ant-table-tbody > tr:nth-child(even) {
+  background-color: $lightest-blue;
+  opacity: 80%;
+  font-weight: 500;
+  color: $pri-blue;
 }
 
 

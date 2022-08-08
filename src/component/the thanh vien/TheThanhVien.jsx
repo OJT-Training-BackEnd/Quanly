@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Axios from "axios";
 import {
   Input,
   Button,
@@ -9,8 +10,11 @@ import {
   Modal,
   Row,
   Col,
+  Spin,
+  Radio,
+  Checkbox,
 } from "antd";
-import { UserOutlined, SearchOutlined } from "@ant-design/icons";
+import { UserOutlined, SearchOutlined, CheckSquareOutlined, CheckSquareTwoTone, CloseSquareOutlined, BorderOutlined, EditOutlined, DeleteOutlined, DeleteFilled, EditFilled } from "@ant-design/icons";
 import "./TheThanhVien.scss";
 import MenuProjectManage from "../menu/Menu";
 import Highlighter from "react-highlight-words";
@@ -21,8 +25,37 @@ function TheThanhVien() {
   const searchInput = useRef(null);
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
-  const data = [];
   const [visible, setVisible] = useState(false);
+  const [datas, setDatas] = useState([]);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await Axios.get("https://localhost:7145/api/MemberCard/GetAllMembers").then(
+      res => {
+        setloading(false);
+        setDatas(
+          res.data.data.map((row) => ({
+            sothe: row.cardNumber,
+            loaithe: row.type,
+            ngaybanhanh: row.dateAdded === null ? "-" : row.dateAdded,
+            lydophathanh: row.reason,
+            hieuluctu: row.validDate === null ? "-" : row.validDate,
+            hieulucden: row.effectDate === null ? "-" : row.effectDate,
+            active: row.isActive === true ? <Checkbox style={{marginLeft: '18px'}} defaultChecked disabled /> : <Checkbox style={{marginLeft: '18px'}} defaultChecked={false} disabled />,
+            khachhang: row.customer === null ? "-" : row.customer,
+            dangkytai: row.registerAt === null ? "-" : row.registerAt,
+            nguoinhap: row.importer,
+            sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
+            xoa: <DeleteFilled style={{color: '#0D378C', fontSize: '20px'}}/>
+          }))
+        );
+      }
+    );
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -147,42 +180,41 @@ function TheThanhVien() {
       dataIndex: "sothe",
       key: "sothe",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.sothe - b.sothe,
     },
     {
       title: "Loại thẻ",
       dataIndex: "loaithe",
       key: "loaithe",
-      width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      width: "10%"
     },
     {
       title: "Ngày ban hành",
       dataIndex: "ngaybanhanh",
       key: "ngaybanhanh",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.ngaybanhanh - b.ngaybanhanh,
     },
     {
       title: "Lý do phát hành",
       dataIndex: "lydophathanh",
       key: "lydophathanh",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.lydophathanh.localeCompare(b.lydophathanh),
     },
     {
       title: "Hiệu lực từ",
       dataIndex: "hieuluctu",
       key: "hieuluctu",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.hieuluctu - b.hieuluctu,
     },
     {
       title: "Hiệu lực đến",
       dataIndex: "hieulucden",
       key: "hieulucden",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.hieulucden - b.hieulucden,
     },
     {
       title: "Active",
@@ -195,27 +227,33 @@ function TheThanhVien() {
       dataIndex: "khachhang",
       key: "khachhang",
       width: "10%",
-      ...getColumnSearchProps("Ghi chú"),
+      sorter: (a, b) => a.khachhang.localeCompare(b.khachhang),
     },
     {
       title: "Đăng ký tại",
       dataIndex: "dangkytai",
       key: "dangkytai",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.dangkytai - b.dangkytai,
     },
     {
       title: "Người nhập",
       dataIndex: "nguoinhap",
       key: "nguoinhap",
-      width: "10%",
-      ...getColumnSearchProps("Ghi chú"),
+      width: "5%",
+      sorter: (a, b) => a.nguoinhap.localeCompare(b.nguoinhap),
     },
     {
-      title: "Action",
-      dataIndex: "suaxoa",
-      key: "suaxoa",
-      width: "10%",
+      title: "Sửa",
+      dataIndex: "sua",
+      key: "sua",
+      width: "5%",
+    },
+    {
+      title: "Xóa",
+      dataIndex: "xoa",
+      key: "xoa",
+      width: "5%",
     },
   ];
 
@@ -304,8 +342,15 @@ function TheThanhVien() {
             <UserOutlined />
           </div>
           <h2 id="titleTheThanhVien">THẺ THÀNH VIÊN</h2>
-          <Table columns={columns} dataSource={data} />;
-          <Pagination defaultCurrent={1} total={10} />;
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+            <Table
+              columns={columns}
+              dataSource={datas}
+              pagination={{position: ["bottomLeft"]}}
+            />
+          )}
         </Col>
       </Row>
     </>

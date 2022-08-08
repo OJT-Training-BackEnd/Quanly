@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
-import { Input, Button, Space, Table, Pagination, Col, Row } from "antd";
-import { UserOutlined, SearchOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Input, Button, Space, Table, Pagination, Col, Row, Checkbox, Spin } from "antd";
+import { UserOutlined, SearchOutlined, EditFilled, DeleteFilled } from "@ant-design/icons";
 import "./CSTD.scss";
 import Highlighter from "react-highlight-words";
 import ThemMoiCSTD from "./ThemMoiCSTD";
 import MenuProjectManage from "../menu/Menu";
-import { Link, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
@@ -16,6 +17,33 @@ function CSTD() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const [datas, setDatas] = useState([]);
+  const [loading, setloading] = useState(true);
+  const onSearch = (value) => console.log(value);
+
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    await axios.get("https://localhost:7145/api/AccumulateRule/accumulaterule").then(
+      res => {
+        setloading(false);
+        setDatas(
+          res.data.data.map(row => ({
+            ma: row.code,
+            ten: row.name,
+            apdungtu: row.applyFrom === null ? "-" : row.applyFrom,
+            apdungden: row.applyTo === null ? "-" : row.applyTo,
+            ghichu: row.note === null ? "-" : row.note,
+            sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
+            xoa: <DeleteFilled style={{color: '#0D378C', fontSize: '20px'}}/>
+          }))
+        );
+        console.log(res.data);
+      }
+    );
+  };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -124,41 +152,47 @@ function CSTD() {
       dataIndex: "ma",
       key: "ma",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.ma - b.ma,
     },
     {
       title: "Tên",
       dataIndex: "ten",
       key: "ten",
       width: "10%",
-      ...getColumnSearchProps("Tên"),
+      sorter: (a, b) => a.ten.localeCompare(b.ten),
     },
     {
       title: "Áp dụng từ",
       dataIndex: "apdungtu",
       key: "apdungtu",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.apdungtu - b.apdungtu,
     },
     {
       title: "Áp dụng đến",
       dataIndex: "apdungden",
       key: "apdungden",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.apdungden - b.apdungden,
     },
     {
       title: "Ghi chú",
       dataIndex: "ghichu",
       key: "ghichu",
       width: "10%",
-      ...getColumnSearchProps("Ghi chú"),
+      sorter: (a, b) => a.ghichu.localeCompare(b.ghichu),
     },
     {
-      title: "Action",
-      dataIndex: "suaxoa",
-      key: "suaxoa",
-      width: "10%",
+      title: "Sửa",
+      dataIndex: "sua",
+      key: "sua",
+      width: "5%",
+    },
+    {
+      title: "Xóa",
+      dataIndex: "xoa",
+      key: "xoa",
+      width: "5%",
     },
   ];
 
@@ -180,8 +214,11 @@ function CSTD() {
             <UserOutlined />
           </div>
           <h2 id="titleCSTD">CHÍNH SÁCH TÍCH ĐIỂM</h2>
-          <Table id="table" columns={columns} dataSource={data} />;
-          <Pagination defaultCurrent={1} total={10} />;
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+          <Table id="table" columns={columns} dataSource={datas} pagination={{position: ["bottomLeft"]}}/>
+          )};
         </Col>
       </Row>
     </>

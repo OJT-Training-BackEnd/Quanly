@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Input,
   Button,
@@ -12,17 +12,21 @@ import {
   Upload,
   Row,
   Col,
+  Spin,
 } from "antd";
 import moment from "moment";
 import {
   UserOutlined,
   SearchOutlined,
   UploadOutlined,
+  EditFilled,
+  DeleteFilled,
 } from "@ant-design/icons";
 import "./CongTruDiem.scss";
 import Highlighter from "react-highlight-words";
 import { hover } from "@testing-library/user-event/dist/hover";
 import MenuProjectManage from "../menu/Menu";
+import Axios from "axios";
 const { Option } = Select;
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
@@ -56,6 +60,36 @@ function CongTruDiem() {
   const [visible2, setVisible2] = useState(false);
   const [visible3, setVisible3] = useState(false);
   const { RangePicker } = DatePicker;
+  const [datas, setDatas] = useState([]);
+  const [loading, setloading] = useState(true);
+  const onSearch = (value) => console.log(value);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await Axios.get("https://localhost:7145/api/ValidPoints/GetAccumulatePointList").then((res) => {
+      setloading(false);
+      setDatas(
+        res.data.data.map((row) => ({
+          ngay: row.date === null ? "-" : row.date,
+          sophieu: row.id,
+          lydo: row.reason === null ? "-" : row.reason,
+          ttv: row.memberCards === null ? "-" : row.memberCards,
+          chinhsach: row.accumulatePointsRules === null ? "-" : row.accumulatePointsRules,
+          diem: row.points === null ? "-" : row.points,
+          cuahang: row.shop === null ? "-" : row.shop,
+          nguoinhap: row.importer === null ? "-" : row.importer,
+          loai: row.type === null ? "-" : row.type,
+          ghichu: row.note === null ? "-" : row.note,
+          sua: <EditFilled style={{ color: "#3e588c", fontSize: "20px" }} />,
+          xoa: <DeleteFilled style={{ color: "#0D378C", fontSize: "20px" }} />,
+        }))
+      );
+      console.log(res.data);
+    });
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -221,69 +255,75 @@ function CongTruDiem() {
       dataIndex: "sophieu",
       key: "sophieu",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.sophieu - b.sophieu,
     },
     {
       title: "Lý do",
       dataIndex: "lydo",
       key: "lydo",
       width: "10%",
-      ...getColumnSearchProps("Lý do"),
+      sorter: (a, b) => a.lydo.localeCompare(b.lydo),
     },
     {
       title: "Thẻ thành viên",
       dataIndex: "ttv",
       key: "ttv",
       width: "10%",
-      ...getColumnSearchProps("Thẻ thành viên"),
+      sorter: (a, b) => a.ttv.localeCompare(b.ttv),
     },
     {
       title: "Chính sách",
       dataIndex: "chinhsach",
-      key: "name",
+      key: "chinhsach",
       width: "10%",
-      ...getColumnSearchProps("Chính sách"),
+      sorter: (a, b) => a.chinhsach.localeCompare(b.chinhsach),
     },
     {
       title: "Điểm",
       dataIndex: "diem",
       key: "diem",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.diem - b.diem,
     },
     {
       title: "Cửa hàng",
       dataIndex: "cuahang",
       key: "cuahang",
       width: "10%",
-      ...getColumnSearchProps("Cửa hàng"),
+      sorter: (a, b) => a.cuahang.localeCompare(b.cuahang),
     },
     {
       title: "Người nhập",
       dataIndex: "nguoinhap",
       key: "nguoinhap",
       width: "10%",
-      ...getColumnSearchProps("người nhập"),
+      sorter: (a, b) => a.nguoinhap.localeCompare(b.nguoinhap),
     },
     {
       title: "Loại",
       dataIndex: "loai",
       key: "loai",
       width: "10%",
-      sorter: (a, b) => a.ngay - b.ngay,
+      sorter: (a, b) => a.loai.localeCompare(b.loai),
     },
     {
       title: "Ghi chú",
       dataIndex: "ghichu",
       key: "ghichu",
       width: "10%",
-      ...getColumnSearchProps("Ghi chú"),
+      sorter: (a, b) => a.ghichu.localeCompare(b.ghichu),
     },
     {
-      title: "Action",
-      dataIndex: "suaxoa",
-      key: "suaxoa",
-      width: "20%",
+      title: "Sửa",
+      dataIndex: "sua",
+      key: "sua",
+      width: "5%",
+    },
+    {
+      title: "Xóa",
+      dataIndex: "xoa",
+      key: "xoa",
+      width: "5%",
     },
   ];
 
@@ -469,8 +509,15 @@ function CongTruDiem() {
             <UserOutlined />
           </div>
           <h2 id="titleCongTruDiem">CỘNG / TRỪ ĐIỂM</h2>
-          <Table columns={columns} dataSource={data} />;
-          <Pagination defaultCurrent={1} total={10} />;
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+          <Table
+            columns={columns}
+            dataSource={datas}
+            pagination={{ position: ["bottomLeft"] }}
+          />
+          )}
         </Col>
       </Row>
     </>
