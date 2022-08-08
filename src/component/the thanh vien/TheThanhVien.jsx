@@ -273,7 +273,7 @@ function TheThanhVien() {
             <Modal
               className="modalTheThanhVien"
               width={"1200px"}
-              title="ĐIỀU CHỈNH ĐIỂM"
+              title="THÊM MỚI THẺ THÀNH VIÊN"
               centered
               visible={visible}
               onOk={handleOk}

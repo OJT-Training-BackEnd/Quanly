@@ -19,6 +19,7 @@ function CSTD() {
   const searchInput = useRef(null);
   const [datas, setDatas] = useState([]);
   const [loading, setloading] = useState(true);
+  
   const onSearch = (value) => console.log(value);
 
   useEffect(() => {
