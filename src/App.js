@@ -20,7 +20,7 @@ function App() {
         <Route path='/chinhsachtichdiem' element={[<MenuProjectManage />,<CSTD />]}/>
         <Route path='/themmoichinhsachtichdiem' element={<ThemMoiCSTD />}/>
         <Route path='/login' element={<Login />}/>
-        {/* <Route path='/themmoikhachhang' element={<ThemMoiKhachHang />}/> */}
+        <Route path='/themmoikhachhang' element={<ThemMoiKhachHang />}/>
       </Routes>
     </>
   );
