@@ -12,7 +12,7 @@ namespace Quanly.Services.MemberCardsService
         private readonly MemberCardValidation _memberCardValidation;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MemberCardService(DataContext context,MemberCardValidation memberCardValidation, IHttpContextAccessor httpContextAccessor)
+        public MemberCardService(DataContext context, MemberCardValidation memberCardValidation, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _memberCardValidation = memberCardValidation;
@@ -29,8 +29,8 @@ namespace Quanly.Services.MemberCardsService
                     Message = cardValidate
                 };
             }
-                /*var importer = await _context.User.FindAsync(GetUserId());
-                memberCard.Importer = importer.Username;*/
+            /*var importer = await _context.User.FindAsync(GetUserId());
+            memberCard.Importer = importer.Username;*/
             await _context.MemberCards.AddAsync(memberCard);
             await _context.SaveChangesAsync();
             return new ServiceResponse<MemberCard>
@@ -52,21 +52,26 @@ namespace Quanly.Services.MemberCardsService
                     Message = idValidate
                 };
             }
+            await SwapStatus(id);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<string>
+            {
+                Success = true,
+                Message = "Changed Successfully"
+            };
+        }
+
+        private async Task SwapStatus(int id)
+        {
             var memberCard = await _context.MemberCards.FirstOrDefaultAsync(x => x.Id == id);
             if (memberCard.IsActive == true)
             {
                 memberCard.IsActive = false;
             }
-            else 
+            else
             {
                 memberCard.IsActive = true;
             }
-            await _context.SaveChangesAsync();
-            return new ServiceResponse<string> 
-            { 
-                Success = true,
-                Message = "Changed Successfully"
-            };
         }
 
         public async Task<ServiceResponse<List<MemberCard>>> SearchMemberCard(string keyword)
@@ -80,14 +85,7 @@ namespace Quanly.Services.MemberCardsService
                     Message = cardValidate
                 };
             }
-            var memberCards = _context.MemberCards.Where(x => x.CardNumber.Contains(keyword)
-                                                                || x.IssueDate.ToString().Contains(keyword)
-                                                                || x.Reason.ToLower().Contains(keyword.ToLower())
-                                                                || x.EffectDate.ToString().Contains(keyword)
-                                                                || x.ValidDate.ToString().Contains(keyword)
-                                                                || x.Customer.CustomerName.ToLower().Contains(keyword.ToLower())
-                                                                || x.RegisterAt.ToLower().Contains(keyword.ToLower())
-                                                                || x.Importer.ToLower().Contains(keyword.ToLower()));
+            IQueryable<MemberCard> memberCards = SearchMemberCardByAllField(keyword);
             if (memberCards.Count() == 0)
             {
                 return new ServiceResponse<List<MemberCard>>
@@ -105,10 +103,23 @@ namespace Quanly.Services.MemberCardsService
                 Message = "Search successfully"
             };
         }
+
+        private IQueryable<MemberCard> SearchMemberCardByAllField(string keyword)
+        {
+            return _context.MemberCards.Where(x => x.CardNumber.Contains(keyword)
+                                                                || x.IssueDate.ToString().Contains(keyword)
+                                                                || x.Reason.ToLower().Contains(keyword.ToLower())
+                                                                || x.EffectDate.ToString().Contains(keyword)
+                                                                || x.ValidDate.ToString().Contains(keyword)
+                                                                || x.Customer.CustomerName.ToLower().Contains(keyword.ToLower())
+                                                                || x.RegisterAt.ToLower().Contains(keyword.ToLower())
+                                                                || x.Importer.ToLower().Contains(keyword.ToLower()));
+        }
+
         public async Task<ServiceResponse<List<MemberCard>>> DeleteMemberCard(int id)
         {
             var cardValidate = _memberCardValidation.ValidateDeleteMember(id);
-            if(cardValidate != "ok")
+            if (cardValidate != "ok")
             {
                 return new ServiceResponse<List<MemberCard>>
                 {
@@ -138,7 +149,7 @@ namespace Quanly.Services.MemberCardsService
 
                 };
             }
-            return new ServiceResponse<List<MemberCard>> { Data=membercard, Message="Successfully", Success = true };
+            return new ServiceResponse<List<MemberCard>> { Data = membercard, Message = "Successfully", Success = true };
 
         }
 
@@ -161,8 +172,6 @@ namespace Quanly.Services.MemberCardsService
             cardExits.ValidDate = newMemberCard.ValidDate;
             cardExits.IsActive = newMemberCard.IsActive;
             cardExits.Note = newMemberCard.Note;
-            /*var importer = await _context.User.FindAsync(GetUserId());
-            cardExits.Importer = importer.Username;*/
             await _context.SaveChangesAsync();
             return new ServiceResponse<MemberCard>
             {
@@ -171,9 +180,6 @@ namespace Quanly.Services.MemberCardsService
             };
         }
 
-        // Get authenticated USER
-        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User
-        .FindFirstValue(ClaimTypes.NameIdentifier));
 
         public async Task<ServiceResponse<MemberCard>> SearchMemberCardToAddPoint(string cardNumber)
         {
@@ -189,12 +195,36 @@ namespace Quanly.Services.MemberCardsService
             var res = await _context.MemberCards
                             .Include(x => x.Customer)
                             .FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
-            return new ServiceResponse<MemberCard> {
+            return new ServiceResponse<MemberCard>
+            {
                 Data = res,
                 Success = true,
                 Message = "Find Successfully"
             };
-            
+
         }
+
+        public async Task<ServiceResponse<MemberCard>> GetMemberCardById(int memberCardId)
+        {
+            var resultAfterValidate = _memberCardValidation.ValidateMemberCardId(memberCardId);
+            if (!resultAfterValidate.Equals("ok"))
+            {
+                return new ServiceResponse<MemberCard>
+                {
+                    Success = false,
+                    Message = resultAfterValidate
+                };
+            }
+
+            var memberCard = await _context.MemberCards.FirstOrDefaultAsync(x => true);
+
+            return new ServiceResponse<MemberCard>
+            {
+                Data = memberCard,
+                Success = true,
+                Message = "Get member card info successfully"
+            };
+        }
+
     }
 }
