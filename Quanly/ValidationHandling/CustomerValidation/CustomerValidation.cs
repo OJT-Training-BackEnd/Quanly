@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Quanly.Data;
+﻿using Quanly.Data;
 using Quanly.Models.Customers;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -16,6 +15,7 @@ namespace Quanly.ValidationHandling.CustomerValidation
         }
 
 
+        //Check Add Customer
         public string ValidateNewCustomer(Customer customer)
         {
             var customerExist = _dataContext.Customers.FirstOrDefault(x => x.Id == customer.Id);
@@ -28,38 +28,130 @@ namespace Quanly.ValidationHandling.CustomerValidation
                 return "Customer name can not be null or empty";
             }
 
-            if (!string.IsNullOrWhiteSpace(customer.Email) && IsValidEmail(customer.Email) == false)
+            if (IsValidEmail(customer.Email) == false)
             {
                 return "Customer Email khong dung format";
+            }
+            if (customer.CustomerName.Contains("!") || customer.CustomerName.Contains("@")
+              || customer.CustomerName.Contains("#") || customer.CustomerName.Contains("$")
+              || customer.CustomerName.Contains("%") || customer.CustomerName.Contains("^")
+              || customer.CustomerName.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (customer.Address.Contains('!') || customer.Address.Contains("@")
+              || customer.Address.Contains("#") || customer.Address.Contains("$")
+              || customer.Address.Contains("%") || customer.Address.Contains("^")
+              || customer.Address.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (customer.CompanyName.Contains('!') || customer.CompanyName.Contains("@")
+              || customer.CompanyName.Contains("#") || customer.CompanyName.Contains("$")
+              || customer.CompanyName.Contains("%") || customer.CompanyName.Contains("^")
+              || customer.CompanyName.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+
+            if (customer.Phone.Contains('!') || customer.Phone.Contains("@")
+              || customer.Phone.Contains("#") || customer.Phone.Contains("$")
+              || customer.Phone.Contains("%") || customer.Phone.Contains("^")
+              || customer.Phone.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (IsIdentityCard(customer.Phone) || IsIdentityCard(customer.CompanyPhone) || IsIdentityCard(customer.TelePhone))
+            {
+                return "Please input correct format Phone";
+            }
+            if (customer.Age.Contains('!') || customer.Age.Contains("@")
+            || customer.Age.Contains("#") || customer.Age.Contains("$")
+            || customer.Age.Contains("%") || customer.Age.Contains("^")
+            || customer.Age.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+
+            if (customer.Email.Contains('!') || customer.Email.Contains("@")
+            || customer.Email.Contains("#") || customer.Email.Contains("$")
+            || customer.Email.Contains("%") || customer.Email.Contains("^")
+            || customer.Email.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
             }
 
             return "ok";
         }
 
+        //Check Update Customer
         public string ValidateUpdateCustomer(Customer customer)
         {
+
+            //check CustomerName
+            if (customer.CustomerName.Contains("!") || customer.CustomerName.Contains("@")
+               || customer.CustomerName.Contains("#") || customer.CustomerName.Contains("$")
+               || customer.CustomerName.Contains("%") || customer.CustomerName.Contains("^")
+               || customer.CustomerName.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (customer.Address.Contains('!') || customer.Address.Contains("@")
+            || customer.Address.Contains("#") || customer.Address.Contains("$")
+            || customer.Address.Contains("%") || customer.Address.Contains("^")
+            || customer.Address.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (customer.CompanyName.Contains('!') || customer.CompanyName.Contains("@")
+              || customer.CompanyName.Contains("#") || customer.CompanyName.Contains("$")
+              || customer.CompanyName.Contains("%") || customer.CompanyName.Contains("^")
+              || customer.CompanyName.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+
+            if (customer.Phone.Contains('!') || customer.Phone.Contains("@")
+              || customer.Phone.Contains("#") || customer.Phone.Contains("$")
+              || customer.Phone.Contains("%") || customer.Phone.Contains("^")
+              || customer.Phone.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (IsIdentityCard(customer.Phone) || IsIdentityCard(customer.CompanyPhone) || IsIdentityCard(customer.TelePhone))
+            {
+                return "Please input correct format Phone";
+            }
+            if (customer.Age.Contains('!') || customer.Age.Contains("@")
+            || customer.Age.Contains("#") || customer.Age.Contains("$")
+            || customer.Age.Contains("%") || customer.Age.Contains("^")
+            || customer.Age.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+
+            if (customer.Email.Contains('!') || customer.Email.Contains("@")
+            || customer.Email.Contains("#") || customer.Email.Contains("$")
+            || customer.Email.Contains("%") || customer.Email.Contains("^")
+            || customer.Email.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
 
             if (String.IsNullOrWhiteSpace(customer.CustomerName) || String.IsNullOrEmpty(customer.CustomerName))
             {
                 return "Customer name can not be null or empty";
             }
 
-            if (!string.IsNullOrWhiteSpace(customer.Email) && IsValidEmail(customer.Email) == false)
+            if (IsValidEmail(customer.Email) == false)
             {
                 return "Customer Email khong dung format";
             }
 
-            if (String.IsNullOrWhiteSpace(customer.CompanyPhone) || String.IsNullOrWhiteSpace(customer.Phone) || String.IsNullOrWhiteSpace(customer.TelePhone))
-            {
-                return "Customer Phone khong dung format";
-            }
-            if (String.IsNullOrEmpty(customer.CompanyPhone) || String.IsNullOrEmpty(customer.Phone) || String.IsNullOrEmpty(customer.TelePhone))
-            {
-                return "Customer Phone khong dung format";
-            }
-
             return "ok";
         }
+
+        //Check Valid Email
         public bool IsValidEmail(string email)
         {
 
@@ -107,15 +199,19 @@ namespace Quanly.ValidationHandling.CustomerValidation
             else return false;
         }
 
+        //Check Search Customer
         public string searchCustomerValidate(string keyword)
         {
+            if (keyword.Contains("!") || keyword.Contains("@")
+              || keyword.Contains("#") || keyword.Contains("$")
+              || keyword.Contains("%") || keyword.Contains("^")
+              || keyword.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
             if (keyword.Count() > 50)
             {
                 return "Key word not more than 50 characters";
-            }
-            if (String.IsNullOrEmpty(keyword))
-            {
-                return "Key word can not be null";
             }
             return "ok";
         }
@@ -135,6 +231,19 @@ namespace Quanly.ValidationHandling.CustomerValidation
 
         public string cardIssueValidate(string capTheValidate, int id)
         {
+            if (capTheValidate.Contains("!") || capTheValidate.Contains("@")
+               || capTheValidate.Contains("#") || capTheValidate.Contains("$")
+               || capTheValidate.Contains("%") || capTheValidate.Contains("^")
+               || capTheValidate.Contains("Select * "))
+            {
+                return "Please do not enter special character or sql query";
+            }
+            if (id == null || id == 0)
+            {
+                return "You must input correct format Id";
+            }
+
+
             if (String.IsNullOrEmpty(capTheValidate))
             {
                 return "Card number not found or not available! You must be input number";
@@ -163,17 +272,22 @@ namespace Quanly.ValidationHandling.CustomerValidation
         }
 
 
-       
-       public string ValidateCustomer( int id )
-       {
+
+        public string ValidateCustomer(int id)
+        {
             var cusexist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
-            if(cusexist == null)
+            if (cusexist == null)
             {
                 return "Customer is not exist";
             }
             return "ok";
-       }
-        public string ValidateViewCustomerTransactionHistory(int customerId)
+        }
+
+
+    
+
+
+    public string ValidateViewCustomerTransactionHistory(int customerId)
         {
             if (customerId == null)
                 return "Please enter customerId";
