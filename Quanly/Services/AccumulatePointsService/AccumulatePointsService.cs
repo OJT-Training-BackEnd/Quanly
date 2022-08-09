@@ -71,9 +71,9 @@ namespace Quanly.Services.AccumulatePointsService
             };
         }
 
-        public async Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, string cardNumber)
+        public async Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, int id)
         {
-            var validate = _validGetAllAccumulatePoints.checkValidateUpdateAccummulatePoint(accumulatePoint, cardNumber);
+            var validate = _validGetAllAccumulatePoints.checkValidateUpdateAccummulatePoint(accumulatePoint, id);
             if (validate != "ok")
             {
                 return new ServiceResponse<AccumulatePoint>
@@ -82,62 +82,104 @@ namespace Quanly.Services.AccumulatePointsService
                     Message = validate
                 };
             }
-            var _memberCard = await _dataContext.MemberCards.Include(x => x.Customer).FirstOrDefaultAsync(x => x.CardNumber == accumulatePoint.MemberCards.CardNumber);
-            if (_memberCard != null)
+            var _accumulatePoint = await _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefaultAsync(x => x.Id == id);
+            if (_accumulatePoint != null)
             {
-                var _accumulatePoint = await _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefaultAsync(p => p.MemberCards.Id == _memberCard.Id);
-                if (_accumulatePoint != null)
+                var _membercard = await _dataContext.MemberCards.Include(x => x.Customer)
+                    .FirstOrDefaultAsync(x => x.CardNumber == _accumulatePoint.MemberCards.CardNumber);
+                if (_membercard != null)
                 {
-                    var customer = await _dataContext.Customers.FirstOrDefaultAsync(x => x.Id == _memberCard.Customer.Id);
-                    if (customer != null)
+
+                    _accumulatePoint.Date = accumulatePoint.Date;
+                    _accumulatePoint.Reason = accumulatePoint.Reason;
+                    _accumulatePoint.Type = accumulatePoint.Type;
+                    _accumulatePoint.Money = accumulatePoint.Money;
+                    _accumulatePoint.Shop = accumulatePoint.Shop;
+                    //Update Points
+                    var customOldPoint = Convert.ToDouble(_membercard.Customer.Points);// Diem khach hang hien tai
+                    
+                    var oldPoint = Convert.ToDouble(_accumulatePoint.Points);
+                    if (_membercard.Customer.Points == null)
+                        _membercard.Customer.Points = "0";
+                    if (_membercard.Customer.Points != null)
                     {
-                        _accumulatePoint.Date = accumulatePoint.Date;
-                        _accumulatePoint.Reason = accumulatePoint.Reason;
-                        _accumulatePoint.Type = accumulatePoint.Type;
-                        _accumulatePoint.Points = accumulatePoint.Points;
-                        _accumulatePoint.Money = accumulatePoint.Money.Trim();
-                        _accumulatePoint.Shop = accumulatePoint.Shop;
-                        //Update Points
-                        var oldPoint = Convert.ToDouble(customer.Points);
-                        if (customer.Points == null)
-                            customer.Points = "0";
-                        if (accumulatePoint.Money != null)
+                        if (_accumulatePoint.Type.Equals("TRU"))
                         {
-                            oldPoint += Convert.ToDouble(_accumulatePoint.Points);
-                        }
-                        else
-                        {
-                            if (oldPoint < Convert.ToDouble(_accumulatePoint.Points))
+                            var newPoint = Convert.ToDouble(accumulatePoint.Points);
+
+                            if (newPoint < oldPoint)
                             {
-                                return new ServiceResponse<AccumulatePoint>
+                                var customerNewPoint = (oldPoint - newPoint) + customOldPoint;
+
+                                _membercard.Customer.Points = customerNewPoint.ToString();
+                                _accumulatePoint.Points = newPoint.ToString();
+                                await _dataContext.SaveChangesAsync();
+                            }
+                            else if (newPoint > oldPoint)
+                            {
+                                if (customOldPoint >= newPoint - oldPoint)
                                 {
-                                    Success = false,
-                                    Message = "You do not have any point to minus"
-                                };
-                            }
-                            else
-                            {
-                                oldPoint -= Convert.ToDouble(_accumulatePoint.Points);
-
+                                    var customerNewPoint = customOldPoint - (newPoint - oldPoint);
+                                    _membercard.Customer.Points = customerNewPoint.ToString();
+                                    _accumulatePoint.Points = newPoint.ToString();
+                                    await _dataContext.SaveChangesAsync();
+                                }
+                                else
+                                {
+                                    return new ServiceResponse<AccumulatePoint>
+                                    {
+                                        Success = false,
+                                        Message = "You do not have any point to minus"
+                                    };
+                                }
                             }
                         }
-                        var customer2 = await _dataContext.Customers.FirstOrDefaultAsync(x => x.Id == _memberCard.Customer.Id);
-                        customer2.Points = oldPoint.ToString();
-                        await _dataContext.SaveChangesAsync();
-                        accumulatePoint.MemberCards = _memberCard;
+                        else if (accumulatePoint.Type.Equals("CONG"))
+                        {
+                            var money = Convert.ToDouble(accumulatePoint.Money);
+                            var newPoint = money / 1000;
+
+                            if(oldPoint < newPoint)
+                            {
+                                var customerNewPoint = customOldPoint + (newPoint - oldPoint);
+                                _membercard.Customer.Points = customerNewPoint.ToString();
+                                _accumulatePoint.Points = newPoint.ToString();
+                                _accumulatePoint.Money = money.ToString();
+                                await _dataContext.SaveChangesAsync();
+                            }
+                            else if(newPoint < oldPoint)
+                            {
+                                if(customOldPoint >= (oldPoint - newPoint))
+                                {
+                                    var customerNewPoint  = customOldPoint - (oldPoint - newPoint);
+                                    _membercard.Customer.Points = customerNewPoint.ToString();
+                                    _accumulatePoint.Points = newPoint.ToString();
+                                    _accumulatePoint.Money = money.ToString();
+                                    await _dataContext.SaveChangesAsync();
+                                }
+                                else
+                                {
+                                    return new ServiceResponse<AccumulatePoint>
+                                    {
+                                        Success = false,
+                                        Message = "You do not have any point to minus"
+                                    };
+                                }
+                            }
+
+                        }
                     }
-
-
-                    await _dataContext.SaveChangesAsync();
+                    
 
                     return new ServiceResponse<AccumulatePoint>
                     {
                         Data = _accumulatePoint,
                         Message = " updated succesfully",
                         Success = true
-                    };
-                }
 
+                    };
+
+                }
 
             }
 
@@ -147,8 +189,6 @@ namespace Quanly.Services.AccumulatePointsService
                 Message = " Failed",
                 Success = false
             };
-
-
         }
         public async Task<ServiceResponse<AccumulatePoint>> search(string cardNumber)
         {
@@ -196,9 +236,9 @@ namespace Quanly.Services.AccumulatePointsService
                                                                    || x.Type.ToLower().Contains(key.ToLower())
                                                                    || x.Money.ToLower().Contains(key.ToLower())
                                                                    || x.Points.ToLower().Contains(key.ToLower())
-                                                                   ||x.Shop.ToLower().Contains(key.ToLower())
-                                                                   ||x.Date.ToString().Contains(key));
-            if(aPoint.Count()==0)
+                                                                   || x.Shop.ToLower().Contains(key.ToLower())
+                                                                   || x.Date.ToString().Contains(key));
+            if (aPoint.Count() == 0)
             {
                 return new ServiceResponse<List<AccumulatePoint>>
                 {

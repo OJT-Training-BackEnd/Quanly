@@ -31,26 +31,26 @@ namespace Quanly.ValidationHandling.AccumulatePointsValidation
                 return "Please enter reason less than 100";
             return "Ok";
         }
-        public string checkValidateUpdateAccummulatePoint(AccumulatePoint accumulatePoint, string cardNumber)
+        public string checkValidateUpdateAccummulatePoint(AccumulatePoint accumulatePoint, int id)
         {
-            if (cardNumber == null)
+            if (id == null || id == 0)
             {
-                return "Cart Number must not be null";
+                return "Id can not be null";
             }
-            var _memberCard = _dataContext.MemberCards.Include(x => x.Customer).FirstOrDefaultAsync(x => x.CardNumber == accumulatePoint.MemberCards.CardNumber);
-            if (_memberCard == null)
+            var _accumulatePoint =  _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefault(x => x.Id == id);
+            if (_accumulatePoint == null)
+            {
+                return "Accumulate Point has null";
+            }
+            var _membercard =  _dataContext.MemberCards.Include(x => x.Customer)
+                    .FirstOrDefault(x => x.CardNumber == _accumulatePoint.MemberCards.CardNumber);
+            if (_membercard == null)
             {
                 return "Member card not existed";
 
             }
 
-            if (cardNumber.Contains("!") || cardNumber.Contains("@")
-                || cardNumber.Contains("#") || cardNumber.Contains("$")
-                || cardNumber.Contains("%") || cardNumber.Contains("^")
-                || cardNumber.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
+            
             if (accumulatePoint.MemberCards.ValidDate < DateTime.Now)
                 return "The date is not suitable";
             if (string.IsNullOrEmpty(accumulatePoint.Reason))

@@ -20,16 +20,20 @@ using Quanly.Models.AccumulatePointsRules;
 using Quanly.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var server = builder.Configuration["DBServer"] ?? "localhost";
+/*var server = builder.Configuration["DBServer"] ?? "localhost";
 var port = builder.Configuration["DBPort"] ?? "11433";
 var user = builder.Configuration["DBUser"] ?? "sa";
 var password = builder.Configuration["DBPassword"] ?? "Chinhpro123a";
-var database = builder.Configuration["Database"] ?? "quanly";
+var database = builder.Configuration["Database"] ?? "quanly";*/
 // Add services to the container.
+/*builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer($"Server={server};Database={database};Uid={user};Password={password}"));*/
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer($"Server={server};Database={database};Uid={user};Password={password}"));
+    options.UseSqlServer(builder
+    .Configuration
+    .GetConnectionString("DefaultConnection")));
 
-Console.WriteLine($"Server={server},{port};Initial Catalog={database};Uid={user};Password={password}");
+/*Console.WriteLine($"Server={server},{port};Initial Catalog={database};Uid={user};Password={password}");*/
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
