@@ -26,7 +26,7 @@ namespace Quanly.Controllers
             return Ok(await _accumulateRuleService.GetAllAccumulatePointRule());
         }
 
-        [HttpGet("SearchAccumulatePointRule")]
+        [HttpGet("SearchAccumulatePointRule/{keyword}")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> SearchAccumulatePointRule(string keyword)
         {
             return Ok(await _accumulateRuleService.SearchAccumulatePointRule(keyword));
@@ -39,7 +39,7 @@ namespace Quanly.Controllers
             return Ok(await _accumulateRuleService.AddNewAccumulatePointsRule(acc));
         }
 
-        [HttpDelete("DeleteAccumulateRule")]
+        [HttpDelete("DeleteAccumulateRule/{id}")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> DeleteAccumulatePointsRule(int id)
         {
             return Ok(await _accumulateRuleService.DeleteAccumulatePointsRule(id));

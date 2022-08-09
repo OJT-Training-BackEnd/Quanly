@@ -13,10 +13,10 @@ namespace Quanly.Controllers
         {
             _contactPersonService = contactService;
         }
-        [HttpDelete("DeleteContactPerson")]
-        public async Task<ActionResult<ServiceResponse<ContactPerson>>> DeleteContactPerson(int Id)
+        [HttpDelete("DeleteContactPerson/{id}")]
+        public async Task<ActionResult<ServiceResponse<ContactPerson>>> DeleteContactPerson(int id)
         {
-            return Ok(await _contactPersonService.DeleteContactPerson(Id));
+            return Ok(await _contactPersonService.DeleteContactPerson(id));
         }
         [HttpPost("AddNewContactPerson")]
         public async Task<ActionResult<ServiceResponse<ContactPerson>>> AddNewContactPerson(ContactPerson contactPerson)

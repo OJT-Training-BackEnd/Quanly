@@ -42,7 +42,7 @@ namespace Quanly.Controllers
         {
             return Ok(await _memberCardService.GetAllMemberCards());
         }
-        [HttpDelete("DeleteMembersCard")]
+        [HttpDelete("DeleteMembersCard/{id}")]
         public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> DeleteMembersCard(int id)
         {
             return Ok(await _memberCardService.DeleteMemberCard(id));

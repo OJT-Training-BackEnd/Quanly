@@ -19,13 +19,12 @@ namespace Quanly.Controllers
         }
 
         [HttpGet]
-
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomer()
         {
             return Ok(await _customerService.GetAllCustomers());
         }
 
-        [HttpDelete]
+        [HttpDelete("{cusId}")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> DeleteCustomer(int cusId)
         {
             return Ok(await _customerService.DeleteCustomers(cusId));
@@ -43,32 +42,32 @@ namespace Quanly.Controllers
             return Ok(await _customerService.EditCustomer(customer));
         }
 
-        [HttpGet("SearchName")]
+        [HttpGet("SearchName/{name}")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> SearchCustomerName(string name)
         {
             return Ok(await _customerService.SearchCustomer(name));
         }
 
-        [HttpGet("Sort-Customer")]
+        [HttpGet("Sort-Customer/{sortBy}")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> SortCustomerName(string sortBy)
         {
             return Ok(await _customerService.SortFieldCustomer(sortBy));
         }
 
 
-        [HttpPut("Card-Issue")]
+        [HttpPut("Card-Issue/{cardNumber}/{id}")]
         public async Task<ActionResult<ServiceResponse<Customer>>> CardIssue(string cardNumber, int id)
         {
             return Ok(await _customerService.CardIssue(cardNumber, id));
         }
         
-        [HttpPut("Active/InactiveCustomer")]
+        [HttpPut("Active/InactiveCustomer/{id}")]
         public async Task<ActionResult<ServiceResponse<string>>> ChangeStatusCustomer(int id)
         {
             return Ok(await _customerService.ChangeStatusCustomer(id));
 
         }
-        [HttpGet("ViewCustomerTransactionHistory")]
+        [HttpGet("ViewCustomerTransactionHistory/{cusId}")]
         public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> ViewCustomerTransactionHistory(int cusId)
         {
             return Ok(await _customerService.ViewCustomerTransactionHistory(cusId));

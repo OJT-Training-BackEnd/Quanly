@@ -165,18 +165,18 @@ namespace Quanly.Services.CustomerService
             {
                 allCustomer = SearchCustomerByFeild(searchString, allCustomer);
 
-            if (allCustomer.Count() == 0)
-            {
-                return new ServiceResponse<List<Customer>>
+                if (allCustomer.Count() == 0)
                 {
-                    Success = false,
-                    Message = "Khong co"
-                };
+                    return new ServiceResponse<List<Customer>>
+                    {
+                        Success = false,
+                        Message = "Khong co"
+                    };
+                }
             }
-            
             return new ServiceResponse<List<Customer>>
             {
-                Data =  await allCustomer.OrderByDescending(x => x.Id).ToListAsync(),
+                Data = allCustomer,
                 Success = true,
                 Message = "Search Successfully"
             };
@@ -363,7 +363,8 @@ namespace Quanly.Services.CustomerService
                 Success = true,
                 Message = "Get customer info successfully"
             };
-                
+
         }
     }
 }
+
