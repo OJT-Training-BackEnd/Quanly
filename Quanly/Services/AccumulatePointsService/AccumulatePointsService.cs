@@ -99,7 +99,7 @@ namespace Quanly.Services.AccumulatePointsService
                 {
                     Data = _accumulatePoints,
                     Success = true,
-                    Message ="Test"
+                    Message = "Test"
 
                 };
             }
@@ -157,9 +157,9 @@ namespace Quanly.Services.AccumulatePointsService
                                                                    || x.Type.ToLower().Contains(key.ToLower())
                                                                    || x.Money.ToLower().Contains(key.ToLower())
                                                                    || x.Points.ToLower().Contains(key.ToLower())
-                                                                   ||x.Shop.ToLower().Contains(key.ToLower())
-                                                                   ||x.Date.ToString().Contains(key));
-            if(aPoint.Count()==0)
+                                                                   || x.Shop.ToLower().Contains(key.ToLower())
+                                                                   || x.Date.ToString().Contains(key));
+            if (aPoint.Count() == 0)
             {
                 return new ServiceResponse<List<AccumulatePoint>>
                 {
@@ -227,5 +227,25 @@ namespace Quanly.Services.AccumulatePointsService
             };
         }
 
+        public async Task<ServiceResponse<AccumulatePoint>> GetAccumulatePointById(int accumulatePointId)
+        {
+            var resultAfterValidate = _validGetAllAccumulatePoints.ValidateAccumulatePointId(accumulatePointId);
+            if (!resultAfterValidate.Equals("ok"))
+            {
+                return new ServiceResponse<AccumulatePoint>
+                {
+                    Success = false,
+                    Message = resultAfterValidate
+                };
+            }
+
+            var accumulatePoint = await _dataContext.AccumulatePoints.FindAsync(accumulatePointId);
+            return new ServiceResponse<AccumulatePoint>
+            {
+                Success = true,
+                Message = "Get transaction successfully",
+                Data = accumulatePoint
+            };
+        }
     }
 }

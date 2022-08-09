@@ -10,10 +10,9 @@ namespace Quanly.Services.ValidPointsService
         Task<ServiceResponse<List<AccumulatePoint>>> DeleteAccumulatePoints(int id);
         Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, string cardNumber);
         Task<ServiceResponse<AccumulatePoint>> search(string cardNumber);
-
         Task<ServiceResponse<List<AccumulatePoint>>> searchAccumulatePoints(string keyword);
-
         Task<ServiceResponse<AccumulatePoint>> CreateAccumulatePoint(AccumulatePoint accumulatePoint);
-/*        Task<ServiceResponse<double>> CalculatePoint(string type, string cardNumber, double money, double newPoint);  */  
+        Task<ServiceResponse<AccumulatePoint>> GetAccumulatePointById(int accumulatePointId);
+
     }
 }

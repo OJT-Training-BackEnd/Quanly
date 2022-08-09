@@ -8,24 +8,24 @@ namespace Quanly.Controllers
     [ApiController]
     public class ValidPointsController : ControllerBase
     {
-        private readonly IAccumulatePointsService _validpointsService;
+        private readonly IAccumulatePointsService _AccumulatePointsService;
 
-        public ValidPointsController(IAccumulatePointsService validpointsService)
+        public ValidPointsController(IAccumulatePointsService accumulatePointsService)
         {
-            _validpointsService = validpointsService;
+            _AccumulatePointsService = accumulatePointsService;
         }
 
         [HttpGet("GetAccumulatePointList")]
 
         public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> GetAllCustomer()
         {
-            return Ok(await _validpointsService.GetAllAccumulatePoints());
+            return Ok(await _AccumulatePointsService.GetAllAccumulatePoints());
         }
 
         [HttpDelete("DeleteAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> DeletePoint(int Id)
         {
-            return Ok(await _validpointsService.DeleteAccumulatePoints(Id));
+            return Ok(await _AccumulatePointsService.DeleteAccumulatePoints(Id));
         }
         /*
                 [HttpPut("UpdateAccumulatePoint/{cardNumber}")]
@@ -39,18 +39,25 @@ namespace Quanly.Controllers
 
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> SearchCardNumber(string cardnumber)
         {
-            return Ok(await _validpointsService.search(cardnumber));
+            return Ok(await _AccumulatePointsService.search(cardnumber));
         }
 
         [HttpGet("SearchAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> searchAccumulatePoints(string keyword)
         {
-            return Ok(await _validpointsService.searchAccumulatePoints(keyword));
+            return Ok(await _AccumulatePointsService.searchAccumulatePoints(keyword));
         }
         [HttpPost("CreateAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> CreateAccumulatePoint(AccumulatePoint accumulatePoint)
         {
-            return Ok(await _validpointsService.CreateAccumulatePoint(accumulatePoint));
+            return Ok(await _AccumulatePointsService.CreateAccumulatePoint(accumulatePoint));
         }
+
+        [HttpGet("GetPointById/{id}")]
+        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> GetPointById(int id)
+        {
+            return Ok(await _AccumulatePointsService.GetAccumulatePointById(id));
+        }
+
     }
 }
