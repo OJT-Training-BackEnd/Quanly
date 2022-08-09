@@ -23,7 +23,7 @@ namespace Quanly.ValidationHandling.CustomerValidation
                 if(customerId == null)
                     return "Please enter customer id";
 
-                var customer = _dataContext.Customers.FirstOrDefault(x => x.Id == customerId);
+                var customer = _dataContext.Customers.Find(customerId);
                 if (customer == null)
                     return "This customer is not exist";
 

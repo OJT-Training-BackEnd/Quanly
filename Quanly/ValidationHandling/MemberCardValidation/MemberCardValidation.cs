@@ -22,7 +22,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 if (memberCardId == null)
                     return "Please enter member card";
 
-                var memberCard = _context.MemberCards.FirstOrDefault(x => x.Id == memberCardId);
+                var memberCard = _context.MemberCards.Find(memberCardId);
                 if (memberCard == null)
                     return "This member card is not exist";
             }
