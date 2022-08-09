@@ -11,6 +11,28 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
         {
             _dataContext = dataContext;
         }
+
+
+        public string ValidateAccumulateRuleId(int? accumulateRuleId)
+        {
+            try
+            {
+                if(accumulateRuleId == null)
+                    return "Please enter accumulate rule Id";
+                
+                var accumulateRule = _dataContext.AccumulatePointsRules.FirstOrDefault(x => x.Id == accumulateRuleId);
+                if(accumulateRule == null)
+                    return "This accumulate rule is not exist";
+
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+
+            return "ok";
+        }
+
         public string ValidateAddNewAccumulateRule(AccumulatePointsRule acc)
         {
             if (acc == null)
@@ -37,7 +59,7 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             if (string.IsNullOrEmpty(acc.Name))
                 return "Please enter the Name";
 
-            if(acc.Name.Count() > 20)
+            if (acc.Name.Count() > 20)
                 return "Please enter the Name less than 20 characters";
 
             if (acc.Name.Contains("!") || acc.Name.Contains("@")
@@ -78,7 +100,7 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
         }
         public string ValidateUpdateAccumulateRule(AccumulatePointsRule accupointrule)
         {
-            
+
             if (string.IsNullOrEmpty(accupointrule.Code))
                 return "Please enter the code";
 
@@ -105,7 +127,7 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             {
                 return "The MemberCard is Empty";
             }
-            if(accupointrule.ApplyFrom >= accupointrule.ApplyTo)
+            if (accupointrule.ApplyFrom >= accupointrule.ApplyTo)
             {
                 return "The Date Apply To must greater than Apply From";
             }
@@ -120,13 +142,13 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             if (string.IsNullOrEmpty(accupointrule.Formula))
                 return "Please enter the Formula";
 
-            List<string> acceptedFomula = new List<string> {"Loai","Amount","TopupQty", "SinhNhat", "weekday", "hour" };
+            List<string> acceptedFomula = new List<string> { "Loai", "Amount", "TopupQty", "SinhNhat", "weekday", "hour" };
             int i = 0;
-            foreach(string fomula in acceptedFomula)
+            foreach (string fomula in acceptedFomula)
             {
-                if(!accupointrule.Formula.ToLower().Equals(fomula.ToLower()))
+                if (!accupointrule.Formula.ToLower().Equals(fomula.ToLower()))
                 {
-                   i++;
+                    i++;
                 }
             }
             if (i == 6)
@@ -138,13 +160,13 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
 
         public string ValidateGetAllAccumulatePointRule(List<AccumulatePointsRule> apr)
         {
-            if(apr.Count == 0)
+            if (apr.Count == 0)
             {
                 return "The Accumulate Point Rule is empty";
             }
             return "ok";
         }
-        public string ValidateSearchAccumulatePointRule (string keyword)
+        public string ValidateSearchAccumulatePointRule(string keyword)
         {
             if (string.IsNullOrEmpty(keyword))
                 return "Please enter the keyword to search";

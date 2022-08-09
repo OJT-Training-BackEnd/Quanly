@@ -159,5 +159,27 @@ namespace Quanly.Services.AccumulateRuleService
                 Success = true
             };
         }
+
+        public async Task<ServiceResponse<AccumulatePointsRule>> GetAccumulateRuleById(int accumulateRuleId)
+        {
+            var resultAfterValidate = _accumulateRuleValidation.ValidateAccumulateRuleId(accumulateRuleId);
+            if (!resultAfterValidate.Equals("ok"))
+            {
+                return new ServiceResponse<AccumulatePointsRule>
+                {
+                    Message = resultAfterValidate,
+                    Success = false
+                };
+            }
+
+            var accumulateRule = await _context.AccumulatePointsRules.FindAsync(accumulateRuleId);
+            return new ServiceResponse<AccumulatePointsRule>
+            {
+                Data = accumulateRule,
+                Message = "Get accumulate rule successfully",
+                Success = true
+            };
+
+        }
     }
 }

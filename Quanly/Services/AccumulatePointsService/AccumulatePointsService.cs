@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Quanly.Data;
 using Quanly.Models.AccumulatePoints;
 using Quanly.Models.Customers;
@@ -306,5 +306,25 @@ namespace Quanly.Services.AccumulatePointsService
             };
         }
 
+        public async Task<ServiceResponse<AccumulatePoint>> GetAccumulatePointById(int accumulatePointId)
+        {
+            var resultAfterValidate = _validGetAllAccumulatePoints.ValidateAccumulatePointId(accumulatePointId);
+            if (!resultAfterValidate.Equals("ok"))
+            {
+                return new ServiceResponse<AccumulatePoint>
+                {
+                    Success = false,
+                    Message = resultAfterValidate
+                };
+            }
+
+            var accumulatePoint = await _dataContext.AccumulatePoints.FindAsync(accumulatePointId);
+            return new ServiceResponse<AccumulatePoint>
+            {
+                Success = true,
+                Message = "Get transaction successfully",
+                Data = accumulatePoint
+            };
+        }
     }
 }

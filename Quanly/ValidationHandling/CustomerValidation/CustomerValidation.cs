@@ -1,4 +1,4 @@
-﻿using Quanly.Data;
+using Quanly.Data;
 using Quanly.Models.Customers;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -13,9 +13,28 @@ namespace Quanly.ValidationHandling.CustomerValidation
         {
             _dataContext = dataContext;
         }
+        public string ValidateCustomerId(int? customerId)
+        {
+            try
+            {
+                if(customerId == null)
+                    return "Please enter customer id";
+  
+                var customer = _dataContext.Customers.Find(customerId);
+                if (customer == null)
+                    return "This customer is not exist";
+
+            }
+            catch (System.Exception ex)
+            {
+
+                return ex.Message.ToString();
+            }
+
+            return "ok";
+        }
 
 
-        //Check Add Customer
         public string ValidateNewCustomer(Customer customer)
         {
             var customerExist = _dataContext.Customers.FirstOrDefault(x => x.Id == customer.Id);
@@ -243,7 +262,6 @@ namespace Quanly.ValidationHandling.CustomerValidation
                 return "You must input correct format Id";
             }
 
-
             if (String.IsNullOrEmpty(capTheValidate))
             {
                 return "Card number not found or not available! You must be input number";
@@ -271,8 +289,6 @@ namespace Quanly.ValidationHandling.CustomerValidation
             return "ok";
         }
 
-
-
         public string ValidateCustomer(int id)
         {
             var cusexist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
@@ -282,12 +298,9 @@ namespace Quanly.ValidationHandling.CustomerValidation
             }
             return "ok";
         }
+        
+        public string ValidateViewCustomerTransactionHistory(int customerId)
 
-
-    
-
-
-    public string ValidateViewCustomerTransactionHistory(int customerId)
         {
             if (customerId == null)
                 return "Please enter customerId";

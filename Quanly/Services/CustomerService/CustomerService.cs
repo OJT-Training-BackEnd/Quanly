@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Quanly.Data;
 using Quanly.Models.AccumulatePoints;
 using Quanly.Models.Customers;
+using Quanly.Models.MemberCards;
 using Quanly.ValidationHandling.CustomerValidation;
 using System.Security.Claims;
 
@@ -26,6 +27,8 @@ namespace Quanly.Services.CustomerService
             _validation = validation;
             _validDeleteCus = validDeleteCus;
         }
+
+
         public async Task<ServiceResponse<List<Customer>>> DeleteCustomers(int customerId)
         {
 
@@ -88,21 +91,21 @@ namespace Quanly.Services.CustomerService
             }
             var _customer = new Customer
             {
-                Code = customer.Code.Trim(),
+                Code = customer.Code?.Trim(),
                 CustomerName = customer.CustomerName,
                 District = customer.District,
                 Type = customer.Type,
-                Phone = customer.Phone.Trim(),
-                TelePhone = customer.TelePhone.Trim(),
-                Email = customer.Email.Trim(),
-                Fax = customer.Fax.Trim(),
+                Phone = customer.Phone?.Trim(),
+                TelePhone = customer.TelePhone?.Trim(),
+                Email = customer.Email?.Trim(),
+                Fax = customer.Fax?.Trim(),
                 Gender = customer.Gender,
                 IsMarried = customer.IsMarried,
                 BirthDate = customer.BirthDate,
-                IdentityCard = customer.IdentityCard.Trim(),
+                IdentityCard = customer.IdentityCard?.Trim(),
                 DateOfRecord = customer.DateOfRecord,
                 CompanyName = customer.CompanyName,
-                CompanyPhone = customer.CompanyPhone.Trim(),
+                CompanyPhone = customer.CompanyPhone?.Trim(),
                 Contact = customer.Contact,
                 Position = customer.Position,
                 MemberCards = null,
@@ -132,33 +135,6 @@ namespace Quanly.Services.CustomerService
                 };
             }
 
-            /* var _customer = _dataContext.Customers.FirstOrDefault(x => x.Id == id);*/
-            /* if(_customer != null)
-             {
-                 _customer.CustomerName = customer.CustomerName;
-                 _customer.Code = customer.Code;
-                 _customer.Address = customer.Address;
-                 _customer.Importer = customer.Importer;
-                 _customer.Phone = customer.Phone;
-                 _customer.Email = customer.Email;
-                 _customer.IdentityCard = customer.IdentityCard;
-                 _customer.BirthDate = customer.BirthDate;
-                 _customer.CompanyName = customer.CompanyName;
-                 _customer.TelePhone = customer.TelePhone;
-                 _customer.CompanyPhone = customer.CompanyPhone; 
-                 _customer.District = customer.District;
-                 _customer.Contact = customer.Contact;
-                 _customer.ContactPersons = customer.ContactPersons;
-                 _customer.Fax = customer.Fax;
-                 _customer.Gender = customer.Gender;
-                 _customer.IsMarried = customer.IsMarried;
-                 _customer.Type= customer.Type;
-                 _customer.IsActive = customer.IsActive;
-
-                 await _dataContext.SaveChangesAsync();
-
-             }*/
-
             _dataContext.Customers.Update(customer);
             await _dataContext.SaveChangesAsync();
 
@@ -171,7 +147,7 @@ namespace Quanly.Services.CustomerService
 
         }
 
-        public async Task<ServiceResponse<List<Customer>>> searchCustomer(string searchString)
+        public async Task<ServiceResponse<List<Customer>>> SearchCustomer(string searchString)
         {
             var searchValidation = _customerValidation.searchCustomerValidate(searchString);
             if (searchValidation != "ok")
@@ -183,10 +159,11 @@ namespace Quanly.Services.CustomerService
                 };
             }
 
-            var allCustomer = _dataContext.Customers.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                            n.Phone.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                            n.Importer.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.District.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                            n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())); ;
+            var allCustomer = _dataContext.Customers.OrderBy(c => c.CustomerName).ToList();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allCustomer = SearchCustomerByFeild(searchString, allCustomer);
 
             if (allCustomer.Count() == 0)
             {
@@ -205,30 +182,22 @@ namespace Quanly.Services.CustomerService
             };
         }
 
-        public async Task<ServiceResponse<List<Customer>>> sortFieldCustomer(string sortBy)
+        private static List<Customer> SearchCustomerByFeild(string searchString, List<Customer> allCustomer)
+        {
+            allCustomer = allCustomer.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                        n.Phone.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                        n.Importer.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.District.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+                                                        n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            return allCustomer;
+        }
+
+        public async Task<ServiceResponse<List<Customer>>> SortFieldCustomer(string sortBy)
         {
             var sortCustomer = _dataContext.Customers.OrderBy(c => c.CustomerName).ToList();
 
             if (!String.IsNullOrEmpty(sortBy))
             {
-                switch (sortBy.Trim())
-                {
-                    case "name_desc":
-                        sortCustomer = sortCustomer.OrderByDescending(n => n.CompanyName).ToList();
-                        break;
-                    case "phone_desc":
-                        sortCustomer = sortCustomer.OrderByDescending(n => n.Phone).ToList();
-                        break;
-                    case "address_desc":
-                        sortCustomer = sortCustomer.OrderByDescending(n => n.Address).ToList();
-                        break;
-                    case "type_desc":
-                        sortCustomer = sortCustomer.OrderByDescending(n => n.MemberCards.GetType()).ToList();
-                        break;
-                    default:
-                        break;
-
-                }
+                sortCustomer = SortCustomerByField(sortBy, sortCustomer);
                 return new ServiceResponse<List<Customer>>
                 {
                     Data = sortCustomer,
@@ -244,8 +213,31 @@ namespace Quanly.Services.CustomerService
             };
         }
 
+        private static List<Customer> SortCustomerByField(string sortBy, List<Customer> sortCustomer)
+        {
+            switch (sortBy.Trim())
+            {
+                case "name_desc":
+                    sortCustomer = sortCustomer.OrderByDescending(n => n.CompanyName).ToList();
+                    break;
+                case "phone_desc":
+                    sortCustomer = sortCustomer.OrderByDescending(n => n.Phone).ToList();
+                    break;
+                case "address_desc":
+                    sortCustomer = sortCustomer.OrderByDescending(n => n.Address).ToList();
+                    break;
+                case "type_desc":
+                    sortCustomer = sortCustomer.OrderByDescending(n => n.MemberCards.GetType()).ToList();
+                    break;
+                default:
+                    break;
 
-        public async Task<ServiceResponse<string>> changeStatusCustomer(int id)
+            }
+
+            return sortCustomer;
+        }
+
+        public async Task<ServiceResponse<string>> ChangeStatusCustomer(int id)
         {
             try
             {
@@ -274,7 +266,7 @@ namespace Quanly.Services.CustomerService
                     Message = "Changed Successfully"
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ServiceResponse<string>
                 {
@@ -282,9 +274,9 @@ namespace Quanly.Services.CustomerService
                     Message = ex.Message
                 };
             }
-            
+
         }
-        
+
         public async Task<ServiceResponse<Customer>> CardIssue(string cardNumber, int id)
         {
             var cardIssueCValidate = _customerValidation.cardIssueValidate(cardNumber, id);
@@ -329,19 +321,49 @@ namespace Quanly.Services.CustomerService
             }
             var cardList = await _dataContext.MemberCards.Include(x => x.Customer)
                 .Where(x => x.Customer.Id == customerId).ToListAsync();
-            var transaction = new List<AccumulatePoint>();
-            foreach (var card in cardList)
-            {
-                transaction = await _dataContext.AccumulatePoints
-                    .Where(x => x.MemberCards.Id == card.Id).OrderByDescending(x => x.Id).ToListAsync();
-            }
-            
+            List<AccumulatePoint> transaction = await OrderByDescendingAccumulatePonint(cardList);
+
             return new ServiceResponse<List<AccumulatePoint>>
             {
                 Data = transaction,
                 Success = true,
                 Message = "View Customer Transaction History Successfully"
             };
+        }
+
+        private async Task<List<AccumulatePoint>> OrderByDescendingAccumulatePonint(List<MemberCard> cardList)
+        {
+            var transaction = new List<AccumulatePoint>();
+            foreach (var card in cardList)
+            {
+                transaction = await _dataContext.AccumulatePoints
+                    .Where(x => x.MemberCards.Id == card.Id).OrderByDescending(x => x.Id).ToListAsync();
+            }
+
+            return transaction;
+        }
+
+        public async Task<ServiceResponse<Customer>> GetCustomerById(int customerId)
+        {
+            var resultAfterValidate = _customerValidation.ValidateCustomerId(customerId);
+            if (!resultAfterValidate.Equals("ok"))
+            {
+                return new ServiceResponse<Customer>
+                {
+                    Success = false,
+                    Message = resultAfterValidate
+                };
+            }
+
+            var customer = await _dataContext.Customers.FindAsync(customerId);
+
+            return new ServiceResponse<Customer>
+            {
+                Data = customer,
+                Success = true,
+                Message = "Get customer info successfully"
+            };
+                
         }
     }
 }

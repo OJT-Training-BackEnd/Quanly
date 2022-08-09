@@ -22,7 +22,7 @@ namespace Quanly.Controllers
         }
         [HttpPut("UpdateMemberCard")]
         public async Task<ActionResult<ServiceResponse<MemberCard>>> UpdateMemberCard(MemberCard newMemberCard)
-        { 
+        {
             return Ok(await _memberCardService.UpdateMemberCard(newMemberCard));
         }
 
@@ -41,7 +41,7 @@ namespace Quanly.Controllers
         public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> GetAllMembers()
         {
             return Ok(await _memberCardService.GetAllMemberCards());
-        } 
+        }
         [HttpDelete("DeleteMembersCard")]
         public async Task<ActionResult<ServiceResponse<List<MemberCard>>>> DeleteMembersCard(int id)
         {
@@ -51,6 +51,12 @@ namespace Quanly.Controllers
         public async Task<ActionResult<ServiceResponse<MemberCard>>> SearchMemberCardToAddPoint(string cardNumber)
         {
             return Ok(await _memberCardService.SearchMemberCardToAddPoint(cardNumber));
+        }
+
+        [HttpGet("GetMemberCardById/{memberCardId}")]
+        public async Task<ActionResult<ServiceResponse<MemberCard>>> GetMemberCardById(int memberCardId)
+        {
+            return Ok(await _memberCardService.GetMemberCardById(memberCardId));
         }
     }
 }
