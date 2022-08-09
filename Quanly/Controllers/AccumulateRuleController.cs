@@ -23,7 +23,7 @@ namespace Quanly.Controllers
         {
             return Ok(await _accumulateRuleService.GetAllAccumulatePointRule());
         }
-        [HttpGet("Search AccumulatePointRule")]
+        [HttpGet("SearchAccumulatePointRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> SearchAccumulatePointRule(string keyword)
         {
             return Ok(await _accumulateRuleService.SearchAccumulatePointRule(keyword));

@@ -35,6 +35,6 @@ namespace Quanly.Models.Customers
         public string? Points { get; set; } = "0";
         public bool? IsActive { get; set; } = true;
         public List<MemberCard>? MemberCards { get; set; }
-        public ContactPerson? ContactPersons { get; set; }
+        public List<ContactPerson>? ContactPersons { get; set; }
     }
 }

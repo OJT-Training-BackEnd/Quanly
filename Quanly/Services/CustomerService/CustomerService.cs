@@ -183,29 +183,25 @@ namespace Quanly.Services.CustomerService
                 };
             }
 
-            var allCustomer = _dataContext.Customers.OrderBy(c => c.CustomerName).ToList();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                allCustomer = allCustomer.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
+            var allCustomer = _dataContext.Customers.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
                                                             n.Phone.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
                                                             n.Importer.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.District.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                            n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+                                                            n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())); ;
 
-                if (allCustomer.Count == 0)
+            if (allCustomer.Count() == 0)
+            {
+                return new ServiceResponse<List<Customer>>
                 {
-                    return new ServiceResponse<List<Customer>>
-                    {
-                        Success = false,
-                        Message = "Khong co"
-                    };
-                }
+                    Success = false,
+                    Message = "Khong co"
+                };
             }
+            
             return new ServiceResponse<List<Customer>>
             {
-                Data = allCustomer,
+                Data =  await allCustomer.OrderByDescending(x => x.Id).ToListAsync(),
                 Success = true,
-                Message = " Search"
+                Message = "Search Successfully"
             };
         }
 
