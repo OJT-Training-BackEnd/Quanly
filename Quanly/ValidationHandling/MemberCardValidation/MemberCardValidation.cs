@@ -14,8 +14,23 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             _context = context;
         }
 
-        public MemberCardValidation()
+        public string ValidateMemberCardId(int? memberCardId)
         {
+            try
+            {
+                if (memberCardId == null)
+                    return "Please enter member card";
+
+                var memberCard = _context.MemberCards.Find(memberCardId);
+                if (memberCard == null)
+                    return "This member card is not exist";
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+
+            return "ok";
         }
 
         public string ValidateMemberCard(MemberCard memberCard)
@@ -60,7 +75,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
         }
 
         public string ValidateMemberCardWhenUpdate(MemberCard memberCard)
-        { 
+        {
             var cardExist = _context.MemberCards.FirstOrDefault(x => x.Id == memberCard.Id);
             if (cardExist == null)
                 return "Customer does not exist";
@@ -120,7 +135,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
         }
         public string ValidateGetMemberList(List<MemberCard> memberCard)
         {
-            if(memberCard.Count == 0)
+            if (memberCard.Count == 0)
             {
                 return "The customer list is empty";
             }
@@ -133,12 +148,12 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             {
                 return "The MemberCard is empty";
             }
-             var point= _context.AccumulatePoints.FirstOrDefault(x => x.MemberCards == memberCardExist);
+            var point = _context.AccumulatePoints.FirstOrDefault(x => x.MemberCards == memberCardExist);
             if (point != null)
             {
                 return "The MemberCard has a point, Cant Delete";
             }
-           return "ok";
+            return "ok";
 
         }
         public string ValidateSearchCardToAddPoint(string cardNumber)
@@ -161,10 +176,10 @@ namespace Quanly.ValidationHandling.MemberCardValidation
 
             if (DateTime.Now > res2.Result.ValidDate)
                 return "The card has expired";
-        
+
             if (res2.Result.Customer == null)
                 return "Empty card!!! No customers yet";
-            
+
             if (res2.Result.Customer.IsActive == false)
                 return "The Owner of the card has been inactive";
 
