@@ -355,7 +355,7 @@ namespace Quanly.Services.CustomerService
                 };
             }
 
-            var customer = await _dataContext.Customers.FirstOrDefaultAsync(x => true);
+            var customer = await _dataContext.Customers.FindAsync(customerId);
 
             return new ServiceResponse<Customer>
             {
