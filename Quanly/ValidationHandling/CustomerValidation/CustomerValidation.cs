@@ -16,6 +16,27 @@ namespace Quanly.ValidationHandling.CustomerValidation
         }
 
 
+        public string ValidateCustomerId(int? customerId)
+        {
+            try
+            {
+                if(customerId == null)
+                    return "Please enter customer id";
+
+                var customer = _dataContext.Customers.FirstOrDefault(x => x.Id == customerId);
+                if (customer == null)
+                    return "This customer is not exist";
+
+            }
+            catch (System.Exception ex)
+            {
+
+                return ex.Message.ToString();
+            }
+
+            return "ok";
+        }
+
         public string ValidateNewCustomer(Customer customer)
         {
             var customerExist = _dataContext.Customers.FirstOrDefault(x => x.Id == customer.Id);
@@ -163,16 +184,16 @@ namespace Quanly.ValidationHandling.CustomerValidation
         }
 
 
-       
-       public string ValidateCustomer( int id )
-       {
+
+        public string ValidateCustomer(int id)
+        {
             var cusexist = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
-            if(cusexist == null)
+            if (cusexist == null)
             {
                 return "Customer is not exist";
             }
             return "ok";
-       }
+        }
         public string ValidateViewCustomerTransactionHistory(int customerId)
         {
             if (customerId == null)

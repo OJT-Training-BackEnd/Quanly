@@ -9,10 +9,11 @@ namespace Quanly.Services.CustomerService
         Task<ServiceResponse<List<Customer>>> DeleteCustomers(int customerId);
         Task<ServiceResponse<Customer>> AddCustomer(Customer customer);
         Task<ServiceResponse<Customer>> EditCustomer(Customer customer);
-        Task<ServiceResponse<List<Customer>>> searchCustomer(string searchString);
-        Task<ServiceResponse<List<Customer>>> sortFieldCustomer(string sortBy);
+        Task<ServiceResponse<List<Customer>>> SearchCustomer(string searchString);
+        Task<ServiceResponse<List<Customer>>> SortFieldCustomer(string sortBy);
         Task<ServiceResponse<Customer>> CardIssue(string cardNumber, int id);
-        Task<ServiceResponse<string>> changeStatusCustomer(int id);
+        Task<ServiceResponse<string>> ChangeStatusCustomer(int id);
         Task<ServiceResponse<List<AccumulatePoint>>> ViewCustomerTransactionHistory(int customerId);
+        Task<ServiceResponse<Customer>> GetCustomerById(int customerId);
     }
 }

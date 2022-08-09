@@ -17,12 +17,12 @@ namespace Quanly.Controllers
         {
             _customerService = customerService;
         }
-        
+
         [HttpGet]
-            
-        public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomer() 
+
+        public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomer()
         {
-            return Ok(await _customerService.GetAllCustomers());        
+            return Ok(await _customerService.GetAllCustomers());
         }
 
         [HttpDelete]
@@ -46,13 +46,13 @@ namespace Quanly.Controllers
         [HttpGet("SearchName")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> SearchCustomerName(string name)
         {
-            return Ok(await _customerService.searchCustomer(name));
+            return Ok(await _customerService.SearchCustomer(name));
         }
 
         [HttpGet("Sort-Customer")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> SortCustomerName(string sortBy)
         {
-            return Ok(await _customerService.sortFieldCustomer(sortBy));
+            return Ok(await _customerService.SortFieldCustomer(sortBy));
         }
 
 
@@ -61,17 +61,23 @@ namespace Quanly.Controllers
         {
             return Ok(await _customerService.CardIssue(cardNumber, id));
         }
-        
+
         [HttpPut("Active/Inactive Customer")]
         public async Task<ActionResult<ServiceResponse<string>>> ChangeStatusCustomer(int id)
         {
-            return Ok(await _customerService.changeStatusCustomer(id));
+            return Ok(await _customerService.ChangeStatusCustomer(id));
 
         }
         [HttpGet("ViewCustomerTransactionHistory")]
         public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> ViewCustomerTransactionHistory(int cusId)
-        { 
+        {
             return Ok(await _customerService.ViewCustomerTransactionHistory(cusId));
+        }
+
+        [HttpGet("GetCustomerById/{customerId}")]
+        public async Task<ActionResult<ServiceResponse<Customer>>> GetCustomerById(int customerId)
+        {
+            return Ok(await _customerService.GetCustomerById(customerId));
         }
     }
 }
