@@ -9,7 +9,7 @@ services:
     ports:
       - "11433:1433"
   myapi:
-    build: .
+    image: nineh/quanly
     environment:
       DBServer: "ms-sql-server"
     ports:

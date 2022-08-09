@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Quanly.Data;
 using Quanly.Models.AccumulatePoints;
 using Quanly.Models.Customers;
@@ -165,20 +165,20 @@ namespace Quanly.Services.CustomerService
             {
                 allCustomer = SearchCustomerByFeild(searchString, allCustomer);
 
-                if (allCustomer.Count == 0)
+            if (allCustomer.Count() == 0)
+            {
+                return new ServiceResponse<List<Customer>>
                 {
-                    return new ServiceResponse<List<Customer>>
-                    {
-                        Success = false,
-                        Message = "Khong co"
-                    };
-                }
+                    Success = false,
+                    Message = "Khong co"
+                };
             }
+            
             return new ServiceResponse<List<Customer>>
             {
-                Data = allCustomer,
+                Data =  await allCustomer.OrderByDescending(x => x.Id).ToListAsync(),
                 Success = true,
-                Message = " Search"
+                Message = "Search Successfully"
             };
         }
 

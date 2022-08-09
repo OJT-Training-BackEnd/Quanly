@@ -113,9 +113,9 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             {
                 return "Please do not enter special character or sql query";
             }
-            var codeExist = _dataContext.AccumulatePointsRules.FirstOrDefault(x => x.Code == accupointrule.Code);
+            /*var codeExist = _dataContext.AccumulatePointsRules.FirstOrDefault(x => x.Code == accupointrule.Code);
             if (codeExist != null)
-                return "The AccumulateRule Code has duplicate";
+                return "The AccumulateRule Code has duplicate";*/
 
             if (string.IsNullOrEmpty(accupointrule.Name))
                 return "Please enter the Name";

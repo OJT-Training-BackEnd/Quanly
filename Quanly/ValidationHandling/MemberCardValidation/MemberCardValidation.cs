@@ -14,7 +14,6 @@ namespace Quanly.ValidationHandling.MemberCardValidation
             _context = context;
         }
 
-
         public string ValidateMemberCardId(int? memberCardId)
         {
             try

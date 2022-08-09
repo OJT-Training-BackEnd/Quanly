@@ -61,8 +61,8 @@ namespace Quanly.Controllers
         {
             return Ok(await _customerService.CardIssue(cardNumber, id));
         }
-
-        [HttpPut("Active/Inactive Customer")]
+        
+        [HttpPut("Active/InactiveCustomer")]
         public async Task<ActionResult<ServiceResponse<string>>> ChangeStatusCustomer(int id)
         {
             return Ok(await _customerService.ChangeStatusCustomer(id));
