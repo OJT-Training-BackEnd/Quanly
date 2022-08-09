@@ -22,17 +22,16 @@ namespace Quanly.Controllers
             return Ok(await _AccumulatePointsService.GetAllAccumulatePoints());
         }
 
-        [HttpDelete("DeleteAccumulatePoint")]
-        public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> DeletePoint(int Id)
+        [HttpDelete("DeleteAccumulatePoint/{id}")]
+        public async Task<ActionResult<ServiceResponse<List<AccumulatePoint>>>> DeletePoint(int id)
         {
-            return Ok(await _AccumulatePointsService.DeleteAccumulatePoints(Id));
+            return Ok(await _AccumulatePointsService.DeleteAccumulatePoints(id));
         }
 
         [HttpPut("UpdateAccumulatePoint")]
-
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> UpdatePoint(AccumulatePoint accumulatePoint, int id)
         {
-            return Ok(await _validpointsService.UpdateAccumulatePoints(accumulatePoint, id));
+            return Ok(await _AccumulatePointsService.UpdateAccumulatePoints(accumulatePoint, id));
         }
 
         /*[HttpGet("SearchAccumulatePoint/{cardNumber}")]
@@ -40,7 +39,7 @@ namespace Quanly.Controllers
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> SearchCardNumber(string cardnumber)
         {
             return Ok(await _AccumulatePointsService.search(cardnumber));
-        }
+        }*/
 
         [HttpGet("SearchAccumulatePoint")]
         public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> searchAccumulatePoints(string keyword)
