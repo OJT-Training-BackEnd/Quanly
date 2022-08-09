@@ -27,13 +27,13 @@ namespace Quanly.Controllers
         {
             return Ok(await _AccumulatePointsService.DeleteAccumulatePoints(Id));
         }
-        /*
-                [HttpPut("UpdateAccumulatePoint/{cardNumber}")]
 
-                public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> UpdatePoint(AccumulatePoint accumulatePoint , string cardNumber)
-                {
-                    return Ok(await _validpointsService.UpdateAccumulatePoints(accumulatePoint,cardNumber));
-                }*/
+        [HttpPut("UpdateAccumulatePoint")]
+
+        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> UpdatePoint(AccumulatePoint accumulatePoint, int id)
+        {
+            return Ok(await _validpointsService.UpdateAccumulatePoints(accumulatePoint, id));
+        }
 
         /*[HttpGet("SearchAccumulatePoint/{cardNumber}")]
 
