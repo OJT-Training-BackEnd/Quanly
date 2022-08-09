@@ -23,8 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 /*var server = builder.Configuration["DBServer"] ?? "localhost";
 var port = builder.Configuration["DBPort"] ?? "11433";
 var user = builder.Configuration["DBUser"] ?? "sa";
-var password = builder.Configuration["DBPassword"] ?? "Chinhpro123a";
-var database = builder.Configuration["Database"] ?? "quanly";*/
+var password = builder.Configuration["DBPassword"] ?? "Supercoolpassword123!";
+var database = builder.Configuration["Database"] ?? "quanly";
 // Add services to the container.
 /*builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer($"Server={server};Database={database};Uid={user};Password={password}"));*/
@@ -77,7 +77,7 @@ builder.Services.AddScoped<AccumulatePoint>();
 builder.Services.AddScoped<AccumulatePointsRule>();
 var app = builder.Build();
 
-PrepDB.PrepPopulation(app);
+/*PrepDB.PrepPopulation(app);*/
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -15,6 +15,26 @@ namespace Quanly.Services.ContactPersonService
             _contactpersonValidation = contactpersonValidation;
         }
 
+        public async Task<ServiceResponse<ContactPerson>> AddNewContactPerson(ContactPerson contactPerson)
+        {
+            var validate = _contactpersonValidation.ValidateAddNewContactPerson(contactPerson);
+            if (validate != "ok")
+            {
+                return new ServiceResponse<ContactPerson>
+                {
+                    Success = false,
+                    Message = validate
+                };
+            }
+            _dataContext.ContactPersons.Add(contactPerson);
+            await _dataContext.SaveChangesAsync();
+            return new ServiceResponse<ContactPerson>
+            {
+                Success = true,
+                Message = "Added Successfully"
+            };
+        }
+
         public async Task<ServiceResponse<List<ContactPerson>>> DeleteContactPerson(int Id)
         {
             var validate = _contactpersonValidation.ValidateDeleteContactPerson(Id);

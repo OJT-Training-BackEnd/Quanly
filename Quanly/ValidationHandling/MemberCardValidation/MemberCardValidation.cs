@@ -13,6 +13,11 @@ namespace Quanly.ValidationHandling.MemberCardValidation
         {
             _context = context;
         }
+
+        public MemberCardValidation()
+        {
+        }
+
         public string ValidateMemberCard(MemberCard memberCard)
         {
             if (memberCard == null)
