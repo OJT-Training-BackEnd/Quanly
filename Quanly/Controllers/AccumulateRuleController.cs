@@ -13,32 +13,42 @@ namespace Quanly.Controllers
         {
             _accumulateRuleService = accumulateRuleService;
         }
+
         [HttpPut("UpdateRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> UpdateAccumulatePointRule(AccumulatePointsRule apr)
         {
             return Ok(await _accumulateRuleService.UpdateAccumulatePointsRule(apr));
         }
-        [HttpGet("accumulaterule")]
+
+        [HttpGet("GetAllAccumulateRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> GetAllRule()
         {
             return Ok(await _accumulateRuleService.GetAllAccumulatePointRule());
         }
-        [HttpGet("Search AccumulatePointRule")]
+
+        [HttpGet("Search-AccumulatePointRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> SearchAccumulatePointRule(string keyword)
         {
             return Ok(await _accumulateRuleService.SearchAccumulatePointRule(keyword));
 
         }
+
         [HttpPost("AddNewAcumulateRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> AddNewAccmulatePointRule(AccumulatePointsRule acc)
         {
             return Ok(await _accumulateRuleService.AddNewAccumulatePointsRule(acc));
         }
-        
+
         [HttpDelete("DeleteAccumulateRule")]
         public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> DeleteAccumulatePointsRule(int id)
         {
             return Ok(await _accumulateRuleService.DeleteAccumulatePointsRule(id));
+        }
+
+        [HttpGet("GetAccumulateRuleById/{accumulateRuleId}")]
+        public async Task<ActionResult<ServiceResponse<AccumulatePointsRule>>> GetAccumulateRuleById(int accumulateRuleId)
+        {
+            return Ok(await _accumulateRuleService.GetAccumulateRuleById(accumulateRuleId));
         }
     }
 }
