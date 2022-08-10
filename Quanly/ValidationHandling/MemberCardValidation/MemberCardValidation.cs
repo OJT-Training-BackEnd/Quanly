@@ -69,7 +69,7 @@ namespace Quanly.ValidationHandling.MemberCardValidation
                 return "The issue date needs to be less than the effective date";
 
             if (memberCard.ValidDate <= memberCard.EffectDate)
-                return "The effect date needs to be greater than the valid date";
+                return "The valid date needs to be greater than the effect date";
 
             return "ok";
         }
