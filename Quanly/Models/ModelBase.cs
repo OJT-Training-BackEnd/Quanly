@@ -2,8 +2,8 @@
 {
     public class ModelBase
     {
-        public string? Importer { get; set; } = string.Empty;
+        public string? Importer { get; set; } = "Ad";
         public string? Note { get; set; } = string.Empty;
-        public DateTime? DateAdded { get; set; }
+        public DateTime? DateAdded { get; set; } = DateTime.Now;
     }
 }
