@@ -124,10 +124,8 @@ namespace Quanly.Services.AccumulateRuleService
                 };
             }
             var aprExits = await _context.AccumulatePointsRules.FirstOrDefaultAsync(x => x.Id == apr.Id);
-            aprExits.Code = apr.Code;
             aprExits.ApplyFrom = apr.ApplyFrom;
             aprExits.ApplyTo = apr.ApplyTo;
-            aprExits.Formula = apr.Formula;
             aprExits.Note = apr.Note;
             aprExits.Name = apr.Name;
             await _context.SaveChangesAsync();
