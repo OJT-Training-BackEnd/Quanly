@@ -216,7 +216,9 @@ namespace Quanly.Services.MemberCardsService
                 };
             }
 
-            var memberCard = await _context.MemberCards.FindAsync(memberCardId);
+            var memberCard = await _context.MemberCards
+                .Include(x => x.Customer)
+                .FirstOrDefaultAsync(x => x.Id == memberCardId);
 
             return new ServiceResponse<MemberCard>
             {
