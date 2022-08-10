@@ -158,38 +158,32 @@ namespace Quanly.Services.CustomerService
                     Message = searchValidation
                 };
             }
-
-            var allCustomer = _dataContext.Customers.OrderBy(c => c.CustomerName).ToList();
-
-            if (!String.IsNullOrEmpty(searchString))
+            IQueryable<Customer> customers = SearchCustomerByFeild(searchString);
+            if (customers.Count() == 0)
             {
-                allCustomer = SearchCustomerByFeild(searchString, allCustomer);
-
-                if (allCustomer.Count() == 0)
+                return new ServiceResponse<List<Customer>>
                 {
-                    return new ServiceResponse<List<Customer>>
-                    {
-                        Success = false,
-                        Message = "Khong co"
-                    };
-                }
+                    Success = false,
+                    Message = $"Can not find any result {searchString}"
+                };
             }
+
             return new ServiceResponse<List<Customer>>
             {
-                Data = allCustomer,
+                Data = await customers.OrderByDescending(n => n.Id).ToListAsync(),
                 Success = true,
-                Message = "Search Successfully"
+                Message = "Search successfully"
             };
         }
 
-        private static List<Customer> SearchCustomerByFeild(string searchString, List<Customer> allCustomer)
-        {
-            allCustomer = allCustomer.Where(n => n.CustomerName.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                        n.Phone.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                        n.Importer.ToLower().Trim().Contains(searchString.ToLower().Trim()) || n.District.ToLower().Trim().Contains(searchString.ToLower().Trim()) ||
-                                                        n.Type.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
-            return allCustomer;
+        private IQueryable<Customer> SearchCustomerByFeild(string keyword)
+        { 
+            return _dataContext.Customers.Where(n => n.CustomerName.ToLower().Trim().Contains(keyword.ToLower().Trim()) || n.Code.ToLower().Trim().Contains(keyword.ToLower().Trim()) ||
+                                                        n.Phone.ToLower().Trim().Contains(keyword.ToLower().Trim()) || n.Type.ToLower().Trim().Contains(keyword.ToLower().Trim()) ||
+                                                        n.Importer.ToLower().Trim().Contains(keyword.ToLower().Trim()) || n.Province.ToLower().Trim().Contains(keyword.ToLower().Trim()) ||
+                                                        n.Type.ToLower().Trim().Contains(keyword.ToLower().Trim()));
         }
+
 
         public async Task<ServiceResponse<List<Customer>>> SortFieldCustomer(string sortBy)
         {
