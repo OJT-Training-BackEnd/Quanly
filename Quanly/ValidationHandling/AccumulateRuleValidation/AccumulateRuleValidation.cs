@@ -99,22 +99,6 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
         public string ValidateUpdateAccumulateRule(AccumulatePointsRule accupointrule)
         {
 
-            if (string.IsNullOrEmpty(accupointrule.Code))
-                return "Please enter the code";
-
-            if (accupointrule.Code.Count() > 10)
-                return "Please enter the code less than 10";
-            if (accupointrule.Code.Contains("!") || accupointrule.Code.Contains("@")
-                || accupointrule.Code.Contains("#") || accupointrule.Code.Contains("$")
-                || accupointrule.Code.Contains("%") || accupointrule.Code.Contains("^")
-                || accupointrule.Code.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-            /*var codeExist = _dataContext.AccumulatePointsRules.FirstOrDefault(x => x.Code == accupointrule.Code);
-            if (codeExist != null)
-                return "The AccumulateRule Code has duplicate";*/
-
             if (string.IsNullOrEmpty(accupointrule.Name))
                 return "Please enter the Name";
 
