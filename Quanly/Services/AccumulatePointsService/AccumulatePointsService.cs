@@ -268,7 +268,7 @@ namespace Quanly.Services.AccumulatePointsService
             var memberCard = await _dataContext.MemberCards
                 .Include(x => x.Customer)
                 .FirstOrDefaultAsync(x => x.CardNumber == accumulatePoint.MemberCards.CardNumber);
-
+            
 
             var customer = await _dataContext.Customers.FirstOrDefaultAsync(x => x.Id == memberCard.Customer.Id);
             var oldPoint = Convert.ToDouble(customer.Points);

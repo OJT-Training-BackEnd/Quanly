@@ -73,8 +73,6 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
             if (acc.ApplyTo <= acc.ApplyFrom)
                 return "The ApplyTo date must be greater than ApplyFrom date";
 
-            if (string.IsNullOrEmpty(acc.Guide))
-                return "Please enter the Guide";
 
             if (string.IsNullOrEmpty(acc.Formula))
                 return "Please enter the Formula";
