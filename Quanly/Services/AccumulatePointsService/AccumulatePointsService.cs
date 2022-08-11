@@ -71,9 +71,9 @@ namespace Quanly.Services.AccumulatePointsService
             };
         }
 
-        public async Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint, int id)
+        public async Task<ServiceResponse<AccumulatePoint>> UpdateAccumulatePoints(AccumulatePoint accumulatePoint)
         {
-            var validate = _validGetAllAccumulatePoints.checkValidateUpdateAccummulatePoint(accumulatePoint, id);
+            var validate = _validGetAllAccumulatePoints.checkValidateUpdateAccummulatePoint(accumulatePoint);
             if (validate != "ok")
             {
                 return new ServiceResponse<AccumulatePoint>
@@ -82,7 +82,7 @@ namespace Quanly.Services.AccumulatePointsService
                     Message = validate
                 };
             }
-            var _accumulatePoint = await _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefaultAsync(x => x.Id == id);
+            var _accumulatePoint = await _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefaultAsync(x => x.Id == accumulatePoint.Id);
             if (_accumulatePoint != null)
             {
                 var _membercard = await _dataContext.MemberCards.Include(x => x.Customer)

@@ -32,13 +32,13 @@ namespace Quanly.ValidationHandling.AccumulatePointsValidation
             return "Ok";
         }
  
-        public string checkValidateUpdateAccummulatePoint(AccumulatePoint accumulatePoint, int id)
+        public string checkValidateUpdateAccummulatePoint(AccumulatePoint accumulatePoint)
         {
-            if (id == null || id == 0)
+            if (accumulatePoint.Id == null || accumulatePoint.Id == 0)
             {
                 return "Id can not be null";
             }
-            var _accumulatePoint =  _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefault(x => x.Id == id);
+            var _accumulatePoint =  _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefault(x => x.Id == accumulatePoint.Id);
             if (_accumulatePoint == null)
             {
                 return "Accumulate Point has null";
@@ -56,7 +56,7 @@ namespace Quanly.ValidationHandling.AccumulatePointsValidation
             if (accumulatePoint.Reason.Count() > 100)
                 return "Please enter reason less than 100";
             
-            return "Ok";
+            return "ok";
         }
 
         public string ValidateAccumulatePointId(int? accumulatePointId)
