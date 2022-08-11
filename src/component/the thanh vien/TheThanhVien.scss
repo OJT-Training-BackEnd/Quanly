@@ -8,6 +8,78 @@ $pri-blue: #0D378C;
     margin-left: 160px;
 }
 
+.ant-popover-arrow {
+  display: none;
+}
+// #TTVConfirm {
+//   .ant-popover-inner-content {
+//     background-color: $light-blue !important;
+//     padding: 12px 16px;
+//     color: rgba(0, 0, 0, 0.85);
+//     width: 500px;
+//     height: 280px;
+//     position: absolute;
+//     background-color: $default;
+//     left: -1000px;
+//     border-radius: 8px;
+//     padding: 0 !important;
+//     .ant-popover-buttons {
+//       text-align: center;
+//       margin-top: 32px;
+//       button {
+//         background-color: $lightest-blue;
+//         opacity: 50%;
+//         width: 80px;
+//         height: 40px;
+//         font-size: 16px;
+//         border: none;
+//         border-radius: 20px;
+//         color: $default;
+//         &:hover {
+//           background-color: $lightest-blue;
+//           opacity: 100%;
+//         }
+//       }
+//       button:nth-child(2) {
+//         background-color: $pri-blue;
+//         opacity: 80%;
+//         width: 80px;
+//         height: 40px;
+//         font-size: 16px;
+//         border: none;
+//         border-radius: 20px;
+//         margin-left: 80px;
+//         &:hover {
+//           background-color: $pri-blue;
+//           opacity: 100%;
+//         }
+//       }
+//     }
+//     .ant-popover-message {
+//       color: $default;
+//       margin-top: 24px;
+//       text-align: center;
+//       font-weight: 600;
+//       font-size: 20px;
+//       background-color: $pri-blue;
+//       .ant-popover-message-title {
+//         background-color: $pri-blue;
+//         margin-top: 80px;
+//         padding: 8px;
+//       }
+//     }
+//     svg {
+//       font-size: 64px;
+//       margin-top: 12px;
+//       margin-left: -24px;
+//     }
+//   }
+// }
+
+.inputTextTTV {
+  color: $default;
+  font-size: 20px;
+}
 #Container {
   display: inline-flex;
   .ant-input-group > .ant-input:first-child {

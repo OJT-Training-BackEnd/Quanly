@@ -1,48 +1,118 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Input, Button, Space, Table, Pagination, Col, Row, Checkbox, Spin } from "antd";
+import { Input, Button, Space, Table, Pagination, Col, Row, Checkbox, Spin, Popconfirm } from "antd";
 import { UserOutlined, SearchOutlined, EditFilled, DeleteFilled } from "@ant-design/icons";
 import "./CSTD.scss";
 import Highlighter from "react-highlight-words";
 import ThemMoiCSTD from "./ThemMoiCSTD";
 import MenuProjectManage from "../menu/Menu";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Search } = Input;
-const onSearch = (value) => console.log(value);
-
-const data = [];
 
 function CSTD() {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const [datas, setDatas] = useState([]);
   const [loading, setloading] = useState(true);
-  
-  const onSearch = (value) => console.log(value);
+
 
   useEffect(() => {
     getData();
   }, []);
+
+  const getAccumulateRuleById = (id) => {
+    axios.get(`https://localhost:7145/api/AccumulateRule/GetAccumulateRuleById/${id}`).then(res => {
+      navigate('/chinhsuachinhsachtichdiem', {state: {
+        idEdit: id,
+        codeEdit: res.data.data.code,
+        nameEdit: res.data.data.name,
+        applyFromEdit: res.data.data.applyFrom,
+        applyToEdit: res.data.data.applyTo,
+        noteEdit: res.data.data.note,
+        importer: res.data.data.importer,
+        dateAdded: res.data.data.dateAdded,
+      }})
+    })
+  }
+
   const getData = async () => {
-    await axios.get("https://localhost:7145/api/AccumulateRule/accumulaterule").then(
+    await axios.get("https://localhost:7145/api/AccumulateRule/GetAllAccumulateRule").then(
       res => {
         setloading(false);
         setDatas(
           res.data.data.map(row => ({
-            ma: row.code,
+            id: row.id,
+            ma: row.code === null ? "-" : row.code,
             ten: row.name,
             apdungtu: row.applyFrom === null ? "-" : row.applyFrom,
             apdungden: row.applyTo === null ? "-" : row.applyTo,
             ghichu: row.note === null ? "-" : row.note,
-            sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
-            xoa: <DeleteFilled style={{color: '#0D378C', fontSize: '20px'}}/>
+            sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} onClick={() => getAccumulateRuleById(row.id)} />,
+            xoa: (
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => onCSTD(row.id)}
+              >
+                <DeleteFilled
+                  key={row.id}
+                  style={{ color: "#0D378C", fontSize: "20px" }}
+                />
+              </Popconfirm>
+            ),
           }))
         );
         console.log(res.data);
       }
     );
+  };
+
+  const onSearch = (value) => {
+    if (value == '') {
+      getData();
+    } else {
+      axios.get( `https://localhost:7145/api/AccumulateRule/SearchAccumulatePointRule/${value}`)
+      .then((res) => {
+        console.log(res.data.success);
+        if (res.data.data === null) {
+          setDatas([]);
+        } else {
+          setloading(false);
+          setDatas(
+            res.data.data.map(row => ({
+              id: row.id,
+              ma: row.code === null ? "-" : row.code,
+              ten: row.name,
+              apdungtu: row.applyFrom === null ? "-" : row.applyFrom,
+              apdungden: row.applyTo === null ? "-" : row.applyTo,
+              ghichu: row.note === null ? "-" : row.note,
+              sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
+              xoa: (
+                <Popconfirm
+                  title="Sure to delete?"
+                  onConfirm={() => onCSTD(row.id)}
+                >
+                  <DeleteFilled
+                    key={row.id}
+                    style={{ color: "#0D378C", fontSize: "20px" }}
+                  />
+                </Popconfirm>
+              ),
+            }))
+          )
+        }
+      });
+    }
+  }
+
+  const onCSTD = (id) => {
+    axios
+      .delete(`https://localhost:7145/api/AccumulateRule/DeleteAccumulateRule/${id}`)
+      .then(() => {
+        getData();
+      });
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -219,7 +289,7 @@ function CSTD() {
             <Spin size="large" />
           ) : (
           <Table id="table" columns={columns} dataSource={datas} pagination={{position: ["bottomLeft"]}}/>
-          )};
+          )}
         </Col>
       </Row>
     </>

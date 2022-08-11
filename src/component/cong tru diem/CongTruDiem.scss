@@ -38,6 +38,8 @@ $pri-blue: #0d378c;
     }
   }
 
+
+
   .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
     background-color: $default;
     color: $lightest-blue;
@@ -143,6 +145,28 @@ $pri-blue: #0d378c;
 }
 
 .ant-modal-content {
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $blur-blue !important;
+    color: $default;
+    
+  }
+  .ant-select-disabled .ant-select-arrow {
+    color: $blur-blue;
+  }
+  .ant-input-group {
+    margin-left: 242px;
+    .ant-input {
+      width: 700px;
+    }
+  }
+  .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+    height: 30px !important;
+    width: 100px;
+    &:hover {
+      background-color: $default;
+      color: $pri-blue;
+    }
+  }
   padding: 24px 24px;
   margin: 24px 0;
   .ant-modal-title {
@@ -228,6 +252,7 @@ $pri-blue: #0d378c;
     color: $default;
     &:disabled {
       background-color: $blur-blue;
+      color: $default;
     }
   }
   #btn-sothe {

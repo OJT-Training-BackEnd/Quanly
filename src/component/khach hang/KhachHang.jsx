@@ -11,7 +11,8 @@ import {
   message,
   Upload,
   Checkbox,
-  Spin
+  Spin,
+  Popconfirm,
 } from "antd";
 import {
   UserOutlined,
@@ -23,72 +24,218 @@ import {
 import "./KhachHang.scss";
 import Highlighter from "react-highlight-words";
 import MenuProjectManage from "../menu/Menu";
-import { Link } from "react-router-dom";
-import Axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const { Search } = Input;
 
-
 function KhachHang() {
   const [visible4, setVisible4] = useState(false);
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const [datas, setDatas] = useState([]);
   const [loading, setloading] = useState(true);
-  const onSearch = (value) => console.log(value);
+  const [visible, setVisible] = useState(false);
 
-useEffect(() => {
-  getData();
-}, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-const getData = async () => {
-  await Axios.get("https://localhost:7145/api/Customer").then(
-    res => {
+  const getData = async () => {
+    await axios.get("https://localhost:7145/api/Customer").then((res) => {
       setloading(false);
       setDatas(
-        res.data.data.map(row => ({
+        res.data.data.map((row) => ({
+          id: row.id,
           ma: row.code,
           ten: row.customerName,
-          dt: row.phone,
+          dt: row.phone === null ? "-" : row.phone,
           tinh: row.province === null ? "-" : row.province,
-          lkh: row.type,
+          lkh: row.type === null ? "-" : row.type,
           the: row.memberCards === null ? "-" : row.memberCards,
-          nguoinhap: row.importer,
+          nguoinhap: row.importer === null ? "-" : row.importer,
           nhanvien: row.contactPersons === null ? "-" : row.contactPersons,
-          ngayt: row.dateOfRecord,
-          active: row.isActive === true ? <Checkbox style={{marginLeft: '18px'}} defaultChecked disabled /> : <Checkbox style={{marginLeft: '18px'}} defaultChecked={false} disabled />,
-          sua: <EditFilled style={{color: '#3e588c', fontSize: '20px'}} />,
-          xoa: <DeleteFilled style={{color: '#0D378C', fontSize: '20px'}}/>
+          ngayt: row.dateOfRecord === null ? "-" : row.dateOfRecord,
+          active:
+            row.isActive === true ? (
+              <Popconfirm
+                title="Inactive this?"
+                onConfirm={() => inActiveMemberCard(row.id)}
+              >
+                <Checkbox style={{ marginLeft: "18px" }} defaultChecked />
+              </Popconfirm>
+            ) : (
+              <Popconfirm
+                title="Active this?"
+                onConfirm={() => inActiveMemberCard(row.id)}
+              >
+                <Checkbox style={{ marginLeft: "18px" }} defaultChecked={false} />
+              </Popconfirm>
+            ),
+          sua: <EditFilled style={{ color: "#3e588c", fontSize: "20px" }} onClick={() => getDataToUpdate(row.id)} />,
+          xoa: (
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => onDeleteKhachHang(row.id)}
+            >
+              <DeleteFilled
+                key={row.id}
+                style={{ color: "#0D378C", fontSize: "20px" }}
+              />
+            </Popconfirm>
+          ),
         }))
       );
       console.log(res.data);
+    });
+  };
+
+  const inActiveMemberCard = (id) => {
+    axios
+      .put(`https://localhost:7145/api/Customer/Active/InactiveCustomer/${id}`)
+      .then((res) => {
+        if (res.data.success) {
+          message.success(res.data.message);
+          getData();
+        } else {
+          message.error(res.data.message);
+        }
+      });
+  };
+
+  const getDataToUpdate = (id) => {
+    axios
+      .get(`https://localhost:7145/api/Customer/GetCustomerById/${id}`)
+      .then((res) => {
+        navigate('/chinhsuakhachhang', {state: {
+          idEdit: id,
+          importerEdit: res.data.data.importer,
+          customerNameEdit: res.data.data.customerName,
+          noteEdit: res.data.data.note,
+          codeEdit: res.data.data.code,
+          addressEdit: res.data.data.address,
+          typeEdit: res.data.data.type,
+          emailEdit: res.data.data.email,
+          birthDateEdit: res.data.data.birthDate,
+          identityCardEdit: res.data.data.identityCard,
+          issueDateEdit: res.data.data.issueDate,
+          companyNameEdit: res.data.data.companyName,
+          companyPhoneEdit: res.data.data.companyPhone,
+          contactEdit: res.data.data.contact,
+          positionEdit: res.data.data.position,
+          provinceEdit: res.data.data.province,
+          districtEdit: res.data.data.district,
+          languageEdit: res.data.data.language,
+          ageEdit: res.data.data.age,
+          dateOfRecordEdit: res.data.data.dateOfRecord,
+          pointsEdit: res.data.data.points,
+          isActiveEdit: res.data.data.isActive
+        }
+      });
+  })};
+
+  const onSearch = (value) => {
+    if (value == '') {
+      getData();
+    } else {
+      axios.get( `https://localhost:7145/api/Customer/SearchName/${value}`)
+      .then((res) => {
+        console.log(res.data.success);
+        if (res.data.data === null) {
+          setDatas([]);
+        } else {
+          setloading(false);
+          setDatas(
+            res.data.data.map((row) => ({
+              id: row.id,
+              ma: row.code,
+              ten: row.customerName,
+              dt: row.phone === null ? "-" : row.phone,
+              tinh: row.province === null ? "-" : row.province,
+              lkh: row.type === null ? "-" : row.type,
+              the: row.memberCards === null ? "-" : row.memberCards,
+              nguoinhap: row.importer === null ? "-" : row.importer,
+              nhanvien: row.contactPersons === null ? "-" : row.contactPersons,
+              ngayt: row.dateOfRecord === null ? "-" : row.dateOfRecord,
+              active:
+                row.isActive === true ? (
+                  <Popconfirm
+                    title="Inactive this?"
+                    onConfirm={() => console.log("hi")}
+                  >
+                    <Checkbox style={{ marginLeft: "18px" }} defaultChecked />
+                  </Popconfirm>
+                ) : (
+                  <Popconfirm
+                    title="Active this?"
+                    onConfirm={() => console.log("hi")}
+                  >
+                    <Checkbox style={{ marginLeft: "18px" }} defaultChecked={false} />
+                  </Popconfirm>
+                ),
+              sua: <EditFilled style={{ color: "#3e588c", fontSize: "20px" }} />,
+              xoa: (
+                <Popconfirm
+                  title="Sure to delete?"
+                  onConfirm={() => onDeleteKhachHang(row.id)}
+                >
+                  <DeleteFilled
+                    key={row.id}
+                    style={{ color: "#0D378C", fontSize: "20px" }}
+                  />
+                </Popconfirm>
+              ),
+            }))
+          )
+        }
+      });
     }
-  );
-};
-const props = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  }
 
-  onChange(info) {
-    const { status } = info.file;
+  const onDeleteKhachHang = (id) => {
+    axios.delete(`https://localhost:7145/api/Customer/${id}`).then(() => {
+      getData();
+    });
+  };
 
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
+  const props = {
+    name: "file",
+    multiple: true,
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
 
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
+    onChange(info) {
+      const { status } = info.file;
 
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-};
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
+
+  const showPopconfirm = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -334,7 +481,12 @@ const props = {
           {loading ? (
             <Spin size="large" />
           ) : (
-          <Table columns={columns} pagination={{position: ["bottomLeft"]}} dataSource={datas} />)}
+            <Table
+              columns={columns}
+              pagination={{ position: ["bottomLeft"] }}
+              dataSource={datas}
+            />
+          )}
         </Col>
       </Row>
     </>
