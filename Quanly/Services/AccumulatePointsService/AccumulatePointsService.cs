@@ -317,13 +317,15 @@ namespace Quanly.Services.AccumulatePointsService
                     Message = resultAfterValidate
                 };
             }
-
-            var accumulatePoint = await _dataContext.AccumulatePoints.FindAsync(accumulatePointId);
+            var _accumulatePoint = await _dataContext.AccumulatePoints.Include(x => x.MemberCards).FirstOrDefaultAsync(x => x.Id == accumulatePointId);
+            var _membercard = await _dataContext.MemberCards.Include(x => x.Customer)
+                    .FirstOrDefaultAsync(x => x.CardNumber == _accumulatePoint.MemberCards.CardNumber);
+          /*  var accumulatePoint = await _dataContext.AccumulatePoints.FindAsync(accumulatePointId);*/
             return new ServiceResponse<AccumulatePoint>
             {
                 Success = true,
                 Message = "Get transaction successfully",
-                Data = accumulatePoint
+                Data = _accumulatePoint
             };
         }
     }
