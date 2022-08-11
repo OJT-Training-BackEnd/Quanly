@@ -165,7 +165,6 @@ namespace Quanly.Services.MemberCardsService
                 };
             }
             var cardExits = await _context.MemberCards.FirstOrDefaultAsync(x => x.Id == newMemberCard.Id);
-            cardExits.CardNumber = newMemberCard.CardNumber;
             cardExits.Reason = newMemberCard.Reason;
             cardExits.IssueDate = newMemberCard.IssueDate;
             cardExits.EffectDate = newMemberCard.EffectDate;

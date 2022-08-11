@@ -95,6 +95,7 @@ namespace Quanly.Services.AccumulatePointsService
                     _accumulatePoint.Type = accumulatePoint.Type;
                     _accumulatePoint.Money = accumulatePoint.Money;
                     _accumulatePoint.Shop = accumulatePoint.Shop;
+                    _accumulatePoint.Note = accumulatePoint.Note;
                     //Update Points
                     var customOldPoint = Convert.ToDouble(_membercard.Customer.Points);// Diem khach hang hien tai
                     
@@ -137,7 +138,7 @@ namespace Quanly.Services.AccumulatePointsService
                         else if (accumulatePoint.Type.Equals("CONG"))
                         {
                             var money = Convert.ToDouble(accumulatePoint.Money);
-                            var newPoint = money / 1000;
+                            var newPoint = money / 100;
 
                             if(oldPoint < newPoint)
                             {
