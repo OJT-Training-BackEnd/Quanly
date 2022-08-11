@@ -29,9 +29,9 @@ namespace Quanly.Controllers
         }
 
         [HttpPut("UpdateAccumulatePoint")]
-        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> UpdatePoint(AccumulatePoint accumulatePoint, int id)
+        public async Task<ActionResult<ServiceResponse<AccumulatePoint>>> UpdatePoint(AccumulatePoint accumulatePoint)
         {
-            return Ok(await _AccumulatePointsService.UpdateAccumulatePoints(accumulatePoint, id));
+            return Ok(await _AccumulatePointsService.UpdateAccumulatePoints(accumulatePoint));
         }
 
         /*[HttpGet("SearchAccumulatePoint/{cardNumber}")]
