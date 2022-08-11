@@ -1,0 +1,124 @@
+$lightest-blue: #bbd3f2;
+$blur-blue: #3e588c;
+$default: #fff;
+
+* {
+  font-family: "Inter";
+  font-style: normal;
+}
+
+#menu {
+  a {
+    color: rgba(255, 255, 255, 0.356);
+    &:hover {
+      color: $default;
+      padding: 8px;
+    }
+  }
+
+  .ant-layout-sider-children {
+    height: 1250px;
+  }
+
+  display: inline-block;
+  float: left;
+  .ant-menu-submenu-title {
+    color: #ffffff;
+    background: #77a1d9;
+    margin: 0 !important;
+    height: 69px !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    width: 274px;
+    height: 131px;
+    left: 0px;
+    top: 0px;
+  }
+
+  .ant-menu-inline.ant-menu-root .ant-menu-item,
+  .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
+    svg {
+      color: $default;
+      font-size: 24px;
+      transform: rotate(90deg);
+    }
+  }
+
+  .site-layout .site-layout-background {
+    background: $blur-blue;
+  }
+
+  .ant-layout-sider-children {
+    background-color: $blur-blue;
+    width: 300px;
+  }
+
+  .ant-menu-sub.ant-menu-inline {
+    background-color: #0d378c;
+    color: $default;
+    padding: 12px 24px 100px 24px;
+    font-size: 20px;
+    svg {
+      color: rgba(255, 255, 255, 0.356) !important;
+      transform: rotate(-360deg) !important;
+    }
+    li {
+      padding: 0 !important;
+      margin-top: 24px !important;
+      text-indent: 8px;
+      background-color: #0d378c;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.356);
+      color: rgba(255, 255, 255, 0.356);
+      &:hover {
+        background-color: #0d378c;
+        color: #fff;
+      }
+    }
+  }
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #0d378c;
+    color: #fff;
+    svg {
+      color: $default !important;
+      transform: rotate(-360deg) !important;
+    }
+  }
+
+  li.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child {
+    background-color: #0d378c !important;
+    border: none;
+    border-bottom: 1px solid $default;
+    color: $default;
+  }
+
+  .ant-menu-inline .ant-menu-selected::after,
+  .ant-menu-inline .ant-menu-item-selected::after {
+    border: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 0 !important;
+  }
+}
+
+#menu .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  border-bottom: 1px solid $default;
+  a {
+    color: $default;
+  }
+}
+
+#menu .ant-menu-sub.ant-menu-inline li {
+  svg {
+    &:hover {
+      color: $default;
+    }
+  }
+}

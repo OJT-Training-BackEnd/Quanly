@@ -1,0 +1,345 @@
+$default: #fff;
+$lightest-blue: #bbd3f2;
+$blur-blue: #3e588c;
+$light-blue: #77a1d9;
+$pri-blue: #0d378c;
+
+#CTDColContainer {
+    margin-left: 160px;
+}
+#Container {
+  display: inline-flex;
+  .ant-input-group > .ant-input:first-child {
+    width: 383px;
+    background-color: $lightest-blue;
+    color: $default;
+    border-radius: 12px 0 0 12px;
+    text-indent: 12px;
+    font-size: 16px;
+    margin-top: 65px;
+    height: 56px;
+    &::placeholder {
+      color: $light-blue;
+    }
+  }
+
+  .ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button {
+    margin-top: 65px;
+    width: 56px;
+    background-color: $lightest-blue;
+    height: 56px;
+    border-radius: 0 12px 12px 0;
+    .anticon svg {
+      color: $pri-blue;
+      font-size: 20px;
+    }
+  }
+
+
+
+  .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+    background-color: $default;
+    color: $lightest-blue;
+    margin-top: 65px;
+  }
+
+  .ant-btn-primary {
+    background-color: $lightest-blue;
+    margin-top: 65px;
+    height: 56px;
+    font-size: 20px;
+    left: 642px;
+    margin-right: 40px;
+    width: 180px;
+    border-radius: 20px;
+    color: $pri-blue;
+    font-weight: 500;
+    border: none;
+    &:hover {
+      background-color: $pri-blue;
+      color: $lightest-blue;
+    }
+  }
+  .anticon-user {
+    position: absolute;
+    margin-top: 72px;
+    width: 48px;
+    height: 48px;
+    right: 56px;
+    background-color: $pri-blue;
+    font-size: 28px;
+    padding-top: 12px;
+    color: $default;
+    border-radius: 50%;
+  }
+}
+#titleCongTruDiem {
+  border-bottom: 1px solid $pri-blue;
+  color: $pri-blue;
+  margin-top: 40px;
+  text-indent: 8px;
+  font-weight: 600;
+  font-size: 24px;
+  width: 1521px;
+}
+
+.ant-table table {
+  width: 1521px;
+  .ant-table-thead th {
+    height: 50px;
+    background-color: $pri-blue;
+    color: $lightest-blue;
+    font-size: 16px;
+    font-weight: 600;
+    &:hover {
+      background-color: $light-blue;
+      color: $pri-blue;
+    }
+  }
+  .ant-table-column-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20px;
+    white-space: nowrap;
+  }
+}
+
+.ant-table-container table > thead > tr:first-child th:first-child {
+  border-radius: 20px 0 0 0;
+}
+
+.ant-table-container table > thead > tr:first-child th:last-child {
+  border-radius: 0 20px 0 0;
+}
+
+.ant-pagination {
+  margin-left: 1050px;
+}
+.ant-pagination-prev .ant-pagination-item-link {
+  color: $pri-blue;
+  border: none;
+}
+
+.ant-pagination-next .ant-pagination-item-link {
+  color: $pri-blue;
+  border: none;
+}
+
+.ant-pagination-item {
+  border: none;
+  a {
+    color: $pri-blue;
+    font-weight: 300;
+  }
+}
+
+.ant-pagination-item-active {
+  background-color: $pri-blue;
+  border-radius: 8px;
+  a {
+    color: $default;
+  }
+}
+
+.ant-modal-content {
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $blur-blue !important;
+    color: $default;
+    
+  }
+  .ant-select-disabled .ant-select-arrow {
+    color: $blur-blue;
+  }
+  .ant-input-group {
+    margin-left: 242px;
+    .ant-input {
+      width: 700px;
+    }
+  }
+  .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+    height: 30px !important;
+    width: 100px;
+    &:hover {
+      background-color: $default;
+      color: $pri-blue;
+    }
+  }
+  padding: 24px 24px;
+  margin: 24px 0;
+  .ant-modal-title {
+    color: $pri-blue;
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 12px;
+  }
+  .ant-modal-body {
+    background-color: $pri-blue;
+    margin: 12px 0;
+    color: $default;
+    font-size: 20px;
+  }
+  #chonNgay,
+  #soThe,
+  #khachHang {
+    margin-right: 40px;
+    margin-left: 20px;
+  }
+  .ant-picker-range {
+    width: 500px;
+    margin-top: 16px;
+  }
+  .ant-input {
+    width: 400px;
+    margin-top: 24px;
+  }
+  #nhapKhachHang {
+    width: 490px;
+    margin-bottom: 16px;
+  }
+  .ant-modal-footer {
+    text-align: center;
+  }
+  .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+    border-radius: 20px;
+    background-color: $light-blue;
+    border: none;
+    color: $pri-blue;
+    font-weight: 600;
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    margin-top: 24px;
+    &:hover {
+      background-color: $pri-blue;
+      color: $default;
+      font-weight: 500;
+    }
+  }
+  .ant-btn {
+    border-radius: 20px;
+    background-color: $lightest-blue;
+    border: none;
+    color: $blur-blue;
+    font-weight: 600;
+    font-size: 20px;
+    width: 80px;
+    height: 40px;
+    &:hover {
+      background-color: $pri-blue;
+      color: $default;
+      font-weight: 500;
+    }
+  }
+}
+.inputFormDieuChinh {
+  margin-top: 24px;
+  .ant-modal-body {
+    position: relative;
+    clear: both;
+  }
+  div {
+    clear: both;
+  }
+  .ant-input {
+    float: right;
+    width: 800px;
+    margin: 0;
+    border-radius: 4px;
+    background-color: $pri-blue;
+    color: $default;
+    &:disabled {
+      background-color: $blur-blue;
+      color: $default;
+    }
+  }
+  #btn-sothe {
+    position: absolute;
+    right: 48px;
+    width: 120px;
+    height: 36px;
+    font-size: 16px;
+    background-color: $blur-blue;
+    color: $default;
+    font-weight: 400;
+    &:hover {
+      background-color: $light-blue;
+    }
+  }
+}
+#loai {
+  display: flex;
+  margin-top: 24px;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: $pri-blue;
+  color: $default;
+}
+
+.ant-select-arrow {
+  color: $default;
+}
+
+.ant-picker-suffix {
+  color: $default;
+}
+
+#audit {
+  border-top: 1px solid $lightest-blue;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+.modalExcel {
+  .ant-modal-body {
+    background-color: $default;
+    padding: 0;
+    .ant-upload.ant-upload-drag .ant-upload-drag-container {
+      .anticon svg {
+        font-size: 56px;
+        margin-bottom: 24px;
+        color: $pri-blue;
+      }
+      button {
+        margin-top: 8px;
+        width: 200px;
+        border-radius: 8px;
+        color: $default;
+        background-color: $blur-blue;
+        font-weight: 400;
+        border: none;
+        &:hover {
+          background-color: $pri-blue;
+        }
+      }
+    }
+    p {
+      font-size: 16px;
+      font-weight: 600;
+      color: $pri-blue;
+      line-height: 36px;
+    }
+    
+  }
+  #dragExcel {
+    height: 306px;
+  }
+  .ant-modal-content .ant-modal-footer {
+    text-align: right;
+    margin-top: 70px;
+  }
+  .ant-btn {
+    width: 260px;
+  }
+
+  .ant-upload-list {
+    height: 70px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      display: none; 
+    }
+  }
+}
