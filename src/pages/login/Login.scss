@@ -1,0 +1,168 @@
+$lightest-blue: #bbd3f2;
+$blur-blue: #3e588c;
+
+#login {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  #loginLeft {
+    position: absolute;
+    width: 1036px;
+    height: 927px;
+    left: 92px;
+    top: 77px;
+    background: $lightest-blue;
+    border-radius: 0px;
+    #loginLeftInsideOut {
+      box-sizing: border-box;
+      position: absolute;
+      width: 999px;
+      height: 899px;
+      left: 16px;
+      top: 12px;
+      border: 1px solid #ffffff;
+    }
+    #loginLeftInside {
+      box-sizing: border-box;
+      position: absolute;
+      width: 850px;
+      height: 563px;
+      right: 0;
+      top: 168px;
+      border-width: 1px 0px 1px 1px;
+      border-style: solid;
+      border-color: #ffffff;
+      img {
+        width: 95%;
+        position: absolute;
+        right: 8px;
+        top: 12px;
+      }
+    }
+  }
+  
+  #loginRight {
+    position: absolute;
+    width: 765px;
+    height: 927px;
+    left: 1128px;
+    top: 77px;
+    background: $blur-blue;
+    border-radius: 0px;
+    #loginRightInsideOut {
+      box-sizing: border-box;
+      position: absolute;
+      width: 732px;
+      height: 899px;
+      left: 16px;
+      top: 12px;
+      border: 1px solid #ffffff;
+      h2 {
+        text-align: center !important;
+        color: #ffffff;
+        font-size: 48px;
+        margin-top: 140px;
+      }
+    }
+  }
+  
+  .ant-form {
+    position: absolute;
+    .ant-form-item-label > label {
+      color: #ffffff;
+      font-size: 32px;
+      margin-right: 260px;
+      left: 42px;
+      top: 20px;
+      margin-top: 40px;
+    }
+    input {
+      font-size: 28px;
+      background-color: $blur-blue;
+      color: #ffffff;
+      margin-top: 48px;
+      background-color: $blur-blue;
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      width: 420px;
+    }
+    #inputPassword {
+      border: none;
+    }
+    .ant-input-affix-wrapper {
+      width: 420px;
+      background-color: $blur-blue;
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      .ant-input {
+        font-size: 28px;
+        background-color: $blur-blue;
+        color: #ffffff;
+      }
+      .ant-input-suffix {
+        margin-top: 48px;
+        font-size: 24px;
+        .anticon svg {
+          color: #ffffff;
+        }
+      }
+    }
+  
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+      font-size: 28px;
+      background-color: $blur-blue;
+      color: #ffffff;
+      background-color: $blur-blue;
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      width: 420px;
+    }
+    .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+    .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
+      font-size: 28px;
+      background-color: $blur-blue;
+      color: #ffffff;
+      background-color: $blur-blue;
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      width: 420px;
+    }
+    .ant-input-affix-wrapper {
+      width: 420px;
+      background-color: $blur-blue;
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      .ant-input {
+        font-size: 28px;
+        background-color: $blur-blue;
+        color: #ffffff;
+      }
+      .ant-input-suffix {
+        font-size: 24px;
+        .anticon svg {
+          color: #ffffff;
+        }
+      }
+    }
+    .ant-checkbox + span {
+      color: #ffffff;
+      margin: 20px 0;
+      font-size: 16px;
+    }
+    button {
+      background: rgba(119, 161, 217, 0.5);
+      border-radius: 20px;
+      width: 186px;
+      height: 66px;
+      font-size: 32px;
+      margin-top: 24px;
+      margin-left: 24px;
+      border: none;
+      &:hover {
+        background-color: #0D378C;
+      }
+    }
+  }
+}
+
