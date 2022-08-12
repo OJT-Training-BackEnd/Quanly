@@ -20,18 +20,18 @@ using Quanly.Models.AccumulatePointsRules;
 using Quanly.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-/*var server = builder.Configuration["DBServer"] ?? "localhost";
+var server = builder.Configuration["DBServer"] ?? "localhost";
 var port = builder.Configuration["DBPort"] ?? "11433";
 var user = builder.Configuration["DBUser"] ?? "sa";
 var password = builder.Configuration["DBPassword"] ?? "Supercoolpassword123!";
 var database = builder.Configuration["Database"] ?? "quanly";
 // Add services to the container.
-/*builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer($"Server={server};Database={database};Uid={user};Password={password}"));*/
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder
-    .Configuration
-    .GetConnectionString("DefaultConnection")));
+    options.UseSqlServer($"Server={server};Database={database};Uid={user};Password={password}"));
+// builder.Services.AddDbContext<DataContext>(options =>
+//     options.UseSqlServer(builder
+//     .Configuration
+//     .GetConnectionString("DefaultConnection")));
 
 /*Console.WriteLine($"Server={server},{port};Initial Catalog={database};Uid={user};Password={password}");*/
 builder.Services.AddControllers();
