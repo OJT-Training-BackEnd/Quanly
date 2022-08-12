@@ -138,7 +138,7 @@ namespace Quanly.Services.AccumulatePointsService
                         else if (accumulatePoint.Type.Equals("CONG"))
                         {
                             var money = Convert.ToDouble(accumulatePoint.Money);
-                            var newPoint = money / 100;
+                            var newPoint = money / 1000;
 
                             if(oldPoint < newPoint)
                             {
