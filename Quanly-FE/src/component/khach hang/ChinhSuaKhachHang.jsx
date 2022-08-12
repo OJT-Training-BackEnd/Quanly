@@ -150,6 +150,7 @@ const ChinhSuaKhachHang = () => {
 
     const updateData = () => {
         const data = {
+            id: id,
             customerName: customerName,
             importer: importer,
             note: note,
@@ -173,7 +174,7 @@ const ChinhSuaKhachHang = () => {
             isActive: isActive,
         }
         console.log(data);
-        axios.put(`http://localhost:7145/api/Customer/Update-User`, data).then(res => {
+        axios.put(`https://localhost:7145/api/Customer/Update-User`, data).then(res => {
             if (res.data.success) {
                 message.success(res.data.message);
                 navigate('/khachhang');

@@ -91,9 +91,6 @@ namespace Quanly.ValidationHandling.AccumulateRuleValidation
                 return "Fomula is not valid";
             }
 
-            if (string.IsNullOrEmpty(acc.Note))
-                return "Please enter the note";
-
             return "ok";
         }
         public string ValidateUpdateAccumulateRule(AccumulatePointsRule accupointrule)

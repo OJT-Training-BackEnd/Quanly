@@ -24,7 +24,7 @@ function CSTD() {
   }, []);
 
   const getAccumulateRuleById = (id) => {
-    axios.get(`http://localhost:7145/api/AccumulateRule/GetAccumulateRuleById/${id}`).then(res => {
+    axios.get(`https://localhost:7145/api/AccumulateRule/GetAccumulateRuleById/${id}`).then(res => {
       navigate('/chinhsuachinhsachtichdiem', {state: {
         idEdit: id,
         codeEdit: res.data.data.code,
@@ -39,7 +39,7 @@ function CSTD() {
   }
 
   const getData = async () => {
-    await axios.get("http://localhost:7145/api/AccumulateRule/GetAllAccumulateRule").then(
+    await axios.get("https://localhost:7145/api/AccumulateRule/GetAllAccumulateRule").then(
       res => {
         setloading(false);
         setDatas(
@@ -73,7 +73,7 @@ function CSTD() {
     if (value == '') {
       getData();
     } else {
-      axios.get( `http://localhost:7145/api/AccumulateRule/SearchAccumulatePointRule/${value}`)
+      axios.get( `https://localhost:7145/api/AccumulateRule/SearchAccumulatePointRule/${value}`)
       .then((res) => {
         console.log(res.data.success);
         if (res.data.data === null) {
@@ -109,7 +109,7 @@ function CSTD() {
 
   const onCSTD = (id) => {
     axios
-      .delete(`http://localhost:7145/api/AccumulateRule/DeleteAccumulateRule/${id}`)
+      .delete(`https://localhost:7145/api/AccumulateRule/DeleteAccumulateRule/${id}`)
       .then(() => {
         getData();
       });

@@ -33,7 +33,7 @@ function ThemMoiCSTD() {
     };
     axios
       .post(
-        `http://localhost:7145/api/AccumulateRule/AddNewAcumulateRule`,
+        `https://localhost:7145/api/AccumulateRule/AddNewAcumulateRule`,
         data
       )
       .then((res) => {
@@ -61,7 +61,7 @@ function ThemMoiCSTD() {
   const getAccumulateRuleById = (idRule) => {
     axios
       .get(
-        `http://localhost:7145/api/AccumulateRule/GetAccumulateRuleById/${idRule}`
+        `https://localhost:7145/api/AccumulateRule/GetAccumulateRuleById/${idRule}`
       )
       .then((res) => {
         console.log(res.data.data);

@@ -127,7 +127,7 @@ const ThemMoiKhachHang = () => {
       isActive: isActive,
     };
     await axios
-      .post(`http://localhost:7145/api/Customer/Add-User`, dataTMKH)
+      .post(`https://localhost:7145/api/Customer/Add-User`, dataTMKH)
       .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);

@@ -11,9 +11,7 @@ namespace Quanly.Models.Customers
         public string? Code { get; set; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
         public string? Type { get; set; } = string.Empty;
-        [StringLength(11, MinimumLength = 10)]
         public string? Phone { get; set; }
-        [StringLength(11, MinimumLength = 10)]
         public string? TelePhone { get; set; }
         public string? Email { get; set; } = string.Empty;
         public string? Fax { get; set; } = string.Empty;
@@ -23,7 +21,6 @@ namespace Quanly.Models.Customers
         public string? IdentityCard { get; set; } = string.Empty;
         public DateTime? IssueDate { get; set; }
         public string? CompanyName { get; set; } = string.Empty;
-        [StringLength(11, MinimumLength = 10)]
         public string? CompanyPhone { get; set; }
         public string? Contact { get; set; } = string.Empty;
         public string? Position { get; set; } = string.Empty;
