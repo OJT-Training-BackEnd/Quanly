@@ -44,7 +44,7 @@ function KhachHang() {
   }, []);
 
   const getData = async () => {
-    await axios.get("http://localhost:7145/api/Customer").then((res) => {
+    await axios.get("https://localhost:7145/api/Customer").then((res) => {
       setloading(false);
       setDatas(
         res.data.data.map((row) => ({
@@ -94,7 +94,7 @@ function KhachHang() {
 
   const inActiveMemberCard = (id) => {
     axios
-      .put(`http://localhost:7145/api/Customer/Active/InactiveCustomer/${id}`)
+      .put(`https://localhost:7145/api/Customer/Active/InactiveCustomer/${id}`)
       .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
@@ -107,7 +107,7 @@ function KhachHang() {
 
   const getDataToUpdate = (id) => {
     axios
-      .get(`http://localhost:7145/api/Customer/GetCustomerById/${id}`)
+      .get(`https://localhost:7145/api/Customer/GetCustomerById/${id}`)
       .then((res) => {
         navigate('/chinhsuakhachhang', {state: {
           idEdit: id,
@@ -140,7 +140,7 @@ function KhachHang() {
     if (value == '') {
       getData();
     } else {
-      axios.get( `http://localhost:7145/api/Customer/SearchName/${value}`)
+      axios.get( `https://localhost:7145/api/Customer/SearchName/${value}`)
       .then((res) => {
         console.log(res.data.success);
         if (res.data.data === null) {
@@ -195,7 +195,7 @@ function KhachHang() {
   }
 
   const onDeleteKhachHang = (id) => {
-    axios.delete(`http://localhost:7145/api/Customer/${id}`).then(() => {
+    axios.delete(`https://localhost:7145/api/Customer/${id}`).then(() => {
       getData();
     });
   };
@@ -203,7 +203,7 @@ function KhachHang() {
   const props = {
     name: "file",
     multiple: true,
-    action: "http://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
 
     onChange(info) {
       const { status } = info.file;

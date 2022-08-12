@@ -70,56 +70,10 @@ namespace Quanly.ValidationHandling.CustomerValidation
             {
                 return "Please do not enter special character or sql query";
             }
-            if (customer.Address.Contains('!') || customer.Address.Contains("@")
-            || customer.Address.Contains("#") || customer.Address.Contains("$")
-            || customer.Address.Contains("%") || customer.Address.Contains("^")
-            || customer.Address.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-            if (customer.CompanyName.Contains('!') || customer.CompanyName.Contains("@")
-              || customer.CompanyName.Contains("#") || customer.CompanyName.Contains("$")
-              || customer.CompanyName.Contains("%") || customer.CompanyName.Contains("^")
-              || customer.CompanyName.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-
-            if (customer.Phone.Contains('!') || customer.Phone.Contains("@")
-              || customer.Phone.Contains("#") || customer.Phone.Contains("$")
-              || customer.Phone.Contains("%") || customer.Phone.Contains("^")
-              || customer.Phone.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-            if (IsIdentityCard(customer.Phone) || IsIdentityCard(customer.CompanyPhone) || IsIdentityCard(customer.TelePhone))
-            {
-                return "Please input correct format Phone";
-            }
-            if (customer.Age.Contains('!') || customer.Age.Contains("@")
-            || customer.Age.Contains("#") || customer.Age.Contains("$")
-            || customer.Age.Contains("%") || customer.Age.Contains("^")
-            || customer.Age.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-
-            if (customer.Email.Contains('!') || customer.Email.Contains("@")
-            || customer.Email.Contains("#") || customer.Email.Contains("$")
-            || customer.Email.Contains("%") || customer.Email.Contains("^")
-            || customer.Email.Contains("Select * "))
-            {
-                return "Please do not enter special character or sql query";
-            }
-
+            
             if (String.IsNullOrWhiteSpace(customer.CustomerName) || String.IsNullOrEmpty(customer.CustomerName))
             {
                 return "Customer name can not be null or empty";
-            }
-
-            if (IsValidEmail(customer.Email) == false)
-            {
-                return "Customer Email khong dung format";
             }
 
             return "ok";

@@ -39,7 +39,7 @@ import {
         note: note,
       }
       console.log(data);
-      axios.put(`http://localhost:7145/api/AccumulateRule/UpdateRule`, data).then(res => {
+      axios.put(`https://localhost:7145/api/AccumulateRule/UpdateRule`, data).then(res => {
         if (res.data.success) {
           message.success(res.data.message);
           navigate('/chinhsachtichdiem');

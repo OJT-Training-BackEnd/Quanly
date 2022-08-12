@@ -34,7 +34,7 @@ import axios from "axios";
 
 const props = {
   name: "file",
-  action: "http://www.mocky.io/v2/5cc8019d300000980a055e76",
+  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
   headers: {
     authorization: "authorization-text",
   },
@@ -84,7 +84,7 @@ function CongTruDiem() {
   const [note, setNote] = useState("");
   const [dateAdded, setDateAdded] = useState();
   const [date, setDate] = useState();
-  const [type, setType] = useState("CONG");
+  const [type, setType] = useState("");
   const [money, setMoney] = useState("");
   const [shop, setShop] = useState("");
   const [reason, setReason] = useState("");
@@ -99,7 +99,7 @@ function CongTruDiem() {
 
   const getData = async () => {
     await axios
-      .get("http://localhost:7145/api/ValidPoints/GetAccumulatePointList")
+      .get("https://localhost:7145/api/ValidPoints/GetAccumulatePointList")
       .then((res) => {
         setloading(false);
         setDatas(
@@ -107,7 +107,7 @@ function CongTruDiem() {
             id: row.id,
             ngay: row.date === null ? "-" : row.date,
             sophieu: row.id,
-            lydo: row.reason === null ? "-" : row.reason,
+lydo: row.reason === null ? "-" : row.reason,
             ttv: row.memberCards === null ? "-" : row.memberCards,
             chinhsach:
               row.accumulatePointsRules === null
@@ -143,7 +143,7 @@ function CongTruDiem() {
   const getSoThe = (sothe) => {
     axios
       .get(
-        `http://localhost:7145/api/MemberCard/SearchMemberCardToAddPoint/${sothe}`
+        `https://localhost:7145/api/MemberCard/SearchMemberCardToAddPoint/${sothe}`
       )
       .then((res) => {
         if (res.data.data === null) {
@@ -169,7 +169,7 @@ function CongTruDiem() {
     } else {
       axios
         .get(
-          `http://localhost:7145/api/ValidPoints/SearchAccumulatePoint/${value}`
+          `https://localhost:7145/api/ValidPoints/SearchAccumulatePoint/${value}`
         )
         .then((res) => {
           console.log(res.data.success);
@@ -196,7 +196,7 @@ function CongTruDiem() {
                 sua: (
                   <EditFilled style={{ color: "#3e588c", fontSize: "20px" }} />
                 ),
-                xoa: (
+xoa: (
                   <Popconfirm
                     title="Sure to delete?"
                     onConfirm={() => onCongTruDiem(row.id)}
@@ -332,7 +332,7 @@ function CongTruDiem() {
               width: 90,
             }}
           >
-            Reset
+Reset
           </Button>
           <Button
             type="link"
@@ -464,8 +464,7 @@ function CongTruDiem() {
       width: "5%",
     },
   ];
-
-  const addData = async () => {
+const addData = async () => {
     const dataCTD = {
       date: date,
       reason: reason,
@@ -476,7 +475,7 @@ function CongTruDiem() {
       money: money,
       points:
         point == 0
-          ? parseInt(money / 100).toString()
+          ? parseInt(money / 1000).toString()
           : parseInt(point).toString(),
       shop: "",
       dateAdded: dateAdded,
@@ -484,7 +483,7 @@ function CongTruDiem() {
       note: note,
     };
     await axios.post(
-      `http://localhost:7145/api/ValidPoints/CreateAccumulatePoint`,
+      `https://localhost:7145/api/ValidPoints/CreateAccumulatePoint`,
       dataCTD
     );
     setDatas([dataCTD, ...datas]);
@@ -503,7 +502,7 @@ function CongTruDiem() {
   const onCongTruDiem = (id) => {
     axios
       .delete(
-        `http://localhost:7145/api/ValidPoints/DeleteAccumulatePoint/${id}`
+        `https://localhost:7145/api/ValidPoints/DeleteAccumulatePoint/${id}`
       )
       .then(() => {
         getData();
@@ -512,7 +511,7 @@ function CongTruDiem() {
 
   const getDataToModalUpdate = (id) => {
     axios
-      .get(`http://localhost:7145/api/ValidPoints/GetPointById/${id}`)
+      .get(`https://localhost:7145/api/ValidPoints/GetPointById/${id}`)
       .then((res) => {
         setDatas2(res.data.data);
       });
@@ -531,13 +530,13 @@ function CongTruDiem() {
       money: money,
       points:
         point == 0
-          ? parseInt(money / 100).toString()
+          ? parseInt(money / 1000).toString()
           : parseInt(point).toString(),
       shop: "",
       note: note,
     };
     await axios.put(
-      `http://localhost:7145/api/ValidPoints/UpdateAccumulatePoint`,
+      `https://localhost:7145/api/ValidPoints/UpdateAccumulatePoint`,
       updateCTD
     );
     setDatas([updateCTD, ...datas]);
@@ -558,9 +557,11 @@ function CongTruDiem() {
     if (value === "TRU") {
       setDisabled("disabled");
       setDisabled1("");
+      setType('TRU')
     } else {
       setDisabled("");
       setDisabled1("disabled");
+      setType('CONG')
     }
   };
 
@@ -587,7 +588,7 @@ function CongTruDiem() {
               onOk={handleOk}
               onCancel={handleCancel}
               footer={[
-                <Button key="back" onClick={handleCancel}>
+<Button key="back" onClick={handleCancel}>
                   Hủy
                 </Button>,
                 <Button key="submit" type="primary" onClick={handleOk}>
@@ -670,7 +671,7 @@ function CongTruDiem() {
                 <span class="inputText">Số thẻ</span>
                 <Search
                   placeholder="nhập thẻ thành viên"
-                  onSearch={getSoThe}
+onSearch={getSoThe}
                   style={{ width: 200 }}
                 />
               </div>
@@ -734,12 +735,12 @@ function CongTruDiem() {
               <div id="loai">
                 <span>Loại</span>
                 <Select
-                  defaultValue={type}
+                  value={type}
                   style={{ width: 120, marginLeft: "265px" }}
                   onChange={handleTypeChange}
                 >
-                  <Option value="CONG">CỘNG</Option>
-                  <Option value="TRU">TRỪ</Option>
+                  <Option value="CONG">CONG</Option>
+                  <Option value="TRU">TRU</Option>
                 </Select>
               </div>
               <div class="inputFormDieuChinh">
@@ -750,11 +751,11 @@ function CongTruDiem() {
                   onChange={(e) => setMoney(e.target.value)}
                 />
               </div>
-              <div class="inputFormDieuChinh">
+<div class="inputFormDieuChinh">
                 <span class="inputText">Điểm</span>
                 <Input
                   value={point}
-                  placeholder={money / 100}
+                  placeholder={money / 1000}
                   onChange={(e) => setPoint(e.target.value)}
                   disabled={disabled1}
                 />
@@ -829,7 +830,7 @@ function CongTruDiem() {
               <div class="inputFormDieuChinh">
                 <span class="inputText">Số thẻ</span>
                 <Input
-                  value={
+value={
                     JSON.stringify(datas2) === "{}"
                       ? ""
                       : datas2.memberCards.cardNumber
@@ -871,8 +872,8 @@ function CongTruDiem() {
                   style={{ width: 120, marginLeft: "265px" }}
                   disabled
                 >
-                  <Option value="CONG">CỘNG</Option>
-                  <Option value="TRU">TRỪ</Option>
+                  <Option value="CONG">CONG</Option>
+                  <Option value="TRU">TRU</Option>
                 </Select>
               </div>
               <div class="inputFormDieuChinh">
@@ -887,7 +888,7 @@ function CongTruDiem() {
                 <span class="inputText">Điểm</span>
                 <Input
                   value={point}
-                  placeholder={money / 100}
+                  placeholder={money / 1000}
                   onChange={(e) => setPoint(e.target.value)}
                   disabled={datas2.type === "TRU" ? disabled : disabled1}
                 />
@@ -905,7 +906,7 @@ function CongTruDiem() {
                   <span class="inputText">Người nhập</span>
                   <Input value={importer} disabled />
                 </div>
-                <div class="inputFormDieuChinh">
+<div class="inputFormDieuChinh">
                   <span class="inputText">Ghi chú</span>
                   <Input
                     value={note}

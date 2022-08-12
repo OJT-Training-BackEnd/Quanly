@@ -275,7 +275,7 @@ namespace Quanly.Services.AccumulatePointsService
             var oldPoint = Convert.ToDouble(customer.Points);
             if (customer.Points == null)
                 customer.Points = "0";
-            if (accumulatePoint.Money != null)
+            if (accumulatePoint.Type.Equals("CONG"))
             {
                 oldPoint += Convert.ToDouble(accumulatePoint.Points);
             }

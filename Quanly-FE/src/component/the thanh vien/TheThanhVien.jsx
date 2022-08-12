@@ -62,7 +62,7 @@ function TheThanhVien() {
       getData();
     } else {
       axios
-        .get(`http://localhost:7145/api/MemberCard/SearchMemberCard/${value}`)
+        .get(`https://localhost:7145/api/MemberCard/SearchMemberCard/${value}`)
         .then((res) => {
           console.log(res.data.success);
           if (res.data.data === null) {
@@ -123,7 +123,7 @@ function TheThanhVien() {
   };
 
   const getData = async () => {
-    await Axios.get("http://localhost:7145/api/MemberCard/GetAllMembers").then(
+    await Axios.get("https://localhost:7145/api/MemberCard/GetAllMembers").then(
       (res) => {
         setloading(false);
         setDatas(
@@ -183,7 +183,7 @@ function TheThanhVien() {
 
   const onDeleteKhachHang = (id) => {
     axios
-      .delete(`http://localhost:7145/api/MemberCard/DeleteMembersCard/${id}`)
+      .delete(`https://localhost:7145/api/MemberCard/DeleteMembersCard/${id}`)
       .then(() => {
         getData();
       });
@@ -198,7 +198,7 @@ function TheThanhVien() {
       effectDate: effectDate,
     };
 
-    Axios.post(`http://localhost:7145/api/MemberCard/AddMemberCard`, data)
+    Axios.post(`https://localhost:7145/api/MemberCard/AddMemberCard`, data)
       .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
@@ -220,7 +220,7 @@ function TheThanhVien() {
   const showModal2 = (id) => {
     setVisible2(true);
     axios
-      .get(`http://localhost:7145/api/MemberCard/GetMemberCardById/${id}`)
+      .get(`https://localhost:7145/api/MemberCard/GetMemberCardById/${id}`)
       .then((res) => {
         setIdEdit(id);
         setCardNumberEdit(res.data.data.cardNumber);
@@ -237,7 +237,7 @@ function TheThanhVien() {
 
   const updateCardMember = () => {
     axios
-      .put(`http://localhost:7145/api/MemberCard/UpdateMemberCard`, {
+      .put(`https://localhost:7145/api/MemberCard/UpdateMemberCard`, {
         id: idEdit,
         reason: reasonEdit,
         issueDate: moment(issueDateEdit),
@@ -299,7 +299,7 @@ function TheThanhVien() {
 
   const inActiveMemberCard = (id) => {
     axios
-      .put(`http://localhost:7145/api/MemberCard/ChangedStatusCard/${id}`)
+      .put(`https://localhost:7145/api/MemberCard/ChangedStatusCard/${id}`)
       .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
